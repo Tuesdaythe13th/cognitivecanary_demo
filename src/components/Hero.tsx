@@ -50,9 +50,9 @@ const LissajousCanvas = () => {
 
       // Main Lissajous curves using actual coprime ratios from the Python engine
       const curves = [
-        { a: 13, b: 8, delta: t * 0.4, color: 'hsla(142, 71%, 45%, 0.5)', width: 2, points: 800 },
-        { a: 8, b: 5, delta: t * 0.25 + Math.PI / 4, color: 'hsla(175, 60%, 45%, 0.35)', width: 1.5, points: 700 },
-        { a: 5, b: 3, delta: t * 0.15 + Math.PI / 2, color: 'hsla(280, 60%, 60%, 0.2)', width: 1, points: 600 },
+        { a: 13, b: 8, delta: t * 0.45, color: 'hsla(142, 71%, 45%, 0.7)', width: 2.5, points: 800 },
+        { a: 8, b: 5, delta: t * 0.3 + Math.PI / 4, color: 'hsla(175, 60%, 45%, 0.25)', width: 1.5, points: 700 },
+        { a: 5, b: 3, delta: t * 0.2 + Math.PI / 2, color: 'hsla(142, 71%, 35%, 0.15)', width: 1, points: 600 },
       ];
 
       curves.forEach(({ a, b, delta, color, width, points }) => {
@@ -60,11 +60,11 @@ const LissajousCanvas = () => {
         ctx.strokeStyle = color;
         ctx.lineWidth = width;
 
-        const scaleX = w * 0.32;
-        const scaleY = h * 0.32;
+        const scaleX = w * 0.35;
+        const scaleY = h * 0.35;
         // Slight mouse parallax
-        const offsetX = (mx - 0.5) * 30;
-        const offsetY = (my - 0.5) * 20;
+        const offsetX = (mx - 0.5) * 40;
+        const offsetY = (my - 0.5) * 30;
 
         for (let i = 0; i <= points; i++) {
           const angle = (i / points) * Math.PI * 2 * 4;
@@ -77,19 +77,19 @@ const LissajousCanvas = () => {
       });
 
       // Trailing glow on the primary curve
-      const glowProgress = ((t * 0.4) % (Math.PI * 8)) / (Math.PI * 8);
+      const glowProgress = ((t * 0.45) % (Math.PI * 8)) / (Math.PI * 8);
       const glowIdx = Math.floor(glowProgress * 800);
-      for (let g = 0; g < 20; g++) {
+      for (let g = 0; g < 25; g++) {
         const idx = (glowIdx - g + 800) % 800;
         const angle = (idx / 800) * Math.PI * 2 * 4;
-        const gx = w / 2 + (mx - 0.5) * 30 + Math.sin(13 * angle + t * 0.4) * (w * 0.32);
-        const gy = h / 2 + (my - 0.5) * 20 + Math.sin(8 * angle) * (h * 0.32);
-        const alpha = (1 - g / 20) * 0.8;
-        const size = (1 - g / 20) * 4 + 1;
+        const gx = w / 2 + (mx - 0.5) * 40 + Math.sin(13 * angle + t * 0.45) * (w * 0.35);
+        const gy = h / 2 + (my - 0.5) * 30 + Math.sin(8 * angle) * (h * 0.35);
+        const alpha = (1 - g / 25) * 1;
+        const size = (1 - g / 25) * 5 + 1.2;
         ctx.beginPath();
         ctx.fillStyle = `hsla(142, 71%, 55%, ${alpha})`;
-        ctx.shadowColor = 'hsla(142, 71%, 50%, 0.6)';
-        ctx.shadowBlur = 15;
+        ctx.shadowColor = 'hsla(142, 71%, 50%, 0.9)';
+        ctx.shadowBlur = 25;
         ctx.arc(gx, gy, size, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -101,22 +101,22 @@ const LissajousCanvas = () => {
         p.y += p.vy;
         if (p.x < 0 || p.x > 1) p.vx *= -1;
         if (p.y < 0 || p.y > 1) p.vy *= -1;
-        p.life += 0.003;
+        p.life += 0.0035;
 
         // Mouse repulsion
         const dx = p.x - mx;
         const dy = p.y - my;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 0.15) {
-          const force = (0.15 - dist) * 0.001;
+        if (dist < 0.2) {
+          const force = (0.2 - dist) * 0.0015;
           p.vx += (dx / dist) * force;
           p.vy += (dy / dist) * force;
         }
 
         const px = p.x * w;
         const py = p.y * h;
-        const size = 1.2 + Math.sin(p.life * 2) * 0.6;
-        const alpha = 0.3 + Math.sin(p.life * 2) * 0.15;
+        const size = 1.5 + Math.sin(p.life * 2.5) * 0.8;
+        const alpha = 0.4 + Math.sin(p.life * 2.5) * 0.2;
 
         ctx.beginPath();
         ctx.fillStyle = `hsla(142, 71%, 50%, ${alpha})`;
@@ -130,10 +130,10 @@ const LissajousCanvas = () => {
           const dx = (particles[i].x - particles[j].x) * w;
           const dy = (particles[i].y - particles[j].y) * h;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 80) {
+          if (dist < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `hsla(142, 71%, 45%, ${0.08 * (1 - dist / 80)})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = `hsla(142, 71%, 45%, ${0.12 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x * w, particles[i].y * h);
             ctx.lineTo(particles[j].x * w, particles[j].y * h);
             ctx.stroke();
@@ -141,7 +141,7 @@ const LissajousCanvas = () => {
         }
       }
 
-      t += 0.006;
+      t += 0.0075;
       animId = requestAnimationFrame(draw);
     };
 

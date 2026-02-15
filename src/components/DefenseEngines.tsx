@@ -307,9 +307,9 @@ const drawAuditor = (ctx: CanvasRenderingContext2D, w: number, h: number, t: num
 
     ctx.beginPath();
     ctx.strokeStyle = isAlert
-      ? `hsla(0, 70%, 55%, ${0.3 + Math.sin(t * 3) * 0.2})`
-      : 'hsla(160, 15%, 25%, 0.3)';
-    ctx.lineWidth = isAlert ? 1.5 : 0.5;
+      ? `hsla(142, 100%, 75%, ${0.5 + Math.sin(t * 3) * 0.3})`
+      : 'hsla(142, 71%, 45%, 0.15)';
+    ctx.lineWidth = isAlert ? 2 : 0.6;
     ctx.moveTo(na.x * w, na.y * h);
     ctx.lineTo(nb.x * w, nb.y * h);
     ctx.stroke();
@@ -320,9 +320,9 @@ const drawAuditor = (ctx: CanvasRenderingContext2D, w: number, h: number, t: num
     const dy = na.y + (nb.y - na.y) * progress;
     ctx.beginPath();
     ctx.fillStyle = isAlert
-      ? `hsla(0, 70%, 55%, ${0.5})`
-      : `hsla(142, 71%, 50%, ${0.3})`;
-    ctx.arc(dx * w, dy * h, 1.5, 0, Math.PI * 2);
+      ? `hsla(142, 100%, 80%, 1)`
+      : `hsla(142, 71%, 50%, 0.4)`;
+    ctx.arc(dx * w, dy * h, isAlert ? 2 : 1.5, 0, Math.PI * 2);
     ctx.fill();
   });
 
@@ -336,41 +336,41 @@ const drawAuditor = (ctx: CanvasRenderingContext2D, w: number, h: number, t: num
     // Node circle
     ctx.beginPath();
     if (node.alert) {
-      ctx.fillStyle = 'hsla(0, 70%, 55%, 0.3)';
-      ctx.strokeStyle = 'hsla(0, 70%, 55%, 0.8)';
-      // Alert pulse
+      ctx.fillStyle = 'hsla(142, 100%, 60%, 0.4)';
+      ctx.strokeStyle = 'hsla(142, 100%, 95%, 1)';
+      // Alert pulse (White-Green)
       ctx.beginPath();
-      ctx.arc(nx, ny, radius + 4 + Math.sin(t * 3) * 2, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(0, 70%, 55%, ${0.1 + Math.sin(t * 3) * 0.05})`;
+      ctx.arc(nx, ny, radius + 5 + Math.sin(t * 3) * 3, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(142, 100%, 95%, ${0.1 + Math.sin(t * 3) * 0.08})`;
       ctx.fill();
     } else if (isGA) {
-      ctx.fillStyle = 'hsla(142, 71%, 45%, 0.3)';
-      ctx.strokeStyle = 'hsla(142, 71%, 45%, 0.8)';
+      ctx.fillStyle = 'hsla(142, 71%, 45%, 0.4)';
+      ctx.strokeStyle = 'hsla(142, 71%, 45%, 0.9)';
     } else {
-      ctx.fillStyle = 'hsla(200, 12%, 15%, 0.8)';
-      ctx.strokeStyle = 'hsla(160, 15%, 30%, 0.5)';
+      ctx.fillStyle = 'hsla(0, 0%, 5%, 0.9)';
+      ctx.strokeStyle = 'hsla(142, 30%, 30%, 0.6)';
     }
 
     ctx.beginPath();
     ctx.arc(nx, ny, radius, 0, Math.PI * 2);
     ctx.fill();
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Label
     ctx.fillStyle = node.alert
-      ? 'hsla(0, 70%, 70%, 0.9)'
-      : isGA ? 'hsla(142, 71%, 60%, 0.9)' : 'hsla(160, 10%, 55%, 0.7)';
-    ctx.font = `${isGA ? '8' : '7'}px JetBrains Mono, monospace`;
+      ? 'hsla(142, 100%, 95%, 1)'
+      : isGA ? 'hsla(142, 100%, 85%, 1)' : 'hsla(142, 50%, 75%, 0.8)';
+    ctx.font = `black ${isGA ? '10' : '8'}px JetBrains Mono, monospace`;
     ctx.textAlign = 'center';
     ctx.fillText(node.label, nx, ny + 3);
     ctx.textAlign = 'start';
   });
 
   // Status
-  ctx.fillStyle = 'hsla(142, 71%, 50%, 0.6)';
-  ctx.font = '7px JetBrains Mono, monospace';
-  ctx.fillText('GRADIENT AUDIT', 5, h - 8);
+  ctx.fillStyle = 'hsla(142, 100%, 70%, 0.8)';
+  ctx.font = '8px JetBrains Mono, monospace';
+  ctx.fillText('GRADIENT AUDIT: NOMINAL', 5, h - 8);
 };
 
 const engines: Engine[] = [

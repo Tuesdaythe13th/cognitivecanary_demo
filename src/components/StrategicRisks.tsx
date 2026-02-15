@@ -43,76 +43,90 @@ export default function StrategicRisks() {
    }, [inView]);
 
    return (
-      <section className="py-24 px-6 border-t border-border/50 bg-black/40 relative overflow-hidden">
-         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-               <div className="space-y-2">
-                  <h2 className="text-4xl font-bold font-mono tracking-tighter text-white uppercase italic decoration-primary underline decoration-4 underline-offset-8">
-                     Strategic <span className="text-primary not-italic">Risks</span>
-                  </h2>
-                  <p className="text-xs font-mono text-white/40 uppercase tracking-widest mt-4">
-                     The BCI Frontier & The Right to be Inscrutable
-                  </p>
-               </div>
+      <section id="strategic" ref={ref} className="py-32 px-6 border-t border-white/5 bg-black relative overflow-hidden">
+         {/* Internal Section Grid */}
+         <div className="absolute inset-0 pointer-events-none opacity-[0.03] grid-bg" />
 
-               <div className="prose prose-invert prose-sm font-mono text-white/60 space-y-4">
-                  <p>
-                     As human-computer interaction moves toward direct neural interfaces, the surface area for behavioral harvesting is expanding from cursor trajectories to <span className="text-white italic">intended cognitive signals</span>.
-                  </p>
-
-                  <div className="glass-panel p-6 border-white/5 bg-white/[0.02]">
-                     <h4 className="text-xs font-bold text-primary mb-2 uppercase">Meta's Brain2QWERTY</h4>
-                     <p className="text-[11px] leading-relaxed">
-                        Utilizing non-invasive MEG/EEG, Meta has demonstrated the ability to decode "intended typing" with as low as <span className="text-white font-bold">19% character error rates</span>. The boundary between thought and digital input is dissolving, creating a permanent "Neural Debt."
+         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+            <div className="grid md:grid-cols-2 gap-20 items-center">
+               <div className="space-y-10">
+                  <div className="space-y-4">
+                     <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
+                        Lab Exhibit 03
+                     </div>
+                     <h2 className="text-6xl font-black font-mono tracking-tighter text-white uppercase italic leading-none">
+                        STRATEGIC <span className="text-primary not-italic block mt-2 shadow-[0_0_20px_rgba(0,255,65,0.2)]">RISKS <span className="text-white opacity-20">v0.9</span></span>
+                     </h2>
+                     <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em] font-bold">
+                        The BCI Frontier // Cognitive Sovereignty
                      </p>
                   </div>
 
-                  <div className="glass-panel p-6 border-white/5 bg-white/[0.02]">
-                     <h4 className="text-xs font-bold text-accent mb-2 uppercase">BCI for RecSys</h4>
-                     <p className="text-[11px] leading-relaxed">
-                        sEMG wristbands (Meta Reality Labs) capture <span className="text-white font-bold">pre-movement motor signals</span>. This data provides recommendation algorithms with high-fidelity implicit feedback—capturing your "intention" to click or skip before a muscle even twitches.
+                  <div className="prose prose-invert prose-sm font-mono text-white/60 space-y-6">
+                     <p className="leading-relaxed text-[13px] uppercase tracking-wide">
+                        As human-computer interaction moves toward direct neural interfaces, the surface area for behavioral harvesting is expanding from cursor trajectories to <span className="text-primary italic font-black">intended cognitive signals</span>.
                      </p>
-                  </div>
-               </div>
-            </div>
 
-            <div className="space-y-8">
-               <div className="glass-panel p-1 border-white/10 bg-black h-80 relative overflow-hidden group">
-                  <canvas ref={canvasRef} width={600} height={320} className="w-full h-full opacity-60" />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                     <div className="text-[10px] font-mono text-white/20 uppercase tracking-[0.5em] animate-pulse">
-                        SCANNED: NEURAL TELEMETRY
+                     <div className="glass-panel p-8 border-primary/10 bg-black/40 space-y-3 relative group overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors" />
+                        <h4 className="text-[10px] font-black text-primary uppercase tracking-widest">[ANALYSIS] Meta's Brain2QWERTY</h4>
+                        <p className="text-[11px] leading-relaxed uppercase font-bold text-white/30 group-hover:text-white/60 transition-colors">
+                           Utilizing non-invasive MEG/EEG, Meta has demonstrated the ability to decode "intended typing" with as low as <span className="text-primary">19% character error rates</span>. The boundary between thought and digital input is dissolving, creating a permanent "Neural Debt."
+                        </p>
+                     </div>
+
+                     <div className="glass-panel p-8 border-primary/10 bg-black/40 space-y-3 relative group overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors" />
+                        <h4 className="text-[10px] font-black text-primary uppercase tracking-widest">[DETECTION] BCI for RecSys</h4>
+                        <p className="text-[11px] leading-relaxed uppercase font-bold text-white/30 group-hover:text-white/60 transition-colors">
+                           sEMG wristbands capture <span className="text-primary">pre-movement motor signals</span>. This data provides recommendation algorithms with high-fidelity implicit feedback—capturing your "intention" to click or skip before a muscle even twitches.
+                        </p>
                      </div>
                   </div>
-                  <div className="absolute top-4 left-4 text-[8px] font-mono text-primary animate-pulse">
-                     SIGNAL DECODING... [SOTA: EEG/MEG TRANSFORMER]
-                  </div>
                </div>
 
-               <div className="glass-panel p-6 border-destructive/20 bg-destructive/5 space-y-4">
-                  <h3 className="text-xs font-bold font-mono text-destructive uppercase tracking-widest">Legal Neuro-rights Chokepoint</h3>
-                  <table className="w-full text-[10px] font-mono border-collapse">
-                     <thead>
-                        <tr className="border-b border-white/10 text-white/40 uppercase">
-                           <th className="text-left pb-2">Jurisdiction</th>
-                           <th className="text-left pb-2">Privacy Status</th>
-                        </tr>
-                     </thead>
-                     <tbody className="text-white/60">
-                        <tr className="border-b border-white/5">
-                           <td className="py-2 text-white">Chile</td>
-                           <td className="py-2 italic">Constitutional "Organ Status" — Protection of Psychic Integrity.</td>
-                        </tr>
-                        <tr className="border-b border-white/5">
-                           <td className="py-2 text-white">US (CA/CO)</td>
-                           <td className="py-2">"Sensitive Data" — Standard consumer protection framework.</td>
-                        </tr>
-                        <tr>
-                           <td className="py-2 text-white">Global Scope</td>
-                           <td className="py-2 text-destructive">Current "Legal Vacuum" regarding automated behavior sampling.</td>
-                        </tr>
-                     </tbody>
-                  </table>
+               <div className="space-y-12">
+                  <div className="glass-panel p-1 border-primary/20 bg-black h-[400px] relative overflow-hidden group shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                     <div className="absolute inset-0 pointer-events-none opacity-[0.05] grid-bg" />
+                     <canvas ref={canvasRef} width={600} height={400} className="w-full h-full opacity-80" />
+                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="text-[9px] font-mono text-primary/30 uppercase tracking-[0.8em] animate-pulse font-black">
+                           NEURAL TELEMETRY BLOCKED
+                        </div>
+                     </div>
+                     <div className="absolute top-6 left-6 text-[9px] font-mono text-primary animate-pulse font-black tracking-widest">
+                        [SIGNAL DECODING ACTIVE...]
+                     </div>
+                     <div className="absolute bottom-6 right-6 text-[8px] font-mono text-white/20 uppercase tracking-widest">
+                        // Latent intent capture: 0.1s
+                     </div>
+                  </div>
+
+                  <div className="glass-panel p-8 border-primary/20 bg-primary/5 space-y-6">
+                     <h3 className="text-[10px] font-black font-mono text-primary uppercase tracking-[0.3em]">Legal Neuro-rights Chokepoint</h3>
+                     <table className="w-full text-[10px] font-mono border-collapse">
+Lookup                        <thead>
+                           <tr className="border-b border-primary/20 text-primary uppercase font-black tracking-widest">
+                              <th className="text-left pb-3">Jurisdiction</th>
+                              <th className="text-left pb-3">Privacy Status</th>
+                           </tr>
+                        </thead>
+                        <tbody className="text-white/40 font-bold uppercase">
+                           <tr className="border-b border-white/5 group hover:bg-white/[0.02] transition-colors">
+                              <td className="py-4 text-white">Chile</td>
+                              <td className="py-4 italic text-[9px] tracking-tighter">Constitutional "Organ Status" — Protection of Psychic Integrity.</td>
+                           </tr>
+                           <tr className="border-b border-white/5 group hover:bg-white/[0.02] transition-colors">
+                              <td className="py-4 text-white">US (CA/CO)</td>
+                              <td className="py-4 text-[9px] tracking-tighter">"Sensitive Data" — Standard consumer protection framework.</td>
+                           </tr>
+                           <tr className="group hover:bg-white/[0.02] transition-colors">
+                              <td className="py-4 text-white">Global Area</td>
+                              <td className="py-4 text-primary text-[9px] tracking-tighter font-black">Current "Legal Vacuum" regarding automated behavior sampling.</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
                </div>
             </div>
          </div>
