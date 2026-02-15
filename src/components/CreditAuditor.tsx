@@ -22,10 +22,10 @@ export default function CreditAuditor() {
 
    const canvasRef = useRef<HTMLCanvasElement>(null);
    const lastPoint = useRef<{ x: number, y: number, t: number } | null>(null);
-   const { ref, inView } = useInView();
+   const { ref, isInView } = useInView();
 
    useEffect(() => {
-      if (!inView) return;
+      if (!isInView) return;
 
       const handleMouseMove = (e: MouseEvent) => {
          if (!isAuditing) return;
@@ -58,7 +58,7 @@ export default function CreditAuditor() {
 
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
-   }, [inView, isAuditing, isCanaryActive]);
+   }, [isInView, isAuditing, isCanaryActive]);
 
    const score = (metrics.reduce((acc, m) => acc + (m.value / m.max), 0) / metrics.length) * 100;
    const isApproved = score < 60; // Higher risk = lower score logic
@@ -67,7 +67,7 @@ export default function CreditAuditor() {
       <section id="credit" ref={ref} className="py-32 px-6 border-t border-white/5 bg-black relative overflow-hidden">
          <div className="absolute inset-0 pointer-events-none opacity-[0.03] grid-bg" />
 
-         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <div className="grid md:grid-cols-2 gap-20">
                {/* Form Side */}
                <div className="space-y-12">

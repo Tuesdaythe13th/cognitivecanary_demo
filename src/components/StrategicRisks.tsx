@@ -3,10 +3,10 @@ import { useInView } from '@/hooks/useInView';
 
 export default function StrategicRisks() {
    const canvasRef = useRef<HTMLCanvasElement>(null);
-   const { ref, inView } = useInView();
+   const { ref, isInView } = useInView();
 
    useEffect(() => {
-      if (!inView || !canvasRef.current) return;
+      if (!isInView || !canvasRef.current) return;
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d')!;
       let animId: number;
@@ -40,14 +40,14 @@ export default function StrategicRisks() {
 
       draw();
       return () => cancelAnimationFrame(animId);
-   }, [inView]);
+   }, [isInView]);
 
    return (
       <section id="strategic" ref={ref} className="py-32 px-6 border-t border-white/5 bg-black relative overflow-hidden">
          {/* Internal Section Grid */}
          <div className="absolute inset-0 pointer-events-none opacity-[0.03] grid-bg" />
 
-         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <div className="grid md:grid-cols-2 gap-20 items-center">
                <div className="space-y-10">
                   <div className="space-y-4">
@@ -105,7 +105,7 @@ export default function StrategicRisks() {
                   <div className="glass-panel p-8 border-primary/20 bg-primary/5 space-y-6">
                      <h3 className="text-[10px] font-black font-mono text-primary uppercase tracking-[0.3em]">Legal Neuro-rights Chokepoint</h3>
                      <table className="w-full text-[10px] font-mono border-collapse">
-Lookup                        <thead>
+                        <thead>
                            <tr className="border-b border-primary/20 text-primary uppercase font-black tracking-widest">
                               <th className="text-left pb-3">Jurisdiction</th>
                               <th className="text-left pb-3">Privacy Status</th>

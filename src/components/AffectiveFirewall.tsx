@@ -22,7 +22,7 @@ export default function AffectiveFirewall() {
    const [isDaccEnabled, setIsDaccEnabled] = useState(false);
    const [isTyping, setIsTyping] = useState(false);
    const scrollRef = useRef<HTMLDivElement>(null);
-   const { ref, inView } = useInView();
+   const { ref, isInView } = useInView();
 
    useEffect(() => {
       if (scrollRef.current) {
@@ -85,7 +85,7 @@ export default function AffectiveFirewall() {
          {/* Internal Section Grid */}
          <div className="absolute inset-0 pointer-events-none opacity-[0.03] grid-bg" />
 
-         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <div className="flex flex-col md:flex-row gap-16">
                {/* Chat Interface */}
                <div className="flex-1 glass-panel border-primary/20 bg-black/60 flex flex-col h-[650px] shadow-[0_0_50px_rgba(0,0,0,0.5)]">
