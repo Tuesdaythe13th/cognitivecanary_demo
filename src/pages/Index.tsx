@@ -18,21 +18,34 @@ const navLinks = [
 
 const Index = () => {
   return (
-    <main className="relative bg-background text-foreground overflow-x-hidden">
+    <main className="relative bg-background text-foreground overflow-x-hidden grid-bg grain-overlay">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-border/50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <span className="text-display text-lg text-foreground">CC<span className="text-primary">.</span></span>
-          <div className="hidden md:flex items-center gap-8">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <a href="#" className="text-display text-sm text-foreground tracking-tight">
+            Cognitive Canary
+          </a>
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map(link => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-body-medium text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-primary transition-colors duration-200"
+                className="text-mono text-[10px] text-muted-foreground hover:text-primary tracking-wider uppercase transition-colors duration-200"
               >
                 {link.label}
               </a>
             ))}
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/Tuesdaythe13th/cognitivecanary"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-mono text-[10px] text-muted-foreground hover:text-primary tracking-wider uppercase transition-colors duration-200"
+            >
+              GitHub
+            </a>
+            <span className="tag-badge text-[8px]">v6.0</span>
           </div>
         </div>
       </nav>
