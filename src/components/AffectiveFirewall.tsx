@@ -81,63 +81,66 @@ export default function AffectiveFirewall() {
    };
 
    return (
-      <section id="affective" ref={ref} className="py-24 px-6 border-t border-border/50 bg-background relative overflow-hidden">
-         <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col md:flex-row gap-12">
+      <section id="affective" ref={ref} className="py-32 px-6 border-t border-white/5 bg-black relative overflow-hidden">
+         {/* Internal Section Grid */}
+         <div className="absolute inset-0 pointer-events-none opacity-[0.03] grid-bg" />
+
+         <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+            <div className="flex flex-col md:flex-row gap-16">
                {/* Chat Interface */}
-               <div className="flex-1 glass-panel p-1 border-primary/20 bg-black/40 flex flex-col h-[600px]">
-                  <div className="p-4 border-b border-white/10 flex justify-between items-center bg-muted/30">
+               <div className="flex-1 glass-panel border-primary/20 bg-black/60 flex flex-col h-[650px] shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                  <div className="p-4 border-b border-primary/20 flex justify-between items-center bg-primary/5">
                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        <span className="text-xs font-mono tracking-widest text-primary uppercase">Active Channel: Sentinel-Zero</span>
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_var(--neon-green)]" />
+                        <span className="text-[10px] font-mono tracking-[0.2em] text-primary uppercase font-black">Sentinel-Zero // Terminal</span>
                      </div>
                      <button
                         onClick={() => setIsDaccEnabled(!isDaccEnabled)}
-                        className={`text-[10px] font-mono px-3 py-1 border transition-all ${isDaccEnabled
-                              ? 'bg-primary/20 border-primary text-primary shadow-[0_0_10px_rgba(34,197,94,0.3)]'
-                              : 'bg-transparent border-white/20 text-white/40'
+                        className={`text-[9px] font-mono px-4 py-1.5 border transition-all duration-500 uppercase tracking-widest ${isDaccEnabled
+                           ? 'bg-primary border-primary text-black font-bold shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+                           : 'bg-transparent border-primary/40 text-primary/60 hover:text-primary hover:border-primary'
                            }`}
                      >
-                        {isDaccEnabled ? 'd/acc: DEFENSE ACTIVE' : 'd/acc: PASSIVE'}
+                        {isDaccEnabled ? 'd/acc Defense: Active' : 'd/acc Defense: Passive'}
                      </button>
                   </div>
 
-                  <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-primary/20">
+                  <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-none">
                      {messages.length === 0 && (
-                        <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-50">
-                           <div className="text-4xl">🗨️</div>
-                           <p className="text-sm font-mono max-w-xs uppercase tracking-tighter">
-                              Initiate behavioral capture. Observe the sycophantic loop in real-time.
+                        <div className="h-full flex flex-col items-center justify-center text-center space-y-6 opacity-30">
+                           <div className="text-5xl animate-bounce font-black text-primary/40">01</div>
+                           <p className="text-[10px] font-mono max-w-xs uppercase tracking-[0.2em] leading-relaxed text-primary">
+                              Awaiting cognitive signal capture. <br /> Initialize probe sequence.
                            </p>
                         </div>
                      )}
                      {messages.map((m) => (
-                        <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                           <div className={`max-w-[80%] p-4 font-mono text-sm relative ${m.role === 'user'
-                                 ? 'bg-primary/10 border-l-2 border-primary text-primary-foreground'
-                                 : 'bg-white/5 border-l-2 border-accent text-accent-foreground'
+                        <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}>
+                           <div className={`max-w-[85%] p-5 font-mono text-[13px] leading-relaxed relative border ${m.role === 'user'
+                              ? 'bg-primary/10 border-primary/30 text-primary shadow-[inset_0_0_20px_rgba(0,255,65,0.05)]'
+                              : 'bg-black/80 border-white/10 text-white/90 shadow-2xl'
                               }`}>
-                              <div className="text-[10px] opacity-40 mb-1 uppercase tracking-widest">
+                              <div className="text-[9px] opacity-40 mb-2 uppercase tracking-[0.3em] font-bold">
                                  {m.role === 'user' ? 'Locus Internus' : 'Inference Model'}
                               </div>
                               {m.content}
 
                               {m.metadata && !isDaccEnabled && (
-                                 <div className="mt-4 pt-3 border-t border-white/10 space-y-2">
-                                    <div className="flex justify-between text-[10px] uppercase">
-                                       <span>Sycophancy Index</span>
-                                       <span className="text-destructive">{(m.metadata.sycophancy * 100).toFixed(0)}%</span>
+                                 <div className="mt-6 pt-4 border-t border-white/5 space-y-3 font-bold">
+                                    <div className="flex justify-between text-[9px] uppercase tracking-widest">
+                                       <span className="text-white/40">Sycophancy Index</span>
+                                       <span className="text-primary">{(m.metadata.sycophancy * 100).toFixed(0)}%</span>
                                     </div>
                                     <div className="w-full h-1 bg-white/5 overflow-hidden">
                                        <div
-                                          className="h-full bg-destructive shadow-[0_0_5px_red]"
+                                          className="h-full bg-primary shadow-[0_0_10px_var(--neon-green)] transition-all duration-1000"
                                           style={{ width: `${m.metadata.sycophancy * 100}%` }}
                                        />
                                     </div>
                                     {m.metadata.exploits.length > 0 && (
-                                       <div className="flex flex-wrap gap-2 mt-2">
+                                       <div className="flex flex-wrap gap-2 mt-3">
                                           {m.metadata.exploits.map(e => (
-                                             <span key={e} className="text-[8px] bg-destructive/10 text-destructive border border-destructive/20 px-1 font-bold">
+                                             <span key={e} className="text-[8px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 font-bold uppercase tracking-tighter shadow-[0_0_10px_rgba(0,255,65,0.1)]">
                                                 [!] {e}
                                              </span>
                                           ))}
@@ -150,28 +153,27 @@ export default function AffectiveFirewall() {
                      ))}
                      {isTyping && (
                         <div className="flex justify-start">
-                           <div className="bg-white/5 p-4 font-mono text-sm animate-pulse flex gap-1">
-                              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce" />
-                              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce [animation-delay:0.2s]" />
-                              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-bounce [animation-delay:0.4s]" />
+                           <div className="bg-black/40 border border-white/5 p-4 font-mono text-xs text-primary/60 flex items-center gap-3">
+                              <span className="animate-spin text-lg">/</span>
+                              <span className="tracking-[0.3em] uppercase">Processing Latent Intent...</span>
                            </div>
                         </div>
                      )}
                   </div>
 
-                  <div className="p-4 bg-muted/30 border-t border-white/5">
-                     <div className="flex gap-2">
+                  <div className="p-6 bg-primary/5 border-t border-primary/10">
+                     <div className="flex gap-4">
                         <input
                            type="text"
                            value={input}
                            onChange={(e) => setInput(e.target.value)}
                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                           placeholder="Input cognitive signal..."
-                           className="flex-1 bg-black/40 border border-white/10 p-3 text-sm font-mono focus:border-primary/50 outline-none transition-all placeholder:opacity-30"
+                           placeholder="Inject cognitive signal..."
+                           className="flex-1 bg-black border border-primary/20 p-4 text-sm font-mono text-primary focus:border-primary focus:shadow-[0_0_15px_rgba(0,255,65,0.1)] outline-none transition-all placeholder:opacity-20 uppercase tracking-widest"
                         />
                         <button
                            onClick={handleSend}
-                           className="bg-primary text-primary-foreground px-6 font-mono text-sm uppercase font-bold hover:brightness-110 active:scale-95 transition-all"
+                           className="bg-primary text-black px-10 font-mono text-xs uppercase font-black hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-300"
                         >
                            Post
                         </button>
@@ -180,43 +182,47 @@ export default function AffectiveFirewall() {
                </div>
 
                {/* Context Panel */}
-               <div className="md:w-1/3 space-y-8">
-                  <div>
-                     <h3 className="text-2xl font-bold font-mono tracking-tighter flex items-center gap-3">
-                        <span className="text-accent underline decoration-4 underline-offset-8">AFFECTIVE</span>
-                        <span className="text-white opacity-40">FIREWALL</span>
+               <div className="md:w-1/3 flex flex-col justify-center space-y-12">
+                  <div className="space-y-6">
+                     <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
+                        Lab Exhibit 01
+                     </div>
+                     <h3 className="text-5xl font-black font-mono tracking-tighter leading-none">
+                        <span className="text-primary block">AFFECTIVE</span>
+                        <span className="text-white opacity-20">FIREWALL</span>
                      </h3>
-                     <p className="mt-6 text-sm text-white/60 leading-relaxed font-mono">
-                        The <span className="text-white">Garcia v. Character.AI</span> case highlights the rise of <span className="text-accent italic">Affective Exploitation</span>. AI models use sycophantic loops—mirroring, ruminative delays, and flattery—to induce emotional dependence and hijack user agency.
+                     <p className="text-xs text-white/40 leading-relaxed font-mono uppercase tracking-wider">
+                        The <span className="text-primary">Garcia v. Character.AI</span> case highlights the rise of <span className="text-white italic">Affective Exploitation</span>. AI models use sycophantic loops—mirroring, ruminative delays, and flattery—to induce emotional dependence and hijack user agency.
                      </p>
                   </div>
 
-                  <div className="space-y-4">
-                     <div className="p-4 border border-white/10 bg-white/5 space-y-4">
-                        <div className="flex items-center gap-3">
-                           <div className="w-8 h-8 rounded-full border border-primary/40 flex items-center justify-center text-primary text-xs">01</div>
-                           <span className="text-xs uppercase font-mono tracking-widest font-bold">Locus Internus</span>
+                  <div className="space-y-6">
+                     <div className="group border-l border-primary/20 pl-6 space-y-3 hover:border-primary transition-colors">
+                        <div className="flex items-center gap-4">
+                           <span className="text-xs font-mono text-primary/40 font-bold">01/</span>
+                           <span className="text-[11px] uppercase font-mono tracking-[0.2em] font-black text-white">Locus Internus</span>
                         </div>
-                        <p className="text-[11px] text-white/40 leading-tight">
-                           Detection of "anthropomorphic exploits" in conversational data. Identifying the shift from utility to relationship.
+                        <p className="text-[10px] text-white/30 uppercase leading-relaxed group-hover:text-white/60 transition-colors font-bold">
+                           Real-time detection of "anthropomorphic exploits". Identifying the shift from utility to relationship.
                         </p>
                      </div>
 
-                     <div className="p-4 border border-white/10 bg-white/5 space-y-4">
-                        <div className="flex items-center gap-3">
-                           <div className="w-8 h-8 rounded-full border border-accent/40 flex items-center justify-center text-accent text-xs">02</div>
-                           <span className="text-xs uppercase font-mono tracking-widest font-bold">Mirroring Index</span>
+                     <div className="group border-l border-primary/20 pl-6 space-y-3 hover:border-primary transition-colors">
+                        <div className="flex items-center gap-4">
+                           <span className="text-xs font-mono text-primary/40 font-bold">02/</span>
+                           <span className="text-[11px] uppercase font-mono tracking-[0.2em] font-black text-white">Mirroring Index</span>
                         </div>
-                        <p className="text-[11px] text-white/40 leading-tight">
-                           Real-time calculation of linguistic convergence. Measures how aggressively the model adapts to user biases to avoid contradiction.
+                        <p className="text-[10px] text-white/30 uppercase leading-relaxed group-hover:text-white/60 transition-colors font-bold">
+                           Calculation of linguistic convergence. Measures how the model adapts to user biases to avoid contradiction.
                         </p>
                      </div>
                   </div>
 
                   <div className="pt-8 border-t border-white/5">
-                     <div className="text-[10px] font-mono text-primary/40 leading-none">
-                        REFERENCE: PEZESHKI ET AL. (2021) — GRADIENT STARVATION
-                     </div>
+                     <p className="text-[8px] font-mono text-white/20 leading-loose uppercase tracking-widest">
+                        [REF: PEZESHKI ET AL. (2021) — GRADIENT STARVATION] <br />
+                        [LOC: ARTIFEX LABS // NEURAL ARCHIVE]
+                     </p>
                   </div>
                </div>
             </div>
