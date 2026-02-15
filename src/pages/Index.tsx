@@ -4,6 +4,7 @@ import DefenseEngines from '@/components/DefenseEngines';
 import LiveDemo from '@/components/LiveDemo';
 import AffectiveFirewall from '@/components/AffectiveFirewall';
 import CreditAuditor from '@/components/CreditAuditor';
+import StrategicRisks from '@/components/StrategicRisks';
 import Results from '@/components/Results';
 import Architecture from '@/components/Architecture';
 import Roadmap from '@/components/Roadmap';
@@ -52,6 +53,8 @@ const Index = () => {
 
         <AffectiveFirewall />
         <CreditAuditor />
+
+        <StrategicRisks />
 
         <LiveDemo />
         <Results />
