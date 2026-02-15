@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import ProblemSection from '@/components/ProblemSection';
+import ImportanceSection from '@/components/ImportanceSection';
 import DefenseEngines from '@/components/DefenseEngines';
 import LiveDemo from '@/components/LiveDemo';
 import AffectiveFirewall from '@/components/AffectiveFirewall';
@@ -26,6 +27,7 @@ const Index = () => {
           </div>
           <div className="hidden md:flex gap-10 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
             <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
+            <a href="#importance" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Urgency</a>
             <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
             <a href="#affective" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Affective</a>
             <a href="#credit" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Auditor</a>
@@ -38,6 +40,7 @@ const Index = () => {
       <main className="relative">
         <Hero />
         <ProblemSection />
+        <ImportanceSection />
         <DefenseEngines />
 
         {/* Lab Case Studies Section Header */}
