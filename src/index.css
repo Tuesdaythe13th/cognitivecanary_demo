@@ -6,14 +6,14 @@
 
 @layer base {
   :root {
-    --background: 200 10% 6%;
-    --foreground: 150 100% 95%;
+    --background: 0 0% 2%;
+    --foreground: 142 100% 95%;
 
-    --card: 200 12% 9%;
-    --card-foreground: 150 100% 95%;
+    --card: 0 0% 3%;
+    --card-foreground: 142 100% 95%;
 
-    --popover: 200 12% 9%;
-    --popover-foreground: 150 100% 95%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 142 100% 95%;
 
     --primary: 142 71% 45%;
     --primary-foreground: 200 10% 4%;
@@ -66,7 +66,12 @@
     cursor: default;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Clash Display', sans-serif;
     font-weight: 700;
     letter-spacing: -0.05em;
@@ -81,9 +86,11 @@
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: hsl(200, 10%, 6%);
   }
+
   ::-webkit-scrollbar-thumb {
     background: hsl(142, 71%, 45%);
     border-radius: 0;
@@ -146,17 +153,16 @@
   .scanline-overlay {
     position: relative;
   }
+
   .scanline-overlay::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      hsl(0 0% 0% / 0.08) 2px,
-      hsl(0 0% 0% / 0.08) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        hsl(0 0% 0% / 0.08) 2px,
+        hsl(0 0% 0% / 0.08) 4px);
     pointer-events: none;
     z-index: 1;
   }
@@ -195,11 +201,10 @@
   .section-divider {
     height: 1px;
     background: linear-gradient(90deg,
-      transparent,
-      hsl(142 71% 45% / 0.3),
-      hsl(175 60% 45% / 0.2),
-      transparent
-    );
+        transparent,
+        hsl(142 71% 45% / 0.3),
+        hsl(175 60% 45% / 0.2),
+        transparent);
   }
 
   /* Tag badge */
@@ -220,6 +225,7 @@
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -227,38 +233,87 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @keyframes grid-drift {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 60px;
+  }
 }
 
 @keyframes typewriter-cursor {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes data-flow {
-  0% { transform: translateX(-10px); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateX(10px); opacity: 0; }
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
 }
 
 @keyframes progress-fill {
-  from { width: 0%; }
-  to { width: var(--target-width); }
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: var(--target-width);
+  }
 }
 
 @keyframes ring-fill {
-  from { stroke-dashoffset: var(--circumference); }
-  to { stroke-dashoffset: var(--target-offset); }
+  from {
+    stroke-dashoffset: var(--circumference);
+  }
+
+  to {
+    stroke-dashoffset: var(--target-offset);
+  }
 }

@@ -19,18 +19,18 @@ const Index = () => {
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/40 backdrop-blur-md border border-white/10 p-4 pointer-events-auto shadow-2xl">
+        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/60 backdrop-blur-xl border border-primary/20 p-4 pointer-events-auto shadow-[0_0_40px_rgba(0,0,0,0.8)]">
           <div className="flex items-center gap-3">
-            <span className="text-primary font-bold tracking-tighter text-xl font-mono">CC // ARTIFEX</span>
-            <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 font-mono border border-primary/30">v6.0-ENTERPRISE</span>
+            <span className="text-primary font-black tracking-tighter text-xl font-mono shadow-[0_0_10px_var(--neon-green)]">CC // ARTIFEX</span>
+            <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.0</span>
           </div>
-          <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-widest font-bold">
-            <a href="#problem" className="hover:text-primary transition-colors">Threats</a>
-            <a href="#engines" className="hover:text-primary transition-colors">Engines</a>
-            <a href="#affective" className="hover:text-primary transition-colors text-accent">Affective</a>
-            <a href="#credit" className="hover:text-primary transition-colors text-destructive">Auditor</a>
-            <a href="#demo" className="hover:text-primary transition-colors">Canary</a>
-            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-4 py-1 hover:brightness-110 transition-all">GitHub</a>
+          <div className="hidden md:flex gap-10 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
+            <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
+            <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
+            <a href="#affective" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Affective</a>
+            <a href="#credit" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Auditor</a>
+            <a href="#demo" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Canary</a>
+            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-6 py-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)]">Source</a>
           </div>
         </div>
       </nav>
@@ -41,12 +41,17 @@ const Index = () => {
         <DefenseEngines />
 
         {/* Lab Case Studies Section Header */}
-        <section className="pt-24 pb-12 px-6 border-t border-border/50 bg-black/20">
-          <div className="max-w-6xl mx-auto text-center">
-            <span className="text-[10px] font-mono text-primary bg-primary/10 px-3 py-1 border border-primary/20 uppercase tracking-widest">Case Studies: 2026-2030 Risks</span>
-            <h2 className="text-4xl font-bold font-mono tracking-tighter mt-4 text-white uppercase italic">Lab Bench <span className="text-accent underline decoration-white/20 underline-offset-8">Exhibits</span></h2>
-            <p className="mt-6 text-sm font-mono text-white/40 max-w-2xl mx-auto uppercase">
-              Exploring the boundary between behavioral metrics and human agency.
+        <section className="py-40 px-6 border-t border-white/5 bg-black relative">
+          <div className="absolute inset-0 pointer-events-none opacity-[0.05] grid-bg" />
+          <div className="max-w-6xl mx-auto text-center relative z-10 space-y-8">
+            <div className="inline-block px-4 py-1.5 border border-primary/30 text-[10px] font-mono text-primary uppercase tracking-[0.5em] bg-primary/5 font-black">
+              Case Studies: 2026-2030 Evolution
+            </div>
+            <h2 className="text-7xl font-black font-mono tracking-tighter text-white uppercase italic leading-none">
+              LAB BENCH <span className="text-primary not-italic block mt-4 shadow-[0_0_30px_rgba(0,255,65,0.2)]">EXHIBITS</span>
+            </h2>
+            <p className="mt-8 text-[11px] font-mono text-white/40 max-w-xl mx-auto uppercase tracking-[0.2em] leading-relaxed">
+              Deconstructing the mathematical scaffolding of the next-generation <span className="text-white italic">Affective Economy</span>.
             </p>
           </div>
         </section>
@@ -55,6 +60,8 @@ const Index = () => {
         <CreditAuditor />
 
         <StrategicRisks />
+
+        <div className="h-40 bg-gradient-to-b from-black to-black/20" />
 
         <LiveDemo />
         <Results />
