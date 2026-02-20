@@ -21,23 +21,34 @@ const metrics: Metric[] = [
   { label: 'Active Obfuscation Engines', value: 5, suffix: '', category: 'System' },
 ];
 
-const AnimatedCounter = ({ value, suffix, prefix, isInView }: { value: number; suffix: string; prefix?: string; isInView: boolean }) => {
+const CATEGORY_COLORS: Record<string, string> = {
+  Evasion: 'hsl(142, 71%, 45%)',
+  Defense: 'hsl(175, 60%, 45%)',
+  Performance: 'hsl(280, 60%, 60%)',
+  System: 'hsl(38, 95%, 55%)',
+};
+
+const AnimatedCounter = ({ value, suffix, prefix, isInView, delay = 0 }: {
+  value: number; suffix: string; prefix?: string; isInView: boolean; delay?: number
+}) => {
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
-    const duration = 2000;
-    const start = Date.now();
-
-    const tick = () => {
-      const elapsed = Date.now() - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Number((eased * value).toFixed(value % 1 === 0 ? 0 : value < 1 ? 2 : 1)));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    tick();
-  }, [isInView, value]);
+    const timer = setTimeout(() => {
+      const duration = 2200;
+      const start = Date.now();
+      const tick = () => {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        setDisplay(Number((eased * value).toFixed(value % 1 === 0 ? 0 : value < 1 ? 2 : 1)));
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      tick();
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [isInView, value, delay]);
 
   return (
     <span className="text-display text-4xl sm:text-5xl text-foreground">
@@ -62,29 +73,27 @@ const ProgressBar = ({ value, prev, isInView, delay }: { value: number; prev?: n
   if (!prev) return null;
 
   return (
-    <div className="mt-3 space-y-1">
-      {/* Previous version */}
+    <div className="mt-3 space-y-1.5">
       <div className="flex items-center gap-2">
-        <span className="text-mono text-[9px] text-muted-foreground/50 w-8">v5.0</span>
-        <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+        <span className="text-mono text-[9px] text-muted-foreground/40 w-8">v5.0</span>
+        <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full bg-muted-foreground/30 rounded-full transition-all duration-1500 ease-out"
-            style={{ width: `${prevWidth}%`, transitionDuration: '1.5s' }}
+            className="h-full bg-muted-foreground/25 rounded-full"
+            style={{ width: `${prevWidth}%`, transition: 'width 1.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
           />
         </div>
-        <span className="text-mono text-[9px] text-muted-foreground/40 w-10 text-right">{prev}%</span>
+        <span className="text-mono text-[9px] text-muted-foreground/35 w-10 text-right">{prev}%</span>
       </div>
-      {/* Current version */}
       <div className="flex items-center gap-2">
         <span className="text-mono text-[9px] text-primary w-8">v6.0</span>
         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full transition-all ease-out"
+            className="h-full rounded-full"
             style={{
               width: `${width}%`,
-              transitionDuration: '2s',
-              background: 'linear-gradient(90deg, hsla(142, 71%, 45%, 0.8), hsla(175, 60%, 45%, 0.8))',
-              boxShadow: '0 0 6px hsla(142, 71%, 50%, 0.3)',
+              transition: 'width 2.2s cubic-bezier(0.16, 1, 0.3, 1)',
+              background: 'linear-gradient(90deg, hsl(142, 71%, 45%), hsl(175, 60%, 45%))',
+              boxShadow: '0 0 8px hsl(142, 71%, 50%, 0.4)',
             }}
           />
         </div>
@@ -100,10 +109,10 @@ const Results = () => {
   return (
     <section id="results" className="relative py-32 px-6" ref={ref}>
       <div className="section-divider mb-32" />
-      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-primary/10 rounded-full gradient-blob" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-primary/8 rounded-full gradient-blob" />
 
       <div className="max-w-6xl mx-auto">
-        <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="tag-badge mb-6 inline-block">BENCHMARKS</span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
             The numbers<br />speak.
@@ -117,13 +126,20 @@ const Results = () => {
           {metrics.map((m, i) => (
             <div
               key={m.label}
-              className={`glass-panel p-6 transition-all duration-500 hover:neon-border-glow ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${i * 100}ms` }}
+              className={`glass-panel p-6 transition-all duration-700 hover:neon-border-glow group ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${i * 80}ms` }}
             >
-              <span className="text-mono text-[9px] text-muted-foreground/50 tracking-wider uppercase block mb-3">{m.category}</span>
-              <AnimatedCounter value={m.value} suffix={m.suffix} prefix={m.prefix} isInView={isInView} />
+              {/* Category dot + label */}
+              <div className="flex items-center gap-2 mb-4">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: CATEGORY_COLORS[m.category] ?? 'hsl(142,71%,45%)' }}
+                />
+                <span className="text-mono text-[9px] text-muted-foreground/50 tracking-wider uppercase">{m.category}</span>
+              </div>
+              <AnimatedCounter value={m.value} suffix={m.suffix} prefix={m.prefix} isInView={isInView} delay={i * 80} />
               <p className="text-body text-muted-foreground mt-2 text-xs leading-relaxed">{m.label}</p>
-              <ProgressBar value={m.value} prev={m.prev} isInView={isInView} delay={i * 100 + 500} />
+              <ProgressBar value={m.value} prev={m.prev} isInView={isInView} delay={i * 80 + 400} />
             </div>
           ))}
         </div>

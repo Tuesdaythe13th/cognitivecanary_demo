@@ -13,10 +13,16 @@ const ProblemSection = () => {
   return (
     <section id="problem" className="relative py-32 px-6" ref={ref}>
       <div className="section-divider mb-32" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full gradient-blob" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/8 rounded-full gradient-blob" />
 
       <div className="max-w-6xl mx-auto">
-        <div className={`transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className="transition-all duration-1000"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? 'translateY(0)' : 'translateY(24px)',
+          }}
+        >
           <span className="tag-badge mb-6 inline-block">THE INFERENCE GAP</span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mb-6 mt-4">
             Your behavior<br />is your password.
@@ -30,20 +36,23 @@ const ProblemSection = () => {
           {threats.map((threat, i) => (
             <div
               key={threat.label}
-              className={`glass-panel p-8 group transition-all duration-500 hover:neon-border-glow ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-              style={{ transitionDelay: `${i * 150}ms` }}
+              className="glass-panel p-8 group hover:neon-border-glow"
+              style={{
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'translateY(0)' : 'translateY(24px)',
+                transition: `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms, border-color 0.3s ease, box-shadow 0.3s ease`,
+              }}
             >
               <div className="flex items-start gap-5">
-                <span className="text-mono text-2xl text-primary/30 group-hover:text-primary transition-colors duration-300 mt-1">
+                <span className="text-mono text-2xl text-primary/25 group-hover:text-primary/60 transition-colors duration-400 mt-1 flex-shrink-0">
                   {threat.icon}
                 </span>
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-mono text-xs text-primary/40">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-mono text-xs text-primary/30 flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <h3 className="text-lg text-foreground" style={{ lineHeight: '1.2' }}>{threat.label}</h3>
+                    <h3 className="text-base text-foreground font-medium" style={{ lineHeight: '1.2' }}>{threat.label}</h3>
                   </div>
                   <p className="text-body text-sm text-muted-foreground leading-relaxed">{threat.desc}</p>
                 </div>
