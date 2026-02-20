@@ -6,6 +6,9 @@ import DefenseEngines from '@/components/DefenseEngines';
 import LiveDemo from '@/components/LiveDemo';
 import AffectiveFirewall from '@/components/AffectiveFirewall';
 import CreditAuditor from '@/components/CreditAuditor';
+import BrowserFingerprint from '@/components/BrowserFingerprint';
+import KeystrokeDynamics from '@/components/KeystrokeDynamics';
+import ThreatFeed from '@/components/ThreatFeed';
 import StrategicRisks from '@/components/StrategicRisks';
 import Results from '@/components/Results';
 import Architecture from '@/components/Architecture';
@@ -28,11 +31,13 @@ const Index = () => {
           </div>
           <div className="hidden md:flex gap-10 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
             <a href="#lab-update" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Lab Update</a>
+          <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
             <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
-            <a href="#importance" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Urgency</a>
             <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
             <a href="#affective" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Affective</a>
-            <a href="#credit" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Auditor</a>
+            <a href="#fingerprint" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">FP Audit</a>
+            <a href="#keystroke" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Keystroke</a>
+            <a href="#threatfeed" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Feed</a>
             <a href="#demo" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Canary</a>
             <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-6 py-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)]">Source</a>
           </div>
@@ -64,6 +69,9 @@ const Index = () => {
 
         <AffectiveFirewall />
         <CreditAuditor />
+        <BrowserFingerprint />
+        <KeystrokeDynamics />
+        <ThreatFeed />
 
         <StrategicRisks />
 
