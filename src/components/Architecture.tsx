@@ -32,8 +32,6 @@ const FlowCanvas = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
-
-      // Draw flow dots traveling between stages
       const stageWidth = w / steps.length;
 
       for (let i = 0; i < steps.length - 1; i++) {
@@ -41,20 +39,23 @@ const FlowCanvas = () => {
         const x2 = stageWidth * (i + 1) + stageWidth / 2;
         const y = h / 2;
 
-        // Connection line
+        // Connection line with gradient
+        const grad = ctx.createLinearGradient(x1, y, x2, y);
+        grad.addColorStop(0, steps[i].color.replace('0.8)', '0.2)').replace('0.9)', '0.25)'));
+        grad.addColorStop(1, steps[i + 1].color.replace('0.8)', '0.2)').replace('0.9)', '0.25)'));
         ctx.beginPath();
-        ctx.strokeStyle = 'hsla(160, 15%, 20%, 0.4)';
+        ctx.strokeStyle = grad;
         ctx.lineWidth = 1;
-        ctx.moveTo(x1 + 15, y);
-        ctx.lineTo(x2 - 15, y);
+        ctx.moveTo(x1 + 16, y);
+        ctx.lineTo(x2 - 16, y);
         ctx.stroke();
 
         // Traveling dots
         for (let d = 0; d < 3; d++) {
-          const progress = ((t * 0.3 + i * 0.15 + d * 0.33) % 1);
-          const dx = x1 + 15 + (x2 - x1 - 30) * progress;
-          const dy = y + Math.sin(progress * Math.PI) * -5;
-          const alpha = Math.sin(progress * Math.PI) * 0.8;
+          const progress = ((t * 0.35 + i * 0.15 + d * 0.33) % 1);
+          const dx = x1 + 16 + (x2 - x1 - 32) * progress;
+          const dy = y + Math.sin(progress * Math.PI) * -6;
+          const alpha = Math.sin(progress * Math.PI) * 0.9;
 
           ctx.beginPath();
           ctx.fillStyle = `hsla(142, 71%, 50%, ${alpha})`;
@@ -66,32 +67,30 @@ const FlowCanvas = () => {
       }
       ctx.shadowBlur = 0;
 
-      // draw stage nodes
+      // Stage nodes
       steps.forEach((step, i) => {
         const cx = stageWidth * i + stageWidth / 2;
         const cy = h / 2;
         const isCore = step.id === 'OBFUSCATE';
         const radius = isCore ? 14 : 10;
 
-        // Pulse ring for OBFUSCATE
         if (isCore) {
+          const pulseR = radius + 6 + Math.sin(t * 2) * 3;
           ctx.beginPath();
-          ctx.strokeStyle = `hsla(142, 71%, 50%, ${0.15 + Math.sin(t * 2) * 0.1})`;
+          ctx.strokeStyle = `hsla(142, 71%, 50%, ${0.12 + Math.sin(t * 2) * 0.08})`;
           ctx.lineWidth = 1;
-          ctx.arc(cx, cy, radius + 5 + Math.sin(t * 2) * 2, 0, Math.PI * 2);
+          ctx.arc(cx, cy, pulseR, 0, Math.PI * 2);
           ctx.stroke();
         }
 
-        // Node
         ctx.beginPath();
-        ctx.fillStyle = isCore ? 'hsla(142, 71%, 45%, 0.2)' : 'hsla(200, 12%, 12%, 0.8)';
+        ctx.fillStyle = isCore ? 'hsla(142, 71%, 45%, 0.18)' : 'hsla(200, 12%, 11%, 0.9)';
         ctx.strokeStyle = step.color;
         ctx.lineWidth = isCore ? 1.5 : 1;
         ctx.arc(cx, cy, radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
-        // Label
         ctx.fillStyle = step.color;
         ctx.font = `${isCore ? '7' : '6'}px JetBrains Mono, monospace`;
         ctx.textAlign = 'center';
@@ -120,30 +119,49 @@ const Architecture = () => {
   return (
     <section id="architecture" className="relative py-32 px-6" ref={ref}>
       <div className="section-divider mb-32" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/8 rounded-full gradient-blob" />
 
       <div className="max-w-6xl mx-auto">
-        <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className="mb-16"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? 'translateY(0)' : 'translateY(24px)',
+            transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
           <span className="tag-badge mb-6 inline-block">PIPELINE</span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
             The pipeline.
           </h2>
         </div>
 
-        {/* Animated flow canvas */}
-        <div className={`transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.15s' }}>
+        <div
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? 'translateY(0)' : 'translateY(16px)',
+            transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 150ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 150ms',
+          }}
+        >
           <FlowCanvas />
         </div>
 
-        {/* Stage cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {steps.map((step, i) => (
             <div
               key={step.id}
-              className={`glass-panel p-4 text-center group hover:neon-border-glow transition-all duration-500 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-              style={{ transitionDelay: `${i * 100 + 200}ms` }}
+              className="glass-panel p-4 text-center group hover:neon-border-glow"
+              style={{
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'translateY(0)' : 'translateY(20px)',
+                transition: `opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${i * 80 + 200}ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${i * 80 + 200}ms, border-color 0.3s ease, box-shadow 0.3s ease`,
+              }}
             >
-              <span className="text-mono text-[10px] tracking-[0.2em] block mb-2" style={{ color: step.color }}>{step.id}</span>
+              <div
+                className="w-1.5 h-1.5 rounded-full mx-auto mb-2"
+                style={{ background: step.color, boxShadow: `0 0 6px ${step.color}` }}
+              />
+              <span className="text-mono text-[10px] tracking-[0.15em] block mb-1.5" style={{ color: step.color }}>{step.id}</span>
               <h3 className="text-xs text-foreground mb-1 font-medium" style={{ lineHeight: '1.3' }}>{step.label}</h3>
               <p className="text-[10px] text-muted-foreground leading-relaxed">{step.desc}</p>
             </div>

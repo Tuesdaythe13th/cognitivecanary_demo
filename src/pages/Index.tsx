@@ -23,23 +23,22 @@ const Index = () => {
       <div className="fixed inset-0 grain-overlay pointer-events-none opacity-50 mix-blend-overlay" />
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/60 backdrop-blur-xl border border-primary/20 p-4 pointer-events-auto shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 pointer-events-none">
+        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/70 backdrop-blur-xl border border-primary/20 px-6 py-3 pointer-events-auto shadow-[0_0_60px_rgba(0,0,0,0.9)]">
           <div className="flex items-center gap-3">
-            <span className="text-primary font-black tracking-tighter text-xl font-mono shadow-[0_0_10px_var(--neon-green)]">CC // ARTIFEX</span>
+            <span className="text-primary font-black tracking-tighter text-xl font-mono" style={{ textShadow: '0 0 10px var(--neon-green)' }}>CC // ARTIFEX</span>
             <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.0</span>
           </div>
-          <div className="hidden md:flex gap-10 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
-            <a href="#lab-update" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Lab Update</a>
           <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
+            <a href="#lab-update" className="text-primary/70 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Lab</a>
             <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
             <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
-            <a href="#affective" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Affective</a>
-            <a href="#fingerprint" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">FP Audit</a>
-            <a href="#keystroke" className="text-primary hover:text-white transition-all duration-300 border-b border-primary/20 pb-0.5">Keystroke</a>
+            <a href="#affective" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Affective</a>
+            <a href="#fingerprint" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">FP Audit</a>
+            <a href="#keystroke" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Keystroke</a>
             <a href="#threatfeed" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Feed</a>
-            <a href="#demo" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Canary</a>
-            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-6 py-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)]">Source</a>
+            <a href="#demo" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Demo</a>
+            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-5 py-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">Source</a>
           </div>
         </div>
       </nav>
@@ -59,7 +58,7 @@ const Index = () => {
               Case Studies: 2026-2030 Evolution
             </div>
             <h2 className="text-7xl font-black font-mono tracking-tighter text-white uppercase italic leading-none">
-              LAB BENCH <span className="text-primary not-italic block mt-4 shadow-[0_0_30px_rgba(0,255,65,0.2)]">EXHIBITS</span>
+              LAB BENCH <span className="text-primary not-italic block mt-4" style={{ textShadow: '0 0 30px rgba(0,255,65,0.2)' }}>EXHIBITS</span>
             </h2>
             <p className="mt-8 text-[11px] font-mono text-white/40 max-w-xl mx-auto uppercase tracking-[0.2em] leading-relaxed">
               Deconstructing the mathematical scaffolding of the next-generation <span className="text-white italic">Affective Economy</span>.
