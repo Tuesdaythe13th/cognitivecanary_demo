@@ -1,6 +1,7 @@
 import { useInView } from '@/hooks/useInView';
 
 const navLinks = [
+  { label: 'About', href: '#about' },
   { label: 'Lab Update', href: '#lab-update' },
   { label: 'Threats', href: '#problem' },
   { label: 'Engines', href: '#engines' },

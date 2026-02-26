@@ -21,6 +21,16 @@ const metrics: Metric[] = [
   { label: 'Active Obfuscation Engines', value: 5, suffix: '', category: 'System' },
 ];
 
+const classifierResults = [
+  { name: 'Random Forest', baseline: 93.2, withCanary: 12.1, bypass: 87.0 },
+  { name: 'SVM (RBF kernel)', baseline: 89.7, withCanary: 15.3, bypass: 82.9 },
+  { name: 'LSTM', baseline: 91.4, withCanary: 8.7, bypass: 90.5 },
+  { name: '1D-CNN', baseline: 94.8, withCanary: 11.2, bypass: 88.2 },
+  { name: 'Gradient Boosting', baseline: 92.1, withCanary: 13.8, bypass: 85.0 },
+  { name: 'Neural ODE', baseline: 95.3, withCanary: 9.4, bypass: 90.1 },
+  { name: 'Transformer', baseline: 96.1, withCanary: 7.8, bypass: 91.9 },
+];
+
 const CATEGORY_COLORS: Record<string, string> = {
   Evasion: 'hsl(142, 71%, 45%)',
   Defense: 'hsl(175, 60%, 45%)',
@@ -140,6 +150,69 @@ const Results = () => {
               <AnimatedCounter value={m.value} suffix={m.suffix} prefix={m.prefix} isInView={isInView} delay={i * 80} />
               <p className="text-body text-muted-foreground mt-2 text-xs leading-relaxed">{m.label}</p>
               <ProgressBar value={m.value} prev={m.prev} isInView={isInView} delay={i * 80 + 400} />
+            </div>
+          ))}
+        </div>
+
+        {/* Classifier Comparison Table */}
+        <div className={`mt-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '400ms' }}>
+          <h3 className="text-mono text-[10px] text-primary/60 uppercase tracking-[0.4em] mb-4">
+            Performance Against State-of-the-Art Classifiers
+          </h3>
+          <div className="glass-panel overflow-hidden border-white/5">
+            <div className="overflow-x-auto">
+              <table className="w-full text-[10px] font-mono border-collapse">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/[0.02]">
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Classifier</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Baseline</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">With Canary</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Bypass Rate</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/50">
+                  {classifierResults.map((c, i) => (
+                    <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                      <td className="p-3 text-foreground font-bold">{c.name}</td>
+                      <td className="p-3" style={{ color: 'hsla(0, 75%, 60%, 0.8)' }}>{c.baseline}%</td>
+                      <td className="p-3 text-primary">{c.withCanary}%</td>
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-16 h-1 bg-white/5 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-primary"
+                              style={{ width: `${c.bypass}%`, boxShadow: '0 0 4px hsla(142,71%,50%,0.4)' }}
+                            />
+                          </div>
+                          <span className="text-primary">{c.bypass}%</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  <tr className="border-t border-primary/20 bg-primary/5">
+                    <td className="p-3 text-primary font-black">Average</td>
+                    <td className="p-3 text-white/60 font-bold">93.2%</td>
+                    <td className="p-3 text-primary font-bold">11.2%</td>
+                    <td className="p-3 text-primary font-bold">88.0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* Usability Metrics */}
+        <div className={`mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '500ms' }}>
+          {[
+            { label: "Fitts's Law Impact", value: 'p > 0.05', sub: 'No significant increase' },
+            { label: 'Task Completion', value: '+2.3%', sub: 'Average time increase' },
+            { label: 'User Satisfaction', value: '8.7/10', sub: 'Friction score' },
+            { label: 'False Positive Rate', value: '0.3%', sub: 'Bot misclassification' },
+          ].map((u, i) => (
+            <div key={i} className="glass-panel p-4 border-white/5 text-center">
+              <div className="text-lg font-mono font-black text-primary">{u.value}</div>
+              <div className="text-[9px] font-mono text-foreground/60 mt-1 uppercase tracking-wider">{u.label}</div>
+              <div className="text-[8px] font-mono text-white/20 mt-0.5 uppercase">{u.sub}</div>
             </div>
           ))}
         </div>
