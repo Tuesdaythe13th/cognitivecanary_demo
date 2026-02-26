@@ -258,11 +258,11 @@ const drawAuditor = (ctx: CanvasRenderingContext2D, w: number, h: number, t: num
 };
 
 const engines: Engine[] = [
-  { name: 'Lissajous 3D Engine', tag: 'lissajous_3d.py', desc: 'Generates adversarial cursor paths using toroidal Lissajous curves with coprime frequency ratios (13:8:5). Z-axis discretized into scroll/zoom events.', draw: drawLissajous },
-  { name: 'Adaptive Tremor', tag: 'adaptive_tremor.py', desc: 'Learns your physiological tremor profile (4-12 Hz), then phase-locks synthetic tremor injection to mask your real motor signature.', draw: drawTremor },
-  { name: 'Keystroke Jitter', tag: 'keystroke_jitter.py', desc: 'Injects pink noise into dwell times, flight times, and typing pressure. Defeats TypingDNA-class biometric systems.', draw: drawKeystroke },
-  { name: 'Spectral Defender', tag: 'spectral_canary.py', desc: 'Targets alpha (8-13 Hz) and theta (4-8 Hz) EEG bands with adversarial oscillations. Blocks neural state inference from BCI devices.', draw: drawSpectral },
-  { name: 'Gradient Auditor', tag: 'gradient_auditor.py', desc: 'Monitors feature vectors and gradient updates for anomalous patterns. Detects ML poisoning and fingerprinting attacks in real-time.', draw: drawAuditor },
+  { name: 'Lissajous 3D Engine', tag: 'lissajous_3d.py', desc: 'Toroidal Lissajous curves with coprime ratios (13:8:5). Z-axis discretized into scroll/zoom events. Non-repeating trajectories mask true intent vectors via x(t) = A·sin(ωₓt + δ), y(t) = B·sin(ωᵧt).', draw: drawLissajous },
+  { name: 'Adaptive Tremor', tag: 'adaptive_tremor.py', desc: 'Learns your physiological tremor profile (4-12 Hz), then phase-locks synthetic injection to create a statistical null space where authentic neuromotor patterns become unrecoverable.', draw: drawTremor },
+  { name: 'Keystroke Jitter', tag: 'keystroke_jitter.py', desc: 'Pink noise (S(f) ∝ 1/f^α) injection into dwell/flight times maintains human-like autocorrelation while destroying inter-keystroke interval signatures used by TypingDNA-class systems.', draw: drawKeystroke },
+  { name: 'Spectral Defender', tag: 'spectral_canary.py', desc: 'Injects counter-phase oscillations in alpha (8-13 Hz) and theta (4-8 Hz) bands, creating destructive interference that collapses power spectral density features used for cognitive state classification from BCIs.', draw: drawSpectral },
+  { name: 'Gradient Auditor', tag: 'gradient_auditor.py', desc: 'Detects gradient rank collapse, feature importance inversion, loss landscape discontinuities, and spectral norm explosions — real-time ML poisoning and fingerprinting attack detection.', draw: drawAuditor },
 ];
 
 const EngineCard = ({ engine, index, isInView }: { engine: Engine; index: number; isInView: boolean }) => {

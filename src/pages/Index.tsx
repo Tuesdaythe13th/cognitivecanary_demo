@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import AboutSection from '@/components/AboutSection';
 import LabProgressUpdate from '@/components/LabProgressUpdate';
 import ProblemSection from '@/components/ProblemSection';
 import ImportanceSection from '@/components/ImportanceSection';
@@ -30,6 +31,7 @@ const Index = () => {
             <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.0</span>
           </div>
           <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
+            <a href="#about" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">About</a>
             <a href="#lab-update" className="text-primary/70 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Lab</a>
             <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
             <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
@@ -45,6 +47,7 @@ const Index = () => {
 
       <main className="relative">
         <Hero />
+        <AboutSection />
         <LabProgressUpdate />
         <ProblemSection />
         <ImportanceSection />
