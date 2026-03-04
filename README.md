@@ -12,7 +12,7 @@
 ██║     ██╔══██║██║╚██╗██║██╔══██║██╔══██╗  ╚██╔╝
 ╚██████╗██║  ██║██║ ╚████║██║  ██║██║  ██║   ██║
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
-                                            v6.0 // ARTIFEX LABS
+                                            v6.2 // ARTIFEX LABS
 ```
 
 <div align="center">
@@ -70,7 +70,7 @@ Without Canary:  Classifier accuracy  ≥ 90%    → identity confirmed
 
 ---
 
-## Five Defense Engines
+## Seven Defense Engines
 
 ### `01` Lissajous 3D Harmonic Overlay
 
@@ -98,6 +98,72 @@ Targets the alpha (8–13 Hz) and theta (4–8 Hz) EEG-proxy bands that CSS anim
 ### `05` Gradient Auditor
 
 Real-time detection of ML poisoning and fingerprinting attacks via **dynamic temporal gradient monitoring**. When a classifier attempts to reconstruct a behavioral profile, the auditor detects the characteristic gradient signature and activates countermeasures.
+
+### `06` EEG Shield — `eeg_shield.py` *(v6.2)*
+
+Consumer EEG / hearable surveillance defense tool. Three-layer protection architecture:
+
+- **Layer 1 — Signal Obfuscation**: Adaptive Gaussian smoothing + temporal warping destroys N200/P300/ERN latency fingerprints while preserving clinically useful signal amplitude.
+- **Layer 2 — Differential Privacy**: Per-band Laplace mechanism (configurable ε) adds calibrated noise independently to theta (4–8 Hz), alpha (8–13 Hz), beta (13–30 Hz), and gamma (30–45 Hz) bands. Inter-band coherence — a key biometric feature — is disrupted without making the signal useless.
+- **Layer 3 — Adversarial Injection**: FGSM-style perturbations tuned for EEG fingerprinting attack surfaces. Imperceptible at the waveform level (<0.3 µV RMS added) but maximally disrupts neural fingerprinting CNNs trained on DEAP/SEED/BCI-Competition IV.
+
+```python
+from engines.eeg_shield import EEGShield, ShieldConfig
+
+cfg    = ShieldConfig(epsilon=0.8, adversarial_strength=0.25, mode="balanced")
+shield = EEGShield(cfg)
+clean  = shield.protect(raw_frame)   # shape (channels, samples)
+print(shield.reid_similarity)        # 0.0 = fully anonymous
+```
+
+**Supported modes**: `passive` · `stealth` · `balanced` · `maximum`
+
+### `07` Neuro Audit — `neuro_audit.py` *(v6.2)*
+
+Multi-jurisdiction neurorights compliance audit engine. Checks products against:
+
+| Jurisdiction | Instrument |
+|---|---|
+| EU | EU AI Act (2024/1689) + GDPR Art. 9 |
+| Chile | Constitutional Neurorights Amendment (2021) |
+| Colorado | AI Act SB 24-205 (effective 2026) |
+| California | AB 1836 / SB 1223 (2024) |
+| New York | Int. 1306-A (2025) |
+| International | UNESCO AI Ethics Recommendation (2021, updated 2024) |
+
+Each finding carries a `severity` (COMPLIANT / LOW / MODERATE / HIGH / CRITICAL), `blocked` flag, remediation guidance, and legislative citation. The overall risk score is the worst-case per-jurisdiction aggregate.
+
+```python
+from engines.neuro_audit import quick_audit, DataCategory
+
+report = quick_audit(
+    product_name  = "NeuralBand Pro",
+    jurisdictions = ["EU", "Chile", "Colorado"],
+    data          = [DataCategory.EEG_RAW, DataCategory.NEURAL_FINGERPRINT],
+    has_explicit_consent        = True,
+    sells_data_to_third_parties = False,
+)
+print(report.summary())
+```
+
+---
+
+## Neurorights Whitepaper
+
+`public/neurorights-2026.html` — **Neurorights & Cognitive Privacy in 2026** *(Cognitive Security Edition, March 2026)*
+
+Eight-section whitepaper covering the consumer neurotechnology landscape, legal frameworks, neurobiometric threats, and the CognitiveCanary defense stack. Section 07 — **Cognitive Security & Attack Surfaces** — documents:
+
+- Neural data in transit (BLE MITM, RF injection, adversarial ML binary poisoning)
+- Reinforcement & behavioral conditioning (reward pathway hijacking, sub-second engagement loops)
+- Synthetic conversational persuasion (adversarial LLMs, cognitive vulnerability profiling)
+- Neurophysiology exploitation (sensory saturation, tDCS/TMS/tFUS, subliminal priming)
+- Neuromodulation hijack (DBS/MICS-band SDR replay, covert tFUS)
+- Landmark research: MIT "Your Brain on ChatGPT" (arXiv:2506.08872) · Meta Brain2Qwerty (arXiv:2502.17480)
+- Device landscape (Neuralink, Meta Ray-Ban, Google Glass/Android XR, Synchron)
+- Neurobiometrics panel (irrevocability, P300/ERN capture, NeuralMask™ defense)
+
+Three live canvas demos embedded in the whitepaper: Neural MITM Interceptor · EEG Neural Fingerprint Shield · Reward Loop Amplification Detector.
 
 ---
 
@@ -286,6 +352,7 @@ npm run build
 |---|---|---|
 | `v5.0` | Core Lissajous + Tremor engines | ✅ Complete |
 | `v6.0` | 3D Lissajous, Gradient Auditor, Browser FP Audit, Keystroke Analyzer, Threat Feed | ✅ Complete |
+| `v6.2` | EEG Shield, Neuro Audit, Neurorights Whitepaper, 8 Interactive Demos | ✅ Complete |
 | `v7.0` | OS-level driver integration, WebExtension | 🔵 Research |
 | `v8.0` | Neural Canary for BCI edge processing | 🔵 Research |
 | `v9.0` | Zero-knowledge behavioral attestation | 🔵 Research |
@@ -314,7 +381,7 @@ npm run build
 <div align="center">
 
 ```
-[ARTIFEX LABS] // COGNITIVE CANARY v6.0 // d/acc // ACTIVE DEFENSE
+[ARTIFEX LABS] // COGNITIVE CANARY v6.2 // d/acc // ACTIVE DEFENSE
 The mental interior remains our own.
 ```
 

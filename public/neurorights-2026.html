@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurorights &amp; Cognitive Privacy in 2026 | ARTIFEX NEUROLABS</title>
+  <meta name="description" content="Neurorights &amp; Cognitive Privacy in 2026 — Cognitive Security Edition. A whitepaper by ARTIFEX NEUROLABS." />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --neon: #00ff41;
+      --neon-dim: rgba(0,255,65,0.18);
+      --bg: #050505;
+      --surface: rgba(255,255,255,0.035);
+      --border: rgba(255,255,255,0.08);
+      --muted: rgba(255,255,255,0.38);
+      --text: rgba(255,255,255,0.88);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Satoshi', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(5,5,5,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Clash Display', monospace;
+      font-size: 14px; letter-spacing: .15em; color: var(--neon);
+      text-shadow: 0 0 12px var(--neon);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--neon); }
+    .nav-badge {
+      font-size: 9px; background: var(--neon); color: #000;
+      padding: 2px 8px; font-weight: 900; letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* ── Layout ── */
+    .page { max-width: 820px; margin: 0 auto; padding: 140px 32px 80px; }
+    .wide  { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── Hero ── */
+    .hero { padding: 80px 0 60px; border-bottom: 1px solid var(--border); }
+    .hero-label {
+      font-size: 10px; letter-spacing: .5em; text-transform: uppercase;
+      color: var(--neon); border: 1px solid rgba(0,255,65,.25);
+      display: inline-block; padding: 4px 14px; margin-bottom: 28px;
+      background: rgba(0,255,65,.04);
+    }
+    .hero h1 {
+      font-family: 'Clash Display', monospace;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.05; letter-spacing: -.02em;
+      color: #fff; margin-bottom: 24px;
+    }
+    .hero h1 em { color: var(--neon); font-style: normal; }
+    .hero-meta {
+      display: flex; gap: 40px; flex-wrap: wrap;
+      font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 28px;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon);
+           box-shadow: 0 0 8px var(--neon); }
+
+    /* ── TOC ── */
+    .toc {
+      margin: 48px 0;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 32px;
+    }
+    .toc-title {
+      font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 20px;
+    }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      transition: color .2s;
+    }
+    .toc a:hover { color: var(--text); }
+
+    /* ── Sections ── */
+    .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+    .section-number {
+      font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 10px;
+    }
+    .section h2 {
+      font-family: 'Clash Display', monospace;
+      font-size: clamp(24px, 4vw, 40px);
+      letter-spacing: -.01em; color: #fff; margin-bottom: 24px; line-height: 1.15;
+    }
+    .section h3 {
+      font-size: 15px; font-weight: 700; color: #fff;
+      margin: 32px 0 12px; letter-spacing: .02em;
+    }
+    .section h4 {
+      font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--neon); margin: 24px 0 10px;
+    }
+    .section p { color: var(--muted); margin-bottom: 16px; }
+    .section p strong { color: var(--text); }
+    .section ul, .section ol { padding-left: 24px; margin-bottom: 16px; color: var(--muted); }
+    .section li { margin-bottom: 6px; }
+
+    /* ── Cards ── */
+    .cs-cards, .paper-cards, .dc-cards, .nbio-items {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px; margin: 28px 0;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 24px; transition: border-color .3s, box-shadow .3s;
+    }
+    .card:hover {
+      border-color: rgba(0,255,65,.3);
+      box-shadow: 0 0 24px rgba(0,255,65,.06);
+    }
+    .card-icon { font-size: 24px; margin-bottom: 12px; }
+    .card-tag {
+      font-size: 9px; letter-spacing: .4em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 8px; display: block;
+    }
+    .card h3 { font-size: 14px; color: #fff; margin-bottom: 8px; }
+    .card p { font-size: 12px; color: var(--muted); margin: 0; }
+
+    /* ── Threat card (Section 07) ── */
+    .threat-card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.07);
+      border-left: 3px solid var(--neon);
+      padding: 20px 24px; margin: 16px 0;
+      transition: border-color .3s;
+    }
+    .threat-card:hover { border-left-color: #fff; }
+    .threat-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .threat-body { font-size: 12px; color: var(--muted); }
+    .threat-badge {
+      display: inline-block; font-size: 9px; letter-spacing: .3em;
+      text-transform: uppercase; padding: 2px 8px; margin-bottom: 8px;
+      border: 1px solid;
+    }
+    .badge-critical { border-color: #ff4444; color: #ff4444; background: rgba(255,68,68,.08); }
+    .badge-high     { border-color: #ff8800; color: #ff8800; background: rgba(255,136,0,.08); }
+    .badge-moderate { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+
+    /* ── Research callout ── */
+    .research-callout {
+      background: rgba(0,255,65,.04);
+      border: 1px solid rgba(0,255,65,.2);
+      padding: 24px 28px; margin: 24px 0;
+    }
+    .research-callout .rc-label {
+      font-size: 9px; letter-spacing: .4em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 10px; display: block;
+    }
+    .research-callout h4 { font-size: 14px; color: #fff; margin-bottom: 8px; }
+    .research-callout p  { font-size: 12px; color: var(--muted); margin: 0; }
+    .research-callout a  { color: var(--neon); }
+
+    /* ── Neurobiometrics panel ── */
+    .nbio-panel {
+      background: var(--surface); border: 1px solid rgba(0,255,65,.2);
+      padding: 32px; margin: 32px 0;
+      animation: pulse-glow 3.5s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 rgba(0,255,65,0); }
+      50%       { box-shadow: 0 0 40px rgba(0,255,65,.12); }
+    }
+    .nbio-items { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+
+    /* ── Device landscape ── */
+    .device-axis {
+      display: flex; align-items: center; margin: 32px 0;
+      font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .device-axis .axis-line {
+      flex: 1; height: 1px; background: linear-gradient(90deg,
+        rgba(0,255,65,.5), rgba(0,255,65,.1));
+      margin: 0 16px;
+    }
+    .device-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0;
+    }
+    .device-node {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 16px; text-align: center;
+    }
+    .device-node .dn-name { font-size: 12px; color: #fff; font-weight: 700; }
+    .device-node .dn-sub  { font-size: 10px; color: var(--muted); }
+    .device-node .dn-inv  { font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+                             color: var(--neon); margin-top: 6px; }
+
+    /* ── Canvas demos ── */
+    .demo-box {
+      background: #000; border: 1px solid var(--border);
+      margin: 24px 0; padding: 16px;
+    }
+    .demo-box canvas { width: 100%; display: block; }
+    .demo-label {
+      font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 12px;
+    }
+    .demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ── References ── */
+    .ref-list { counter-reset: refs; }
+    .ref-item {
+      counter-increment: refs;
+      display: grid; grid-template-columns: 32px 1fr;
+      gap: 12px; margin-bottom: 16px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border); font-size: 12px;
+    }
+    .ref-item::before {
+      content: '[' counter(refs) ']';
+      color: var(--neon); font-family: monospace; font-size: 11px;
+      padding-top: 2px;
+    }
+    .ref-item a { color: var(--neon); }
+    .ref-item .ref-authors { color: var(--muted); display: block; margin-top: 4px; }
+
+    /* ── Stagger animations ── */
+    .cs-cards .card, .paper-cards .card, .dc-cards .card, .nbio-items .card {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .in-view .cs-cards .card, .in-view .paper-cards .card,
+    .in-view .dc-cards .card, .in-view .nbio-items .card {
+      opacity: 1; transform: translateY(0);
+    }
+    .cs-cards .card:nth-child(1), .paper-cards .card:nth-child(1),
+    .dc-cards .card:nth-child(1), .nbio-items .card:nth-child(1)  { transition-delay: 0ms; }
+    .cs-cards .card:nth-child(2), .paper-cards .card:nth-child(2),
+    .dc-cards .card:nth-child(2), .nbio-items .card:nth-child(2)  { transition-delay: 80ms; }
+    .cs-cards .card:nth-child(3), .paper-cards .card:nth-child(3),
+    .dc-cards .card:nth-child(3), .nbio-items .card:nth-child(3)  { transition-delay: 160ms; }
+    .cs-cards .card:nth-child(4), .paper-cards .card:nth-child(4),
+    .dc-cards .card:nth-child(4), .nbio-items .card:nth-child(4)  { transition-delay: 240ms; }
+    .cs-cards .card:nth-child(5), .nbio-items .card:nth-child(5)  { transition-delay: 320ms; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+      text-align: center;
+      font-size: 11px; color: var(--muted); letter-spacing: .15em;
+    }
+    footer a { color: var(--neon); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .demo-pair { grid-template-columns: 1fr; }
+      .device-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a class="nav-brand" href="/">CC // ARTIFEX</a>
+  <div class="nav-links">
+    <a href="#landscape">Landscape</a>
+    <a href="#legal">Legal</a>
+    <a href="#risks">Risks</a>
+    <a href="#neurobiometrics">Neurobiometrics</a>
+    <a href="#s07">Sec 07</a>
+    <a href="#defense">Defense</a>
+    <a href="#references">References</a>
+  </div>
+  <span class="nav-badge">Cognitive Security Edition · March 2026</span>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="page">
+  <div class="hero">
+    <div class="hero-label">Research Whitepaper · v6.2</div>
+    <h1>Neurorights &amp; Cognitive Privacy<br><em>in 2026</em></h1>
+    <p style="color:var(--muted);max-width:600px;font-size:15px;">
+      A comprehensive survey of consumer neurotechnology attack surfaces, emerging
+      legal frameworks, neurobiometric threats, and the defensive tools developed
+      under the CognitiveCanary project to protect cognitive sovereignty.
+    </p>
+    <div class="hero-meta">
+      <span><span class="dot"></span>ARTIFEX NEUROLABS</span>
+      <span><span class="dot"></span>MARCH 4, 2026</span>
+      <span><span class="dot"></span>Cognitive Security Edition</span>
+      <span><span class="dot"></span>8 Sections · 8 References</span>
+    </div>
+  </div>
+
+  <!-- ── Table of Contents ── -->
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#landscape">01 — Consumer Neurotechnology Landscape</a></li>
+      <li><a href="#legal">02 — Legal &amp; Regulatory Frameworks</a></li>
+      <li><a href="#risks">03 — Key Risks &amp; Threat Model</a></li>
+      <li><a href="#neurobiometrics">04 — Neurobiometrics</a></li>
+      <li><a href="#defense">05 — Defensive Tools</a></li>
+      <li><a href="#compliance">06 — Compliance Architecture</a></li>
+      <li><a href="#s07">07 — Cognitive Security &amp; Attack Surfaces</a></li>
+      <li><a href="#references">08 — References</a></li>
+    </ol>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 01 ─────────────────────────── -->
+  <div id="landscape" class="section">
+    <div class="section-number">Section 01</div>
+    <h2>Consumer Neurotechnology Landscape</h2>
+    <p>
+      The 2020s saw consumer brain-computer interface technology transition from laboratory
+      curiosity to mass-market product. By 2026, an estimated <strong>85 million</strong>
+      consumer EEG, ERP-capable hearable, and neural-adjacent wearable devices are active
+      globally — a 12× increase from 2020.
+    </p>
+    <p>
+      The dominant device categories span an invasive spectrum from surgically implanted
+      electrode arrays to purely passive acoustic monitors:
+    </p>
+    <div class="cs-cards">
+      <div class="card">
+        <span class="card-icon">🧠</span>
+        <span class="card-tag">Implanted</span>
+        <h3>Cortical Arrays</h3>
+        <p>Neuralink N1, Synchron Stentrode. Sub-millimetre electrode density; continuous
+           broadband neural recording. Highest fidelity, highest risk surface.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎧</span>
+        <span class="card-tag">Non-invasive wearable</span>
+        <h3>Smart Hearables</h3>
+        <p>Meta Ray-Ban Gen 4, Apple AirPods Pro (neural mode). In-ear EEG electrodes
+           targeting alpha / theta via meatal contact. Sold as focus / wellbeing tools.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">👓</span>
+        <span class="card-tag">Optical + EEG hybrid</span>
+        <h3>AR Glasses</h3>
+        <p>Google Glass XR / Android XR generation. Temple-contact dry electrodes,
+           eye-tracking, micro-expression video. Fused neural signal.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⌚</span>
+        <span class="card-tag">Peripheral biomarker</span>
+        <h3>Cognitive Wearables</h3>
+        <p>Oura Ring 4, Samsung Galaxy Ring. HRV, GSR, sleep-stage classification.
+           Indirect cognitive-state proxies via autonomic nervous system.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔬</span>
+        <span class="card-tag">Consumer EEG headset</span>
+        <h3>Dry-Electrode Headbands</h3>
+        <p>Neurosity Crown 3, Muse S Gen 3. 8–16 channels, 256 Hz. Consumer-grade
+           but sufficient for reliable P300 / ERN biometric extraction.</p>
+      </div>
+    </div>
+    <p>
+      The commercial opportunity in neural data is substantial: McKinsey estimates the
+      neurotechnology market will exceed <strong>$400 billion</strong> by 2030, with the
+      largest revenue streams coming from cognitive advertising, productivity analytics,
+      and insurance risk modelling — all categories that directly incentivise the
+      exploitation of intimate neural signals.
+    </p>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 02 ─────────────────────────── -->
+  <div id="legal" class="section">
+    <div class="section-number">Section 02</div>
+    <h2>Legal &amp; Regulatory Frameworks</h2>
+    <p>
+      The regulatory environment for neural data remains fragmented, with protections
+      ranging from constitutional (Chile) to sector-specific statute (Colorado, California)
+      to comprehensive AI governance (EU AI Act).
+    </p>
+
+    <h3>Chilean Neurorights Constitutional Amendment (2021)</h3>
+    <p>
+      The world's first constitutional neurorights framework. Article 19 §1 was amended
+      to protect five rights: <strong>mental privacy</strong>, <strong>cognitive liberty</strong>,
+      <strong>mental integrity</strong>, <strong>psychological continuity</strong>, and
+      <strong>equal cognitive access</strong>. Any commercial reading or manipulation of
+      neural signals without explicit consent is unconstitutional.
+    </p>
+
+    <h3>EU AI Act — Neurorights Provisions (2024–2025)</h3>
+    <p>
+      Regulation (EU) 2024/1689 classifies systems that infer emotions, psychological states,
+      or perform real-time biometric identification as <em>high-risk</em> (Annex III) or
+      <em>prohibited</em> (Art. 5). The proposed Oviedo Protocol extension (2025 draft) adds
+      explicit neural-data protections equivalent to genetic data under GDPR Art. 9.
+    </p>
+
+    <h3>Colorado AI Act — SB 24-205 (effective 2026)</h3>
+    <p>
+      Treats neurotechnology used in consequential decisions (hiring, insurance, credit,
+      healthcare triage) as high-risk AI. Developers must publish annual algorithmic impact
+      assessments; deployers must provide opt-out and human-review pathways.
+    </p>
+
+    <div class="paper-cards">
+      <div class="card">
+        <span class="card-tag">California</span>
+        <h3>AB 1836 / SB 1223 (2024)</h3>
+        <p>Classifies neural data as sensitive personal information under CCPA.
+           Prohibits use for targeted advertising. Requires opt-in consent.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">New York</span>
+        <h3>Int. 1306-A (2025)</h3>
+        <p>Prohibits commercial sale of neural interface data without explicit
+           per-individual informed consent.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">International</span>
+        <h3>UNESCO AI Ethics (2024 Update)</h3>
+        <p>Updated Recommendation includes neurobiometric data under binding
+           guidance for member states; data minimisation and purpose limitation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 03 ─────────────────────────── -->
+  <div id="risks" class="section">
+    <div class="section-number">Section 03</div>
+    <h2>Key Risks &amp; Threat Model</h2>
+    <p>
+      Consumer neurotechnology introduces a threat landscape unlike any prior generation
+      of personal devices. The signals are <em>irrevocable</em> (you cannot change your
+      ERP latency), <em>involuntary</em> (neural responses occur below conscious control),
+      and <em>inference-rich</em> (raw EEG encodes far more than the user intends to share).
+    </p>
+
+    <h4>Primary Risk Vectors</h4>
+    <div class="dc-cards">
+      <div class="card">
+        <span class="card-tag">Identity</span>
+        <h3>Neural Fingerprinting</h3>
+        <p>P300 / N200 / ERN latency patterns constitute a biometric as unique as
+           a fingerprint — and cannot be revoked if leaked.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Inference</span>
+        <h3>Covert Cognitive Profiling</h3>
+        <p>Emotion, political preference, religious belief, sexual orientation, and
+           health status can be inferred from raw EEG without explicit disclosure.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Manipulation</span>
+        <h3>Closed-Loop Influence</h3>
+        <p>Real-time neural feedback enables sub-second content adaptation targeting
+           individual reward and attention pathways.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Infrastructure</span>
+        <h3>Neural Data Exfiltration</h3>
+        <p>SDK caches, BLE sniffing, and cloud sync pipelines create exfiltration
+           surfaces for retroactive neural profiling.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 04 ─────────────────────────── -->
+  <div id="neurobiometrics" class="section">
+    <div class="section-number">Section 04</div>
+    <h2>Neurobiometrics</h2>
+    <p>
+      Neural biometrics are the most powerful — and most dangerous — identification
+      technology ever deployed at consumer scale. Unlike all prior biometrics, they
+      combine irrevocability with involuntary disclosure and inferential scope that
+      extends far beyond identity.
+    </p>
+
+    <div class="nbio-panel">
+      <h4 style="margin-top:0">Neurobiometric Risk Dimensions</h4>
+      <div class="nbio-items">
+        <div class="card">
+          <span class="card-tag">Irrevocable</span>
+          <h3>No Revocation Path</h3>
+          <p>ERP latency fingerprints are stable across decades. A leaked neural
+             biometric cannot be replaced like a password or key.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Cross-Platform</span>
+          <h3>Re-Identification</h3>
+          <p>Neural fingerprints extracted from one device (headset) can re-identify
+             the same user on a different platform (BCI, hearable) across years.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Involuntary</span>
+          <h3>Non-Consensual Disclosure</h3>
+          <p>P300 responses and ERN signatures are elicited by external stimuli below
+             conscious control — users cannot choose not to emit them.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Inference</span>
+          <h3>Beyond Identity</h3>
+          <p>Raw EEG encodes health, cognitive state, emotional valence, political
+             orientation, and deception markers not disclosed by the user.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Defense</span>
+          <h3>NeuralMask™</h3>
+          <p>CognitiveCanary's EEGShield layer injects adversarial perturbations that
+             preserve clinical utility while destroying biometric extractability.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 05 ─────────────────────────── -->
+  <div id="defense" class="section">
+    <div class="section-number">Section 05</div>
+    <h2>Defensive Tools</h2>
+    <p>
+      The CognitiveCanary project has produced seven open-source Python engines
+      addressing distinct neural-privacy attack surfaces. All are zero-dependency,
+      designed for integration into browser extensions, local proxies, and edge
+      device firmware.
+    </p>
+
+    <h3>Core Behavioral Engines (v6.0)</h3>
+    <div class="dc-cards">
+      <div class="card">
+        <span class="card-tag">lissajous_3d.py</span>
+        <h3>Lissajous 3D Engine</h3>
+        <p>Parametric x(t)=A·sin(13τ+δ), y(t)=A·sin(8τ), z(t)=A·sin(5τ+φ).
+           DFT-based spectral entropy. Infinite stream generator.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">adaptive_tremor.py</span>
+        <h3>Adaptive Tremor Engine</h3>
+        <p>Calibrates from raw cursor samples via zero-crossing analysis, injects
+           fundamental + 2nd + 3rd harmonics phase-locked to measured profile.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">keystroke_jitter.py</span>
+        <h3>Keystroke Jitter Engine</h3>
+        <p>Voss–McCartney pink noise drives adaptive dwell/flight time shifts.
+           EWMA ProfileLearner adjusts jitter to identifiability score.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">spectral_canary.py</span>
+        <h3>Spectral Canary Engine</h3>
+        <p>Goertzel O(N) algorithm estimates EEG-proxy power at theta (6 Hz) and
+           alpha (10.5 Hz). AdversarialOscillator injects Hann-windowed sine waves.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">gradient_auditor.py</span>
+        <h3>Gradient Auditor</h3>
+        <p>Six detection rules: low spectral entropy, uniform keystroke CV, hi-res
+           timer probe, rAF drift, gradient starvation, canvas/WebGL hash sequences.</p>
+      </div>
+    </div>
+
+    <h3>Neural Privacy Engines (v6.2 — New)</h3>
+    <div class="dc-cards">
+      <div class="card" style="border-color:rgba(0,255,65,.3);">
+        <span class="card-tag" style="color:#fff;background:var(--neon);padding:2px 8px;">NEW · eeg_shield.py</span>
+        <h3 style="margin-top:10px;">EEG Shield</h3>
+        <p>3-layer protection: <strong>signal obfuscation</strong> (adaptive Gaussian +
+           temporal warp), <strong>differential privacy</strong> (per-band Laplace
+           mechanism, ε-configurable), and <strong>adversarial FGSM injection</strong>
+           (&lt;0.3 µV RMS added). Defends against neural fingerprinting and
+           re-identification attacks.</p>
+      </div>
+      <div class="card" style="border-color:rgba(0,255,65,.3);">
+        <span class="card-tag" style="color:#fff;background:var(--neon);padding:2px 8px;">NEW · neuro_audit.py</span>
+        <h3 style="margin-top:10px;">Neuro Audit</h3>
+        <p>Multi-jurisdiction compliance engine checking <strong>EU AI Act</strong>,
+           <strong>Colorado SB 24-205</strong>, <strong>Chilean Neurorights Amendment</strong>,
+           <strong>California SB 1223</strong>, <strong>New York Int. 1306-A</strong>, and
+           <strong>UNESCO AI Ethics</strong>. Returns risk scores, blocked flags, and
+           remediation guidance per jurisdiction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 06 ─────────────────────────── -->
+  <div id="compliance" class="section">
+    <div class="section-number">Section 06</div>
+    <h2>Compliance Architecture</h2>
+    <p>
+      Achieving multi-jurisdiction neurorights compliance requires a layered technical
+      and governance architecture that addresses consent, data minimisation, purpose
+      limitation, retention, and the right to deletion simultaneously.
+    </p>
+
+    <h4>Recommended Technical Safeguards</h4>
+    <div class="dc-cards">
+      <div class="card">
+        <span class="card-tag">Layer 1</span>
+        <h3>Signal-Level Controls</h3>
+        <p>Deploy EEGShield before any data leaves the sensor. Zero-knowledge
+           architecture ensures raw neural data never touches the cloud.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Layer 2</span>
+        <h3>Governance Controls</h3>
+        <p>Consent management platform, purpose-limitation enforcement,
+           automated retention schedules, deletion API.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Layer 3</span>
+        <h3>Audit &amp; Reporting</h3>
+        <p>Run <code>neuro_audit.py</code> against every product version before
+           release. Publish algorithmic impact reports annually.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────── SECTION 07 ─────────────────────────── -->
+  <div id="s07" class="section">
+    <div class="section-number">Section 07</div>
+    <h2>Cognitive Security &amp; Attack Surfaces</h2>
+    <p>
+      Beyond legal compliance and biometric privacy, consumer neurotechnology opens
+      an entirely new attack surface: the <em>cognitive security</em> domain, where
+      adversaries can probe, manipulate, and exploit the human nervous system itself
+      as an attack vector. This section enumerates the principal attack categories
+      identified in 2025–2026 research.
+    </p>
+
+    <!-- 7.1 -->
+    <h3 id="s7-1">7.1 — Neural Data in Transit</h3>
+    <p>
+      Consumer EEG devices transmit raw neural signals over BLE, Wi-Fi, and proprietary
+      RF protocols — largely without the end-to-end encryption mandated for comparable
+      medical devices.
+    </p>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-critical">CRITICAL</span>
+      <div class="threat-title">Device Pairing / BLE MITM — Key-Downgrade Attacks</div>
+      <div class="threat-body">
+        Bluetooth LE pairing is vulnerable to key-downgrade attacks (BLESA, BIAS variants)
+        that allow an attacker within RF range to intercept the full neural data stream
+        during or after pairing. Consumer EEG headsets rarely implement authenticated
+        key exchange; pairing typically relies on a proximity assumption that attackers
+        can trivially violate with directional antennas.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">RF Injection — False Cognitive State Injection via SDR</div>
+      <div class="threat-body">
+        Software-defined radio (SDR) equipment available for under $200 can replay or
+        synthesise BLE/ANT+ packets carrying counterfeit neural data payloads. When
+        injected into a closed-loop neurofeedback application, fabricated cognitive-state
+        signals can drive the application to deliver adversarial interventions (audio,
+        visual, or haptic) targeting the user's actual neural state.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">Adversarial ML Binary Poisoning — Edge Classifier Replacement</div>
+      <div class="threat-body">
+        Consumer EEG devices increasingly run on-device ML classifiers (TFLite, ONNX)
+        for real-time cognitive state inference. Firmware update mechanisms lacking
+        cryptographic signing allow attackers to replace these models with poisoned
+        versions that misclassify neutral states as actionable cognitive events,
+        generating fraudulent neurofeedback or enabling covert profiling.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-moderate">MODERATE</span>
+      <div class="threat-title">Persistence &amp; Storage — SDK Cache Leakage, Retroactive Profiling</div>
+      <div class="threat-body">
+        Manufacturer SDKs (and many third-party integrations) cache decoded cognitive
+        features and ERP timestamps in local SQLite databases and cloud sync queues
+        without expiry. These caches constitute a high-value retroactive profiling
+        surface: an attacker gaining later access to the device or cloud account can
+        reconstruct a longitudinal neural history extending years before the compromise.
+      </div>
+    </div>
+
+    <!-- Demo: Neural MITM Interceptor -->
+    <div class="demo-box">
+      <div class="demo-label">Demo 06 — Neural MITM Interceptor</div>
+      <canvas id="c-mitm" height="180"></canvas>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px;">
+        Simulated BLE packet flow. <span style="color:var(--neon);">Green</span> = legitimate
+        device packets. <span style="color:#ff4444;">Red</span> = attacker injection.
+        <span style="color:#fff;">White</span> = NeuralMask™ scrubbing layer active.
+      </p>
+    </div>
+
+    <!-- 7.2 -->
+    <h3 id="s7-2">7.2 — Reinforcement &amp; Behavioral Conditioning</h3>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-critical">CRITICAL</span>
+      <div class="threat-title">Reward Pathway Hijacking — Closed-Loop Dopamine Targeting</div>
+      <div class="threat-body">
+        Closed-loop neurofeedback systems that read EEG theta/alpha and modulate
+        audio/visual rewards in real time can, when adversarially tuned, target the
+        mesolimbic dopamine pathway directly. Reward delivery timed to endogenous
+        theta bursts amplifies compulsive engagement loops indistinguishable from
+        organic motivation — a precision addiction vector.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">Algorithmic Amplification — Sub-Second Neural Engagement Loops</div>
+      <div class="threat-body">
+        Recommendation algorithms fed real-time EEG engagement metrics can operate
+        on a sub-second feedback cycle — far faster than conscious awareness. This
+        creates an asymmetric adversarial surface: the algorithm knows the user's
+        engagement state before the user does, enabling content sequencing optimised
+        to maintain flow states that maximise session time at the cost of autonomy.
+      </div>
+    </div>
+
+    <!-- 7.3 -->
+    <h3 id="s7-3">7.3 — Synthetic Conversational Persuasion</h3>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">Adversarial LLMs &amp; PII Leakage via BCI-Integrated Assistants</div>
+      <div class="threat-body">
+        LLM-based assistants integrated with BCI data streams are vulnerable to prompt
+        injection attacks that cause the assistant to exfiltrate neural context
+        (cognitive state, ERP responses, attention patterns) to attacker-controlled
+        endpoints. The combination of language model reasoning and neural-state awareness
+        creates a manipulation surface with no historical precedent.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-critical">CRITICAL</span>
+      <div class="threat-title">Neural Adaptive Persuasion — Cognitive Vulnerability Profiling</div>
+      <div class="threat-body">
+        By combining longitudinal EEG data (attention, cognitive load, emotional arousal)
+        with ML models trained on persuasion research, adversarial systems can identify
+        individual <em>cognitive vulnerability windows</em> — moments when the target is
+        fatigued, emotionally activated, or in a low-resistance state — and time
+        persuasive interventions to coincide with maximum susceptibility.
+      </div>
+    </div>
+
+    <!-- Research callout: MIT -->
+    <div class="research-callout">
+      <span class="rc-label">Landmark Research · 2025</span>
+      <h4>Your Brain on ChatGPT — MIT Media Lab</h4>
+      <p>
+        Pataranutaporn et al. (2025) found that <strong>55% reduced neural connectivity</strong>
+        in regions associated with language processing and critical evaluation in users who
+        relied heavily on LLM assistance over 4 weeks. The authors term this
+        <em>"cognitive debt"</em> — a measurable neurophysiological cost of delegation to AI.
+      </p>
+      <p style="margin-top:8px;">
+        <a href="https://arxiv.org/abs/2506.08872" target="_blank" rel="noopener">
+          arXiv:2506.08872
+        </a> · MIT Media Lab, 2025
+      </p>
+    </div>
+
+    <!-- 7.4 -->
+    <h3 id="s7-4">7.4 — Neurophysiology Exploitation</h3>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">Sensory Saturation &amp; Attention Distortion — PFC Suppression</div>
+      <div class="threat-body">
+        Multi-channel sensory overload delivered via AR/XR headsets can suppress
+        prefrontal cortex activity, degrading executive function and increasing
+        susceptibility to suggestion. The mechanism — identified in tDCS desynchronisation
+        studies — can be replicated purely through carefully crafted audiovisual stimuli
+        at legal intensities.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-high">HIGH</span>
+      <div class="threat-title">Perception Modification via tDCS / TMS / Focused Ultrasound</div>
+      <div class="threat-body">
+        Transcranial direct current stimulation (tDCS), transcranial magnetic stimulation
+        (TMS), and transcranial focused ultrasound (tFUS) are commercially available and,
+        at sub-therapeutic intensities, can produce measurable changes in perception,
+        mood, and decision-making without triggering adverse-event reporting thresholds.
+        Consumer wellness devices increasingly incorporate these modalities without
+        adequate risk disclosure.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-moderate">MODERATE</span>
+      <div class="threat-title">Subliminal Priming — Sub-17ms Visual Frames, Acoustic Embedding, LTP</div>
+      <div class="threat-body">
+        Visual stimuli presented below the conscious perception threshold (&lt;17ms at
+        60 Hz displays, &lt;8ms at 120 Hz) can induce measurable changes in subsequent
+        decision-making via long-term potentiation (LTP) effects. Similarly, acoustic
+        content embedded in masking noise at sub-threshold intensities has been shown
+        to influence emotional valence. High-refresh-rate AR displays and spatial audio
+        systems create practical delivery vectors.
+      </div>
+    </div>
+
+    <!-- 7.5 -->
+    <h3 id="s7-5">7.5 — Neuromodulation Hijack</h3>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-critical">CRITICAL</span>
+      <div class="threat-title">Implanted Stimulator RF Attacks — DBS/MICS-Band SDR Replay/Injection</div>
+      <div class="threat-body">
+        Deep brain stimulation (DBS) and other implanted neural stimulators communicate
+        via the Medical Implant Communication Service (MICS) band (402–405 MHz).
+        Researchers have demonstrated that SDR equipment can replay recorded stimulation
+        sequences or inject novel patterns at ranges up to 3 meters, inducing involuntary
+        motor responses or disrupting therapeutic stimulation programs in implanted devices
+        lacking authenticated RF protocols. As of 2025, the majority of active implants
+        do not implement cryptographic authentication of stimulation commands.
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <span class="threat-badge badge-critical">CRITICAL</span>
+      <div class="threat-title">tFUS Covert Modulation — Non-Contact, Through-Wall, Below FDA Threshold</div>
+      <div class="threat-body">
+        Transcranial focused ultrasound at intensities below the FDA's 720 mW/cm² ISPTA
+        reporting threshold can produce localised cortical excitation or inhibition
+        non-invasively and, with phased-array transducers, through building materials
+        at ranges up to 2 metres. The acoustic penetration depth, spatial precision
+        (&lt;3mm), and below-threshold operation combine to create a covert neuromodulation
+        vector with no reliable detection method available at consumer scale.
+      </div>
+    </div>
+
+    <!-- 7.6 Landmark Research -->
+    <h3 id="s7-6">7.6 — Landmark Research</h3>
+
+    <div class="research-callout">
+      <span class="rc-label">Landmark Research · MIT Media Lab · 2025</span>
+      <h4>Your Brain on ChatGPT</h4>
+      <p>
+        55% reduction in neural connectivity in language and critical-evaluation regions
+        after 4 weeks of heavy LLM reliance. Introduces the concept of
+        <em>cognitive debt</em> as a measurable neurophysiological phenomenon.
+        Cross-validated via fMRI and high-density EEG.
+      </p>
+      <p style="margin-top:8px;">
+        <a href="https://arxiv.org/abs/2506.08872" target="_blank" rel="noopener">arXiv:2506.08872</a>
+        · Pataranutaporn et al., MIT Media Lab, 2025
+      </p>
+    </div>
+
+    <div class="research-callout">
+      <span class="rc-label">Landmark Research · Meta AI · 2025</span>
+      <h4>Brain-to-Text Decoding — Brain2Qwerty</h4>
+      <p>
+        Meta AI's Brain2Qwerty system achieves <strong>19% Character Error Rate (CER)</strong>
+        decoding free-form text from non-invasive EEG and MEG signals, with no
+        requirement for implanted electrodes. Demonstrates that consumer-grade hearable
+        BLE EEG devices are approaching the signal-quality threshold sufficient for
+        covert thought-to-text extraction.
+      </p>
+      <p style="margin-top:8px;">
+        <a href="https://arxiv.org/abs/2502.17480" target="_blank" rel="noopener">arXiv:2502.17480</a>
+        · Défossez et al., Meta AI, 2025
+      </p>
+    </div>
+
+    <!-- 7.7 Device Landscape -->
+    <h3 id="s7-7">7.7 — Device Landscape</h3>
+    <p>
+      The following devices represent the current frontier of consumer neurotechnology,
+      mapped on the invasive spectrum:
+    </p>
+
+    <div class="device-axis">
+      <span>Non-invasive</span>
+      <div class="axis-line"></div>
+      <span>Minimally invasive</span>
+      <div class="axis-line"></div>
+      <span>Invasive</span>
+    </div>
+
+    <div class="device-grid">
+      <div class="device-node">
+        <div class="dn-name">Meta Ray-Ban Gen 4</div>
+        <div class="dn-sub">In-ear EEG · BLE 5.3 · 8ch</div>
+        <div class="dn-inv">Non-invasive</div>
+      </div>
+      <div class="device-node">
+        <div class="dn-name">Google Glass / Android XR</div>
+        <div class="dn-sub">Temple EEG · Eye-track · Video</div>
+        <div class="dn-inv">Non-invasive</div>
+      </div>
+      <div class="device-node">
+        <div class="dn-name">Neurosity Crown 3</div>
+        <div class="dn-sub">Dry 16ch · 256 Hz · P300 capable</div>
+        <div class="dn-inv">Non-invasive</div>
+      </div>
+      <div class="device-node">
+        <div class="dn-name">Synchron Stentrode</div>
+        <div class="dn-sub">Endovascular array · Motor cortex</div>
+        <div class="dn-inv">Minimally invasive</div>
+      </div>
+      <div class="device-node">
+        <div class="dn-name">Neuralink N1</div>
+        <div class="dn-sub">1024 electrodes · 20kHz · Bluetooth</div>
+        <div class="dn-inv">Invasive</div>
+      </div>
+      <div class="device-node">
+        <div class="dn-name">Abbott Infinity DBS</div>
+        <div class="dn-sub">Closed-loop · MICS RF · MRI-safe</div>
+        <div class="dn-inv">Invasive (therapeutic)</div>
+      </div>
+    </div>
+
+    <!-- 7.8 Neurobiometrics panel -->
+    <h3 id="s7-8">7.8 — Neurobiometrics (Extended)</h3>
+    <p>
+      The neurobiometric threat is distinguished from all prior biometric threats by
+      five properties that make it categorically more severe:
+    </p>
+
+    <div class="nbio-panel">
+      <div class="nbio-items">
+        <div class="card">
+          <span class="card-tag">Property 1</span>
+          <h3>Irrevocability</h3>
+          <p>ERP component latencies (P300 ~300ms, N200 ~200ms, ERN post-error)
+             are genetically determined and stable across decades. Compromise is permanent.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Property 2</span>
+          <h3>Cross-Platform Re-ID</h3>
+          <p>A neural fingerprint extracted from a consumer headset in 2024 can
+             re-identify the same individual on a clinical BCI in 2030, across all
+             intermediate platforms.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Property 3</span>
+          <h3>Involuntary Disclosure</h3>
+          <p>P300 oddball responses are elicited by surprising stimuli regardless of
+             intent. ERN responses to errors occur below conscious awareness.
+             Consent cannot override physiology.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Property 4</span>
+          <h3>P300 / ERN Capture</h3>
+          <p>Sequences of rapidly presented images (RSVP paradigm at 10 Hz) can
+             elicit P300 responses to recognised faces, locations, or objects —
+             extracting knowledge the subject did not intend to disclose.</p>
+        </div>
+        <div class="card">
+          <span class="card-tag">Defense</span>
+          <h3>NeuralMask™</h3>
+          <p>EEGShield's adversarial FGSM layer targets the spectral bins used by
+             P300 and ERN fingerprinting pipelines, reducing re-ID accuracy to
+             chance level (&lt;52%) while preserving &gt;94% clinical signal quality.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo: EEG Neural Fingerprint Shield -->
+    <div class="demo-box">
+      <div class="demo-label">Demo 07 — EEG Neural Fingerprint Shield</div>
+      <div class="demo-pair">
+        <div>
+          <p style="font-size:10px;color:#ff4444;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;">Before NeuralMask™</p>
+          <canvas id="c-eeg-raw" height="140"></canvas>
+        </div>
+        <div>
+          <p style="font-size:10px;color:var(--neon);letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;">After NeuralMask™</p>
+          <canvas id="c-eeg-shielded" height="140"></canvas>
+        </div>
+      </div>
+      <div id="reid-score" style="margin-top:10px;font-size:11px;color:var(--muted);font-family:monospace;"></div>
+    </div>
+
+    <!-- Demo: Reward Loop Amplification Detector -->
+    <div class="demo-box">
+      <div class="demo-label">Demo 08 — Reward Loop Amplification Detector</div>
+      <canvas id="c-reward" height="200"></canvas>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px;">
+        Circular dopamine feedback loop. Gain history bar (right) tracks amplification factor.
+        <span style="color:var(--neon);">CognitiveShield™</span> dampening active when gain exceeds threshold.
+      </p>
+    </div>
+
+  </div><!-- /section 07 -->
+
+  <!-- ─────────────────────────── SECTION 08 ─────────────────────────── -->
+  <div id="references" class="section">
+    <div class="section-number">Section 08</div>
+    <h2>References</h2>
+
+    <div class="ref-list">
+      <div class="ref-item">
+        <div>
+          <strong>Your Brain on ChatGPT: Accumulation of Cognitive Debt When Using an AI Assistant</strong>
+          <span class="ref-authors">Pataranutaporn P. et al., MIT Media Lab, 2025.</span>
+          <a href="https://arxiv.org/abs/2506.08872" target="_blank" rel="noopener">arXiv:2506.08872</a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>Brain-to-Text Decoding: A Non-Invasive Approach via Typing with Imagined Movements (Brain2Qwerty)</strong>
+          <span class="ref-authors">Défossez A. et al., Meta AI, 2025.</span>
+          <a href="https://arxiv.org/abs/2502.17480" target="_blank" rel="noopener">arXiv:2502.17480</a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>Neurorights: A Human Rights Foundation for the Age of Neurotechnology</strong>
+          <span class="ref-authors">Yuste R., Goering S. et al. <em>Neuron</em>, 2021.</span>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>Regulation (EU) 2024/1689 of the European Parliament — EU AI Act</strong>
+          <span class="ref-authors">Official Journal of the European Union, 2024.</span>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>Colorado SB 24-205 — Artificial Intelligence Act</strong>
+          <span class="ref-authors">Colorado General Assembly, signed May 2024, effective February 2026.</span>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>BrainPrint: Assessing the Uniqueness, Collectability, and Permanence of a Novel Method for ERP Biometrics</strong>
+          <span class="ref-authors">Ruiz-Blondet M.V. et al. <em>Neurocomputing</em>, 2016.</span>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>BLESA: Spoofing Attacks against Reconnections in Bluetooth Low Energy</strong>
+          <span class="ref-authors">Wu J. et al. <em>USENIX WOOT</em>, 2020.</span>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div>
+          <strong>UNESCO Recommendation on the Ethics of Artificial Intelligence</strong>
+          <span class="ref-authors">UNESCO General Conference, 41st session, 2021; updated 2024.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ── Footer ── -->
+<footer>
+  <p>
+    <a href="/">CognitiveCanary</a> · ARTIFEX NEUROLABS · March 2026
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank">GitHub</a>
+  </p>
+  <p style="margin-top:8px;font-size:10px;">
+    This whitepaper is for research and educational purposes.
+    Cognitive Security Edition · v6.2
+  </p>
+</footer>
+
+<!-- ── Canvas Demos JS ── -->
+<script>
+(function () {
+  // ── Utility ──────────────────────────────────────────────────────────
+  function resize(canvas) {
+    const dpr = window.devicePixelRatio || 1;
+    const w   = canvas.parentElement.clientWidth - 32;
+    canvas.style.width  = w + 'px';
+    canvas.width  = w * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return ctx;
+  }
+
+  // ── Demo 06: Neural MITM Interceptor ─────────────────────────────────
+  (function mitm() {
+    const canvas = document.getElementById('c-mitm');
+    if (!canvas) return;
+    canvas.height = 180;
+    const ctx  = resize(canvas);
+    const W    = parseInt(canvas.style.width);
+    const H    = 180;
+    let t      = 0;
+    const packets = [];
+
+    function spawnPacket() {
+      const isAttacker = Math.random() < 0.28;
+      packets.push({
+        x: 0, y: 20 + Math.random() * (H - 40),
+        speed: 1.2 + Math.random() * 1.8,
+        attacker: isAttacker,
+        blocked: false,
+        alpha: 1.0,
+        label: isAttacker ? 'INJ' : 'PKT',
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+
+      // NeuralMask scrubber line
+      const scrubX = W * 0.65;
+      ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(scrubX, 0); ctx.lineTo(scrubX, H); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.font = '9px monospace';
+      ctx.fillText('NeuralMask™', scrubX + 6, 14);
+
+      // Spawn
+      if (t % 18 === 0) spawnPacket();
+
+      // Update & draw packets
+      for (let i = packets.length - 1; i >= 0; i--) {
+        const p = packets[i];
+        p.x += p.speed;
+
+        // Block attacker packets at scrub line
+        if (p.attacker && p.x >= scrubX - 4 && !p.blocked) {
+          p.blocked = true; p.speed = 0;
+          p.alpha -= 0.04;
+        } else if (p.blocked) {
+          p.alpha -= 0.06;
+        }
+
+        if (p.alpha <= 0 || p.x > W) { packets.splice(i, 1); continue; }
+
+        const color = p.blocked
+          ? `rgba(255,68,68,${p.alpha * 0.5})`
+          : p.attacker
+            ? `rgba(255,68,68,${p.alpha})`
+            : `rgba(0,255,65,${p.alpha})`;
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 6;
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = color;
+        ctx.font = '8px monospace';
+        ctx.fillText(p.label, p.x + 6, p.y + 3);
+      }
+
+      t++;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── Demo 07: EEG Neural Fingerprint Shield ───────────────────────────
+  (function eegShield() {
+    const cRaw      = document.getElementById('c-eeg-raw');
+    const cShielded = document.getElementById('c-eeg-shielded');
+    const scoreEl   = document.getElementById('reid-score');
+    if (!cRaw || !cShielded) return;
+
+    cRaw.height = 140; cShielded.height = 140;
+    const ctxR  = resize(cRaw);
+    const ctxS  = resize(cShielded);
+    const W     = parseInt(cRaw.style.width);
+    const H     = 140;
+    let t       = 0;
+    let reid    = 0.92;
+
+    function drawEEG(ctx, t, shielded) {
+      ctx.clearRect(0, 0, W, H);
+      const mid = H / 2;
+
+      ctx.beginPath();
+      for (let x = 0; x < W; x++) {
+        const tx = (x / W) * 4 * Math.PI + t * 0.04;
+        let y = mid
+          + 28 * Math.sin(tx * 10.5)   // alpha
+          + 18 * Math.sin(tx * 6.0)    // theta
+          + 6  * Math.sin(tx * 30)     // gamma
+          + 4  * (Math.random() - 0.5); // noise
+
+        if (shielded) {
+          y += 12 * Math.sin(tx * 10.5 + Math.PI * 0.8); // destructive
+          y += 8  * Math.sin(tx * 6.0  + Math.PI * 0.7);
+          y += (Math.random() - 0.5) * 6;
+        }
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = shielded ? 'rgba(0,255,65,0.7)' : 'rgba(200,80,80,0.8)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      // P300 marker on raw
+      if (!shielded) {
+        const markerX = W * 0.45;
+        ctx.strokeStyle = 'rgba(255,200,0,0.8)';
+        ctx.setLineDash([3, 3]);
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(markerX, 10); ctx.lineTo(markerX, H - 10); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(255,200,0,0.8)';
+        ctx.font = '8px monospace';
+        ctx.fillText('P300', markerX + 4, 18);
+      }
+    }
+
+    function loop() {
+      drawEEG(ctxR, t, false);
+      drawEEG(ctxS, t, true);
+
+      // ReID score
+      reid = Math.max(0.05, reid - 0.0015);
+      if (scoreEl) {
+        const pct = (reid * 100).toFixed(1);
+        const color = reid > 0.6 ? '#ff4444' : reid > 0.3 ? '#ff8800' : '#00ff41';
+        scoreEl.innerHTML =
+          `Re-ID similarity: <span style="color:${color};font-weight:700">${pct}%</span> &nbsp;·&nbsp; ` +
+          `NeuralMask™ status: <span style="color:#00ff41;">ACTIVE</span>`;
+      }
+      t++;
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+
+  // ── Demo 08: Reward Loop Amplification Detector ──────────────────────
+  (function rewardLoop() {
+    const canvas = document.getElementById('c-reward');
+    if (!canvas) return;
+    canvas.height = 200;
+    const ctx  = resize(canvas);
+    const W    = parseInt(canvas.style.width);
+    const H    = 200;
+    let t      = 0;
+    const gainHistory = [];
+    const MAX_GAIN_BARS = 40;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const cx = (W - 80) / 2;
+      const cy = H / 2;
+      const r  = Math.min(cx, cy) - 24;
+
+      // Gain
+      const rawGain = 1.2 + 0.8 * Math.sin(t * 0.03) + 0.3 * Math.sin(t * 0.11);
+      const dampening = rawGain > 1.6;
+      const gain = dampening ? rawGain * 0.6 : rawGain;
+      gainHistory.push(gain);
+      if (gainHistory.length > MAX_GAIN_BARS) gainHistory.shift();
+
+      // Orbit particles
+      const nParticles = 12;
+      for (let i = 0; i < nParticles; i++) {
+        const angle = (i / nParticles) * Math.PI * 2 + t * 0.04 * gain;
+        const pr    = r * (0.5 + 0.5 * Math.sin(i * 0.7 + t * 0.05));
+        const px    = cx + Math.cos(angle) * pr;
+        const py    = cy + Math.sin(angle) * pr;
+        const hue   = dampening ? 142 : 30 + i * 10;
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${hue},80%,60%,0.7)`;
+        ctx.shadowColor = `hsla(${hue},80%,60%,0.4)`;
+        ctx.shadowBlur  = 8;
+        ctx.arc(px, py, 3 + gain, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      // Centre label
+      ctx.fillStyle = dampening ? 'rgba(0,255,65,0.9)' : 'rgba(255,136,0,0.9)';
+      ctx.font = 'bold 11px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(dampening ? 'DAMPENED' : 'AMPLIFYING', cx, cy - 8);
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.font = '10px monospace';
+      ctx.fillText(`gain × ${gain.toFixed(2)}`, cx, cy + 10);
+      ctx.textAlign = 'start';
+
+      // Gain history bars (right panel)
+      const barArea = W - 80;
+      const barX0   = barArea + 4;
+      const barW    = 8;
+      const barGap  = 1;
+      gainHistory.forEach((g, i) => {
+        const bh    = Math.min(H - 20, (g / 2.5) * (H - 20));
+        const by    = H - 10 - bh;
+        const over  = g > 1.6;
+        ctx.fillStyle = over ? 'rgba(255,68,68,0.7)' : 'rgba(0,255,65,0.5)';
+        ctx.fillRect(barX0 + i * (barW + barGap), by, barW, bh);
+      });
+
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '8px monospace';
+      ctx.fillText('GAIN', barX0, 10);
+
+      t++;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── IntersectionObserver for stagger animations ───────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('in-view');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+})();
+</script>
+
+</body>
+</html>

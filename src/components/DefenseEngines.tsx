@@ -257,12 +257,97 @@ const drawAuditor = (ctx: CanvasRenderingContext2D, w: number, h: number, t: num
   ctx.fillText('GRADIENT AUDIT: NOMINAL', 5, h - 8);
 };
 
+// Engine 6: EEG Shield — differential privacy + adversarial injection visualisation
+const drawEEGShield = (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => {
+  ctx.clearRect(0, 0, w, h);
+  const mid = h / 2;
+
+  // Raw EEG (top half)
+  ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const tx = (x / w) * 4 * Math.PI + t * 0.04;
+    const y = mid * 0.45
+      + 18 * Math.sin(tx * 10.5)
+      + 12 * Math.sin(tx * 6.0)
+      + 4 * Math.sin(tx * 30)
+      + (Math.random() - 0.5) * 3;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = 'hsla(0, 60%, 55%, 0.65)';
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+
+  // Divider
+  ctx.strokeStyle = 'hsla(160, 10%, 22%, 0.5)';
+  ctx.lineWidth = 0.5;
+  ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(w, mid); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Shielded EEG (bottom half) — destructive interference applied
+  ctx.beginPath();
+  for (let x = 0; x < w; x++) {
+    const tx = (x / w) * 4 * Math.PI + t * 0.04;
+    const raw = 18 * Math.sin(tx * 10.5) + 12 * Math.sin(tx * 6.0);
+    const adv = 16 * Math.sin(tx * 10.5 + Math.PI * 0.85) + 10 * Math.sin(tx * 6.0 + Math.PI * 0.75);
+    const noise = (Math.random() - 0.5) * 4;
+    const y = mid + mid * 0.45 + (raw + adv) * 0.5 + noise;
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = 'hsla(142, 71%, 45%, 0.7)';
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+
+  ctx.fillStyle = 'hsla(0, 60%, 60%, 0.65)';
+  ctx.font = '8px JetBrains Mono, monospace';
+  ctx.fillText('RAW EEG', 6, 12);
+  ctx.fillStyle = 'hsla(142, 71%, 50%, 0.8)';
+  ctx.fillText('SHIELDED', 6, mid + 12);
+};
+
+// Engine 7: Neuro Audit — jurisdiction risk bar chart
+const drawNeuroAudit = (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => {
+  ctx.clearRect(0, 0, w, h);
+  const jurisdictions = [
+    { label: 'EU AI Act', score: 0.82, color: 'hsla(200, 70%, 50%, 0.8)' },
+    { label: 'Chile NR',  score: 0.91, color: 'hsla(142, 71%, 45%, 0.8)' },
+    { label: 'Colorado',  score: 0.65, color: 'hsla(45, 80%, 55%, 0.8)' },
+    { label: 'CA SB1223', score: 0.74, color: 'hsla(280, 60%, 60%, 0.8)' },
+    { label: 'UNESCO',    score: 0.58, color: 'hsla(175, 60%, 45%, 0.8)' },
+  ];
+  const barH = (h - 30) / jurisdictions.length - 6;
+  const animOffset = Math.sin(t * 0.8) * 0.03;
+
+  jurisdictions.forEach((j, i) => {
+    const y = 10 + i * (barH + 6);
+    const score = Math.min(1, j.score + animOffset);
+    const barW = (w - 80) * score;
+    const pulse = i % 2 === 0 ? Math.sin(t * 1.2 + i) * 0.08 : 0;
+
+    ctx.fillStyle = 'hsla(160, 10%, 12%, 0.6)';
+    ctx.fillRect(60, y, w - 80, barH);
+    ctx.fillStyle = j.color.replace('0.8)', `${0.4 + pulse + (1 - score) * 0.1})`);
+    ctx.fillRect(60, y, barW, barH);
+
+    ctx.fillStyle = 'hsla(160, 10%, 55%, 0.8)';
+    ctx.font = '8px JetBrains Mono, monospace';
+    ctx.fillText(j.label, 0, y + barH - 2);
+
+    const riskLabel = score > 0.75 ? 'HIGH' : score > 0.5 ? 'MOD' : 'LOW';
+    ctx.fillStyle = score > 0.75 ? 'hsla(0,60%,55%,0.8)' : score > 0.5 ? 'hsla(45,80%,55%,0.8)' : 'hsla(142,71%,50%,0.8)';
+    ctx.font = '7px JetBrains Mono, monospace';
+    ctx.fillText(riskLabel, w - 18, y + barH - 2);
+  });
+};
+
 const engines: Engine[] = [
   { name: 'Lissajous 3D Engine', tag: 'lissajous_3d.py', desc: 'Toroidal Lissajous curves with coprime ratios (13:8:5). Z-axis discretized into scroll/zoom events. Non-repeating trajectories mask true intent vectors via x(t) = A·sin(ωₓt + δ), y(t) = B·sin(ωᵧt).', draw: drawLissajous },
   { name: 'Adaptive Tremor', tag: 'adaptive_tremor.py', desc: 'Learns your physiological tremor profile (4-12 Hz), then phase-locks synthetic injection to create a statistical null space where authentic neuromotor patterns become unrecoverable.', draw: drawTremor },
   { name: 'Keystroke Jitter', tag: 'keystroke_jitter.py', desc: 'Pink noise (S(f) ∝ 1/f^α) injection into dwell/flight times maintains human-like autocorrelation while destroying inter-keystroke interval signatures used by TypingDNA-class systems.', draw: drawKeystroke },
   { name: 'Spectral Defender', tag: 'spectral_canary.py', desc: 'Injects counter-phase oscillations in alpha (8-13 Hz) and theta (4-8 Hz) bands, creating destructive interference that collapses power spectral density features used for cognitive state classification from BCIs.', draw: drawSpectral },
   { name: 'Gradient Auditor', tag: 'gradient_auditor.py', desc: 'Detects gradient rank collapse, feature importance inversion, loss landscape discontinuities, and spectral norm explosions — real-time ML poisoning and fingerprinting attack detection.', draw: drawAuditor },
+  { name: 'EEG Shield', tag: 'eeg_shield.py', desc: '3-layer neural privacy: signal obfuscation (adaptive Gaussian + temporal warp), per-band differential privacy (Laplace ε-mechanism), and FGSM-style adversarial injection (<0.3 µV RMS). Destroys P300/ERN biometric extractability.', draw: drawEEGShield },
+  { name: 'Neuro Audit', tag: 'neuro_audit.py', desc: 'Multi-jurisdiction neurorights compliance engine. Checks EU AI Act, Colorado SB 24-205, Chilean constitutional amendment, California SB 1223, New York Int. 1306-A, and UNESCO AI Ethics. Returns per-jurisdiction risk scores and remediation guidance.', draw: drawNeuroAudit },
 ];
 
 const EngineCard = ({ engine, index, isInView }: { engine: Engine; index: number; isInView: boolean }) => {
@@ -337,7 +422,7 @@ const DefenseEngines = () => {
             transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <span className="tag-badge mb-6 inline-block">5 ENGINES</span>
+          <span className="tag-badge mb-6 inline-block">7 ENGINES</span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
             The defense<br />stack.
           </h2>
