@@ -28,7 +28,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/70 backdrop-blur-xl border border-primary/20 px-6 py-3 pointer-events-auto shadow-[0_0_60px_rgba(0,0,0,0.9)]">
           <div className="flex items-center gap-3">
             <span className="text-primary font-black tracking-tighter text-xl font-mono" style={{ textShadow: '0 0 10px var(--neon-green)' }}>CC // ARTIFEX</span>
-            <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.0</span>
+            <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.2</span>
           </div>
           <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
             <a href="#about" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">About</a>
