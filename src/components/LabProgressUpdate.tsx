@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar1' | 'feb14'>('mar1');
+  const [activeTab, setActiveTab] = useState<'mar9' | 'mar1' | 'feb14'>('mar9');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -21,7 +21,14 @@ const LabProgressUpdate = () => {
               </h2>
             </div>
             {/* Date tab switcher */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={() => setActiveTab('mar9')}
+                className={`px-5 py-3 border transition-all duration-200 text-left ${activeTab === 'mar9' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'mar9' ? 'text-primary' : 'text-foreground/40'}`}>MAR 9 2026</span>
+              </button>
               <button
                 onClick={() => setActiveTab('mar1')}
                 className={`px-5 py-3 border transition-all duration-200 text-left ${activeTab === 'mar1' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
@@ -38,6 +45,122 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── March 9 2026 ── */}
+          {activeTab === 'mar9' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold">9 March 2026</span></p>
+                </div>
+              </div>
+            </div>
+
+            {/* Demo improvements */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚡</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Interactive Demo — Code Review &amp; Improvements</h3>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground font-mono">
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">→</span><span>Roadmap updated: v6.2 marked as shipped</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">→</span><span>Roadmap nav link added to main navigation</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">→</span><span>Lab Progress tab added for March 9 reporting period</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">→</span><span>EEG Shield &amp; Neuro Audit now reflected in roadmap</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* v6.2 full suite */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 lg:col-span-2 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-4 font-black">v6.2 Full Engine Suite — Confirmed Shipped</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                      { name: 'lissajous_3d.py', desc: 'Toroidal cursor obfuscation' },
+                      { name: 'adaptive_tremor.py', desc: 'Physiological tremor masking' },
+                      { name: 'keystroke_jitter.py', desc: 'Pink noise timing injection' },
+                      { name: 'spectral_canary.py', desc: 'EEG-band adversarial oscillation' },
+                      { name: 'gradient_auditor.py', desc: '9-class ML threat detection' },
+                      { name: 'eeg_shield.py', desc: '3-layer EEG protection (NEW v6.2)' },
+                      { name: 'neuro_audit.py', desc: 'Neurorights compliance audit (NEW v6.2)' },
+                    ].map(e => (
+                      <div key={e.name} className="bg-black/30 border border-primary/20 p-3 hover:border-primary/40 transition-colors duration-200">
+                        <p className="text-foreground font-mono text-xs font-semibold mb-1">{e.name}</p>
+                        <p className="text-muted-foreground text-[10px]">{e.desc}</p>
+                      </div>
+                    ))}
+                    <div className="bg-black/30 border border-primary/20 p-3 hover:border-primary/40 transition-colors duration-200 flex items-center justify-center">
+                      <div className="text-center">
+                        <p className="text-primary font-mono text-2xl font-black">7</p>
+                        <p className="text-muted-foreground text-[10px] uppercase tracking-wider">Engines Total</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Whitepaper */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📄</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Neurorights Whitepaper Live</h3>
+                  <p className="text-body text-muted-foreground text-sm leading-relaxed">
+                    <span className="text-foreground font-mono text-xs">neurorights-2026.html</span> — 8 sections, 3 live canvas demos, Section 07: Cognitive Security &amp; Attack Surfaces
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {['EU AI Act', 'Chile NeuroRights', 'Colorado SB 24-205', 'CA AB 1836', 'UNESCO 2024'].map(j => (
+                      <span key={j} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{j}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Benchmarks */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📊</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">v6.2 Benchmark Results</h3>
+                  <div className="space-y-2">
+                    {[
+                      { label: 'Mouse Fingerprint Bypass', value: '98.9%' },
+                      { label: 'Keystroke ID Failure Rate', value: '99.3%' },
+                      { label: '3D Lissajous Bypass', value: '99.7%' },
+                      { label: 'Latency Overhead', value: '<0.3ms' },
+                    ].map(b => (
+                      <div key={b.label} className="flex justify-between items-center text-xs">
+                        <span className="text-muted-foreground font-mono">{b.label}</span>
+                        <span className="text-primary font-mono font-black">{b.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Next: v7.0 */}
+            <div className="glass-panel p-5 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30 lg:col-span-2">
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">🚀</span>
+                <div>
+                  <p className="text-mono text-foreground text-sm uppercase tracking-wider font-black">Next Milestone: v7.0 — Neural Adversary</p>
+                  <p className="text-muted-foreground text-xs font-mono mt-1">GAN-based behavioral synthesis · OS-level driver · WebExtension support · Target: Q3 2026</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
 
           {/* ── March 1 2026 ── */}
           {activeTab === 'mar1' && (

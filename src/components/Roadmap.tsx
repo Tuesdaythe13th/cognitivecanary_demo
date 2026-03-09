@@ -4,9 +4,10 @@ const milestones = [
   { version: 'v4.0', date: '2024 Q1', title: 'Foundation', desc: 'Core obfuscation engine with 2D Lissajous cursor rewriting.', done: true },
   { version: 'v5.0', date: '2024 Q3', title: 'Multi-Vector', desc: 'Added keystroke jitter, scroll obfuscation, and adaptive tremor engines.', done: true },
   { version: 'v6.0', date: '2025 Q1', title: 'Entropy Mixer', desc: '3D Lissajous, spectral defense, gradient auditing, session decorrelation.', done: true },
-  { version: 'v6.1', date: '2026 Q2', title: 'Federated Guard', desc: 'Federated learning attack detection and cross-device identity unlinking.', done: false, current: true },
-  { version: 'v7.0', date: '2026 Q3', title: 'Neural Adversary', desc: 'GAN-based behavioral synthesis for next-gen evasion.', done: false },
-  { version: 'v8.0', date: '2026 Q4', title: 'Zero-Knowledge', desc: 'Proof-of-humanity without behavioral exposure.', done: false },
+  { version: 'v6.2', date: '2026 Q1', title: 'Neurorights Suite', desc: 'EEG Shield (3-layer differential privacy), Neuro Audit (multi-jurisdiction compliance), neurorights whitepaper, 7-engine suite complete.', done: true },
+  { version: 'v7.0', date: '2026 Q3', title: 'Neural Adversary', desc: 'GAN-based behavioral synthesis, OS-level driver integration, WebExtension, federated learning attack detection.', done: false, current: true },
+  { version: 'v8.0', date: '2026 Q4', title: 'BCI Edge Shield', desc: 'Neural Canary for BCI edge processing. Zero-knowledge proof-of-humanity without behavioral exposure.', done: false },
+  { version: 'v9.0', date: '2027 Q2', title: 'Sovereign Stack', desc: 'Full neuro-sovereignty stack: cross-device identity unlinking, regulatory API bridge, open neurorights standard.', done: false },
 ];
 
 const Roadmap = () => {
