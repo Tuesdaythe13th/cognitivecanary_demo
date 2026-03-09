@@ -5,7 +5,7 @@ const steps = [
   { id: 'INPUT', label: 'Raw Input', desc: 'Mouse, keyboard, scroll, EEG events', color: 'hsla(0, 0%, 60%, 0.8)' },
   { id: 'INTERCEPT', label: 'Event Interceptor', desc: 'Captures all behavioral signals', color: 'hsla(175, 60%, 45%, 0.8)' },
   { id: 'CLASSIFY', label: 'Task Classifier', desc: 'Detects context, selects profile', color: 'hsla(175, 60%, 45%, 0.8)' },
-  { id: 'OBFUSCATE', label: 'Obfuscation Core', desc: '5 engines run in parallel', color: 'hsla(142, 71%, 45%, 0.9)' },
+  { id: 'OBFUSCATE', label: 'Obfuscation Core', desc: '7 engines run in parallel', color: 'hsla(142, 71%, 45%, 0.9)' },
   { id: 'AUDIT', label: 'Gradient Auditor', desc: 'Detects ML attacks in real-time', color: 'hsla(280, 60%, 60%, 0.8)' },
   { id: 'OUTPUT', label: 'Clean Output', desc: 'Unidentifiable behavioral data', color: 'hsla(142, 71%, 55%, 0.9)' },
 ];

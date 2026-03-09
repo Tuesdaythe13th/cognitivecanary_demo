@@ -18,7 +18,7 @@ const metrics: Metric[] = [
   { label: 'Cross-Session Correlation', value: 0.02, suffix: '', prefix: '→ ', category: 'Defense' },
   { label: 'Latency Overhead', value: 0.3, suffix: 'ms', prefix: '<', category: 'Performance' },
   { label: 'Detection Evasion Rate', value: 99.1, suffix: '%', category: 'Evasion', prev: 94.1 },
-  { label: 'Active Obfuscation Engines', value: 5, suffix: '', category: 'System' },
+  { label: 'Active Obfuscation Engines', value: 7, suffix: '', category: 'System' },
 ];
 
 const classifierResults = [
@@ -85,7 +85,7 @@ const ProgressBar = ({ value, prev, isInView, delay }: { value: number; prev?: n
   return (
     <div className="mt-3 space-y-1.5">
       <div className="flex items-center gap-2">
-        <span className="text-mono text-[9px] text-muted-foreground/40 w-8">v5.0</span>
+        <span className="text-mono text-[9px] text-muted-foreground/40 w-8">v6.0</span>
         <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
           <div
             className="h-full bg-muted-foreground/25 rounded-full"
@@ -95,7 +95,7 @@ const ProgressBar = ({ value, prev, isInView, delay }: { value: number; prev?: n
         <span className="text-mono text-[9px] text-muted-foreground/35 w-10 text-right">{prev}%</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-mono text-[9px] text-primary w-8">v6.0</span>
+        <span className="text-mono text-[9px] text-primary w-8">v6.2</span>
         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
           <div
             className="h-full rounded-full"
@@ -128,7 +128,7 @@ const Results = () => {
             The numbers<br />speak.
           </h2>
           <p className="text-body text-muted-foreground text-lg max-w-2xl mt-6 leading-relaxed">
-            Tested against TypingDNA, BehavioSec, and custom neural classifiers. Results from v6.0 release.
+            Tested against TypingDNA, BehavioSec, and custom neural classifiers. Results from v6.2 release.
           </p>
         </div>
 

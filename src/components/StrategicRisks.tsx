@@ -55,7 +55,7 @@ export default function StrategicRisks() {
                         Lab Exhibit 03
                      </div>
                      <h2 className="text-6xl font-black font-mono tracking-tighter text-white uppercase italic leading-none">
-                        STRATEGIC <span className="text-primary not-italic block mt-2 shadow-[0_0_20px_rgba(0,255,65,0.2)]">RISKS <span className="text-white opacity-20">v0.9</span></span>
+                        STRATEGIC <span className="text-primary not-italic block mt-2 shadow-[0_0_20px_rgba(0,255,65,0.2)]">RISKS</span>
                      </h2>
                      <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em] font-bold">
                         The BCI Frontier // Cognitive Sovereignty

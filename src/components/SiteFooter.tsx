@@ -32,7 +32,7 @@ const SiteFooter = () => {
               Advanced behavioral obfuscation engine protecting cognitive fingerprints since 2024.
             </p>
             <div className="flex gap-2">
-              <span className="tag-badge">v6.0</span>
+              <span className="tag-badge">v6.2</span>
               <span className="text-mono text-[9px] bg-muted text-muted-foreground px-2 py-0.5 tracking-wider uppercase border border-border">
                 MIT
               </span>
@@ -74,9 +74,9 @@ const SiteFooter = () => {
             <div className="glass-panel p-4 hover:neon-border-glow transition-all duration-300">
               <code className="text-mono text-[10px] text-muted-foreground block leading-loose">
                 @software{'{'}<br />
-                &nbsp;&nbsp;cognitive_canary_v6,<br />
+                &nbsp;&nbsp;cognitive_canary_v6_2,<br />
                 &nbsp;&nbsp;title=Cognitive Canary,<br />
-                &nbsp;&nbsp;version=6.0,<br />
+                &nbsp;&nbsp;version=6.2,<br />
                 &nbsp;&nbsp;year=2026<br />
                 {'}'}
               </code>
