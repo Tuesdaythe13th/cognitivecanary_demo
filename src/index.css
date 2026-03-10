@@ -245,6 +245,69 @@
     opacity: 1;
     transform: translateX(0);
   }
+
+  /* Stagger animation delays for grid children */
+  .stagger-1 { animation-delay: 0ms; }
+  .stagger-2 { animation-delay: 80ms; }
+  .stagger-3 { animation-delay: 160ms; }
+  .stagger-4 { animation-delay: 240ms; }
+  .stagger-5 { animation-delay: 320ms; }
+  .stagger-6 { animation-delay: 400ms; }
+  .stagger-7 { animation-delay: 480ms; }
+  .stagger-8 { animation-delay: 560ms; }
+
+  /* Scan card — horizontal scan line on hover */
+  .scan-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .scan-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(142 71% 45% / 0.06),
+      hsl(142 71% 45% / 0.12),
+      hsl(142 71% 45% / 0.06),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: none;
+  }
+  .scan-card:hover::after {
+    animation: scan-line 1.2s ease-in-out forwards;
+  }
+
+  /* Animated stat bar */
+  .stat-bar {
+    height: 2px;
+    background: hsl(142 71% 45% / 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, hsl(142 71% 45%), hsl(175 60% 45%));
+    animation: bar-grow 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    box-shadow: 0 0 6px hsl(142 71% 45% / 0.5);
+  }
+
+  /* Terminal cursor blink */
+  .cursor-blink::after {
+    content: '█';
+    animation: typewriter-cursor 1s step-end infinite;
+    color: hsl(142 71% 45%);
+    font-size: 0.7em;
+    margin-left: 2px;
+  }
 }
 
 @keyframes slideUp {
@@ -343,4 +406,21 @@
   to {
     stroke-dashoffset: var(--target-offset);
   }
+}
+
+@keyframes scan-line {
+  0% { transform: translateX(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(250%); opacity: 0; }
+}
+
+@keyframes bar-grow {
+  from { width: 0%; }
+  to { width: var(--bar-width, 100%); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
