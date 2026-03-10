@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar9' | 'mar1' | 'feb14'>('mar9');
+  const [activeTab, setActiveTab] = useState<'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar10');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -22,6 +22,14 @@ const LabProgressUpdate = () => {
             </div>
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={() => setActiveTab('mar10')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar10' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'mar10' ? 'text-primary' : 'text-foreground/40'}`}>MAR 10 2026</span>
+              </button>
               <button
                 onClick={() => setActiveTab('mar9')}
                 className={`px-5 py-3 border transition-all duration-200 text-left ${activeTab === 'mar9' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
@@ -45,6 +53,169 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── March 10 2026 ── */}
+          {activeTab === 'mar10' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">10 March 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">Field Intelligence Report: February 2026 Neurotech Landscape</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sector Intelligence */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📡</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Sector Intelligence — February 2026</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Neurotech Market (2025)', value: '$15.77B', pct: 52 },
+                      { label: 'Projected Market (2030)', value: '~$30B', pct: 100 },
+                      { label: 'Non-Invasive Market Share', value: '76.5%', pct: 76 },
+                      { label: 'Humans w/ Active BCI Implants', value: '≥ 9', pct: 30 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Clinical Frontier */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 lg:col-span-2 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧠</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-4 font-black">BCI Clinical Frontier — Active Platforms (Feb 2026)</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                      { name: 'Neuralink (N1)', detail: '3 humans implanted · PRIME study · 1,024 ch intracortical · R1 robot insertion', tag: 'PRIME Study' },
+                      { name: 'Synchron Stentrode', detail: 'COMMAND study · 0 SAEs @ 12mo · Apple BCI HID integration → iPhone/iPad/Vision Pro', tag: 'Apple Native' },
+                      { name: 'Blackrock MoveAgain', detail: '62 WPM speech restoration · FDA Breakthrough Device · Utah Array multi-site', tag: 'FDA Breakthrough' },
+                      { name: 'Cognixion Axon-R', detail: 'Non-invasive EEG headband · Apple Vision Pro trial underway · consumer pathway', tag: 'Non-Invasive' },
+                    ].map(p => (
+                      <div key={p.name} className="bg-black/30 border border-primary/20 p-3 hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5 scan-card">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <p className="text-foreground font-mono text-xs font-semibold">{p.name}</p>
+                          <span className="text-[8px] font-mono text-primary bg-primary/10 border border-primary/20 px-1.5 py-0.5 uppercase tracking-wider whitespace-nowrap">{p.tag}</span>
+                        </div>
+                        <p className="text-muted-foreground text-[10px] leading-relaxed">{p.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Cellular & Molecular Shifts */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🔬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Cellular Paradigm Shifts — Q1 2026</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Astrocytes recharacterized as active brain-state regulators via Ca²⁺ waves + adenosine gliotransmission (Quanta Mag / Science)' },
+                      { icon: '→', text: 'MPS Lattice identified as endocytosis gatekeeper — breakdown accelerates Aβ42 uptake in Alzheimer\'s (Penn State)' },
+                      { icon: '→', text: 'DLK/SARM1 "survival switch" discovered: metabolic bivalence creates novel stroke/TBI intervention target (U-Michigan)' },
+                      { icon: '→', text: 'Eif5a hypusination in motor axons: spermidine restores local protein synthesis in ALS models (VIB/KU Leuven)' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Global Governance */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-5">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚖️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Neurorights Governance — Active 2025–2026</h3>
+                  <div className="space-y-2">
+                    {[
+                      { jurisdiction: 'UNESCO', instrument: 'First global neurotech ethics standard', status: 'Adopted 2025' },
+                      { jurisdiction: 'Chile', instrument: 'Constitutional neurorights — mental privacy, identity, free will', status: 'World first' },
+                      { jurisdiction: 'Brazil', instrument: 'Bill 2,338/2023 — risk-based AI framework', status: 'Senate passed' },
+                      { jurisdiction: 'USA', instrument: 'MIND Act — FTC regulation of neural data', status: 'Proposed 2025' },
+                      { jurisdiction: 'Spain', instrument: 'Charter of Digital Rights + ENDS health data space', status: 'Active 2026' },
+                      { jurisdiction: 'EU', instrument: 'AI Act — high-risk profiling rules phasing in', status: '2024→2027' },
+                    ].map((row, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary font-mono font-black shrink-0 w-14">{row.jurisdiction}</span>
+                        <span className="text-muted-foreground flex-1 leading-relaxed">{row.instrument}</span>
+                        <span className="text-primary/60 font-mono text-[9px] shrink-0 text-right">{row.status}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* What's at stake — cognitive sovereignty callout */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 lg:col-span-2 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/40 animate-fade-in-up stagger-6">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🛡</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">What's at Stake — Cognitive Sovereignty in 2026</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div className="bg-black/40 border-l-2 border-primary/50 pl-4 py-2">
+                      <p className="text-foreground font-mono text-xs font-semibold mb-1">Neural Data as Biometric Identity</p>
+                      <p className="text-muted-foreground text-[11px] leading-relaxed">EEG signals can re-identify individuals even from consumer wearables. P300, ERN, N200 latency profiles are permanent, uncancellable fingerprints. The MIND Act framers note neural data "reveals what people think and when they intend to act."</p>
+                    </div>
+                    <div className="bg-black/40 border-l-2 border-primary/50 pl-4 py-2">
+                      <p className="text-foreground font-mono text-xs font-semibold mb-1">Native OS Integration as Attack Surface</p>
+                      <p className="text-muted-foreground text-[11px] leading-relaxed">Synchron's BCI HID profile on iOS marks the formal canonization of neural input. With thought-control of iPhone/Vision Pro now real, behavioral telemetry pipelines gain a direct cortical feed — the highest-fidelity signal ever harvested at scale.</p>
+                    </div>
+                    <div className="bg-black/40 border-l-2 border-primary/50 pl-4 py-2">
+                      <p className="text-foreground font-mono text-xs font-semibold mb-1">The Glial Blind Spot</p>
+                      <p className="text-muted-foreground text-[11px] leading-relaxed">Current connectome models miss astrocyte regulation entirely. As neurofeedback products target alertness and mood via EEG proxies, they are intervening in a system far more complex than their models capture — with no regulatory framework for gliotransmitter manipulation.</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {['Mental Privacy', 'Cognitive Liberty', 'Neuro-Augmentation Equity', 'Gliotransmitter Governance', 'BCI HID Telemetry', 'MIND Act'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Relevance to Cognitive Canary v7.0 */}
+            <div className="glass-panel p-5 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30 lg:col-span-2">
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">🚀</span>
+                <div>
+                  <p className="text-mono text-foreground text-sm uppercase tracking-wider font-black">Implications for v7.0 — Neural Adversary</p>
+                  <p className="text-muted-foreground text-xs font-mono mt-1">
+                    Astrocyte-aware obfuscation · BCI HID input spoofing layer · Closed-loop adversarial EEG defense against consumer neurofeedback harvest · Target: Q3 2026
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
 
           {/* ── March 9 2026 ── */}
           {activeTab === 'mar9' && (
