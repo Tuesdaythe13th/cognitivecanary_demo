@@ -17,7 +17,7 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-00ff41?style=for-the-badge&logo=vercel&logoColor=black)](https://github.com/Tuesdaythe13th/cognitivecanary_demo)
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-00ff41?style=for-the-badge&logo=vercel&logoColor=black)](https://cognitivecanary.lovable.app)
 [![Open In Colab](https://img.shields.io/badge/Colab_Notebook-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=black)](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq)
 [![License: MIT](https://img.shields.io/badge/License-MIT-white?style=for-the-badge)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -25,9 +25,44 @@
 
 **We didn't hack the password. We hacked the inference.**
 
-*Multi-modal behavioral obfuscation engine that protects your cognitive fingerprint from surveillance systems.*
+> Protect your behavioral and neural exhaust from surveillance classifiers — without breaking the apps you use.
 
 </div>
+
+---
+
+## Overview
+
+Cognitive Canary is a **user-side behavioral and neural obfuscation layer** that collapses fingerprinting and re-identification while preserving usability.
+
+It wraps browser + EEG + BCI telemetry in adaptive noise, adversarial perturbations, and neurorights-aware policy checks so platforms cannot turn your behavior and brain signals into stable IDs or risk scores.
+
+This repo contains the **live demo site** (React), **seven Python defense engines** (EEG Shield, Neuro Audit, Lissajous 3D, and more), an interactive **Colab notebook**, and the **2026 neurorights whitepaper** backing the threat model.
+
+---
+
+## Links
+
+- **Live demo**: https://cognitivecanary.lovable.app
+- **Colab notebook**: https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq — also at `CognitiveCanary_Demo.ipynb` in this repo
+- **Neurorights whitepaper** (HTML): `public/neurorights-2026.html`
+
+---
+
+## Who is this for?
+
+- **Security & privacy engineers**: drop-in engines to test and harden against behavioral and neural fingerprinting.
+- **Policy / neurorights researchers**: Neuro Audit + whitepaper map current products onto EU AI Act, GDPR, Chilean neurorights, and new US state laws.
+- **ML researchers**: reference implementations of gradient-starvation-based defenses, EEG anonymization, and behavioral entropy measurement.
+
+## Quickstart
+
+I want to:
+
+- **Play with the live defenses in the browser** → see [Interactive Demo Sections](#interactive-demo-sections)
+- **Use EEG Shield in my own pipeline** → see [EEG Shield — `eeg_shield.py`](#06-eeg-shield--eeg_shieldpy-v62)
+- **Run a neurorights audit on a product** → see [Neuro Audit — `neuro_audit.py`](#07-neuro-audit--neuro_auditpy-v62)
+- **Try everything interactively** → open the [Colab notebook](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq)
 
 ---
 
@@ -50,6 +85,8 @@ Modern surveillance infrastructure now targets:
 
 The result is a **behavioral fingerprint** stable enough for 1-in-millions identification — without cookies, logins, or consent.
 
+**Why this matters:** these streams together create a de-facto biometric ID that cannot be rotated or revoked.
+
 ---
 
 ## The Solution: Gradient Starvation as a Weapon
@@ -68,11 +105,17 @@ Without Canary:  Classifier accuracy  ≥ 90%    → identity confirmed
    Human/Bot discrimination remains:   0.97     → still looks human
 ```
 
+### Why gradient starvation helps privacy
+
+Neural fingerprinting systems over-weight a few cheap, high-gradient features. By injecting realistic noise into exactly those features (motor tremor bands, timing ratios, EEG latencies), Canary forces the model to "forget" the individual while keeping the interaction usable.
+
 ---
 
 ## Seven Defense Engines
 
 ### `01` Lissajous 3D Harmonic Overlay
+**File:** `engines/lissajous_3d.py`
+**Use when you need:** cursor-level obfuscation that looks like physiological tremor.
 
 Injects a small-amplitude Lissajous curve into cursor movement data using **physiological tremor frequencies** (4–12 Hz) with irrational frequency ratios:
 
@@ -83,23 +126,71 @@ y(t) = A_y · sin(ω_b · t)
 
 With coprime ratios `13:8:5` (Fibonacci-adjacent), the resulting motion pattern mimics the **spectral signature of natural human hand tremor** while decoupling trajectory from actual CNS state.
 
+```python
+from engines import LissajousEngine
+lj = LissajousEngine()
+pt = lj.transform(x=0.5, y=0.5, dt=1/60)
+```
+
+---
+
 ### `02` Adaptive Tremor Engine
+**File:** `engines/adaptive_tremor.py`
+**Use when you need:** to mask fine-grained motor signatures without impacting Fitts's-Law performance.
 
 Injects synthetic physiological tremor (4–12 Hz) calibrated to remain **below the Fitts's Law detection threshold** (<1% of screen diagonal), maintaining task performance while masking motor signatures.
 
+```python
+from engines import AdaptiveTremorEngine
+eng = AdaptiveTremorEngine()
+```
+
+---
+
 ### `03` Keystroke Jitter
+**File:** `engines/keystroke_jitter.py`
+**Use when you need:** to defeat TypingDNA-class classifiers targeting dwell/flight timing ratios.
 
 Pink noise injection into typing patterns. Human neuromotor control exhibits `1/f` (pink) noise — positive sequential correlations extending into the distant future. Canary maintains this structure while randomizing the **dwell/flight timing ratios** that TypingDNA-class systems rely on.
 
+```python
+from engines import KeystrokeJitterEngine
+kjr = KeystrokeJitterEngine()
+obf = kjr.process(raw_keystroke)
+```
+
+---
+
 ### `04` Spectral Defender
+**File:** `engines/spectral_canary.py`
+**Use when you need:** to defeat EEG-proxy inference from browser timing APIs.
 
 Targets the alpha (8–13 Hz) and theta (4–8 Hz) EEG-proxy bands that CSS animation timing and `requestAnimationFrame` drift can inadvertently expose. Adversarial oscillations collapse the inference surface for P300 event-related potential reconstruction.
 
+```python
+from engines import SpectralCanaryEngine
+sc = SpectralCanaryEngine()
+```
+
+---
+
 ### `05` Gradient Auditor
+**File:** `engines/gradient_auditor.py`
+**Use when you need:** real-time detection of active ML fingerprinting attempts.
 
 Real-time detection of ML poisoning and fingerprinting attacks via **dynamic temporal gradient monitoring**. When a classifier attempts to reconstruct a behavioral profile, the auditor detects the characteristic gradient signature and activates countermeasures.
 
+```python
+from engines import GradientAuditor
+ga = GradientAuditor()
+threats = ga.ingest(feature_vector)
+```
+
+---
+
 ### `06` EEG Shield — `eeg_shield.py` *(v6.2)*
+**File:** `engines/eeg_shield.py`
+**Use when you need:** privacy protection for raw EEG / hearable data streams.
 
 Consumer EEG / hearable surveillance defense tool. Three-layer protection architecture:
 
@@ -118,7 +209,11 @@ print(shield.reid_similarity)        # 0.0 = fully anonymous
 
 **Supported modes**: `passive` · `stealth` · `balanced` · `maximum`
 
+---
+
 ### `07` Neuro Audit — `neuro_audit.py` *(v6.2)*
+**File:** `engines/neuro_audit.py`
+**Use when you need:** a multi-jurisdiction neurorights compliance audit for any neural/AI product.
 
 Multi-jurisdiction neurorights compliance audit engine. Checks products against:
 
@@ -145,6 +240,51 @@ report = quick_audit(
 )
 print(report.summary())
 ```
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    INPUT STREAM                              │
+│  Mouse · Keyboard · Touch · Scroll · Gaze · EEG             │
+└──────────────────┬──────────────────────────────────────────┘
+                   │ Raw behavioral telemetry
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  GRADIENT AUDITOR                           │
+│  Monitors for fingerprinting signatures in real-time        │
+└──────────────────┬──────────────────────────────────────────┘
+                   │ Threat detected → activate countermeasure
+                   ▼
+┌──────────────────┬───────────────┬──────────────────────────┐
+│  Lissajous 3D    │ Adaptive      │  Keystroke               │
+│  Harmonic Overlay│ Tremor Engine │  Jitter                  │
+│  (cursor path)   │ (motor mask)  │  (timing noise)          │
+└──────────────────┴───────┬───────┴──────────────────────────┘
+                           │ Spectral Defender
+                           │ (EEG-band adversarial oscillation)
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   OUTPUT STREAM                             │
+│  Obfuscated telemetry · H_s entropy: 3.2 nats              │
+│  Cross-session correlation: 0.02 · Latency: <0.3ms         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+Zero-knowledge proofs (ZKPs) verify that all deployed configurations derive from a **consented, audited corpus** — ensuring the defense layer itself cannot become a surveillance sink.
+
+### Example: putting it together
+
+In a typical browser + hearable setup:
+
+1. Raw mouse, keyboard, and EEG streams are ingested.
+2. `GradientAuditor` detects active fingerprinting attempts (e.g., TypingDNA-style calls + high-entropy cursor logging).
+3. Cursor and keystrokes are routed through Lissajous + Tremor + Keystroke Jitter, while EEG passes through EEG Shield with `mode="balanced"`.
+4. The site still receives valid input, but cross-session correlation drops to ~0.02 and neural re-ID similarity to ≈0.0.
+
+This is the "Right to be Inscrutable" expressed as code rather than policy prose.
 
 ---
 
@@ -269,8 +409,6 @@ The U.S. Special Operations Command (USSOCOM) now treats behavioral biometrics a
 | Social Deficit | Atypical turn-taking in dialogue | Dysfluent pause structure |
 | Ideological Deviation | Semantic drift in communications | NLP topic clustering anomaly |
 
-Service members risk becoming sources of **cognitive ISR** — where moral distress or ideological questioning can be inferred from routine system use and fed into risk-scoring pipelines.
-
 ---
 
 ## The Right to Be Inscrutable
@@ -288,40 +426,6 @@ Current privacy regimes fail to address behavioral and neural telemetry:
 Existing laws do not account for **telemetry, automated sampling, or embedded processing** — the hallmarks of modern behavioral surveillance.
 
 The path forward is **defensive acceleration**: evolving user-side countermeasures at the same velocity as the inference infrastructure closing the mental privacy gap.
-
----
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    INPUT STREAM                              │
-│  Mouse · Keyboard · Touch · Scroll · Gaze · EEG             │
-└──────────────────┬──────────────────────────────────────────┘
-                   │ Raw behavioral telemetry
-                   ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  GRADIENT AUDITOR                           │
-│  Monitors for fingerprinting signatures in real-time        │
-└──────────────────┬──────────────────────────────────────────┘
-                   │ Threat detected → activate countermeasure
-                   ▼
-┌──────────────────┬───────────────┬──────────────────────────┐
-│  Lissajous 3D    │ Adaptive      │  Keystroke               │
-│  Harmonic Overlay│ Tremor Engine │  Jitter                  │
-│  (cursor path)   │ (motor mask)  │  (timing noise)          │
-└──────────────────┴───────┬───────┴──────────────────────────┘
-                           │ Spectral Defender
-                           │ (EEG-band adversarial oscillation)
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   OUTPUT STREAM                             │
-│  Obfuscated telemetry · H_s entropy: 3.2 nats              │
-│  Cross-session correlation: 0.02 · Latency: <0.3ms         │
-└─────────────────────────────────────────────────────────────┘
-```
-
-Zero-knowledge proofs (ZKPs) verify that all deployed configurations derive from a **consented, audited corpus** — ensuring the defense layer itself cannot become a surveillance sink.
 
 ---
 
@@ -343,6 +447,16 @@ npm run build
 ```
 
 **Stack:** React 18 · TypeScript 5.8 · Vite 5 · Tailwind CSS · shadcn/ui · Recharts · Canvas API
+
+---
+
+## Status & Limitations
+
+- v6.2 is a **research prototype**, not a turnkey product.
+- Engines are tuned against specific classes of models (e.g., TypingDNA-like classifiers, CNN-based EEG re-ID) and may not generalize to all future systems.
+- EEG Shield is **not** a medical device; it is designed for privacy, not diagnosis or therapy.
+
+Use this as a reference implementation and starting point, not a guarantee of anonymity in hostile environments.
 
 ---
 
@@ -375,6 +489,18 @@ npm run build
 10. **Visual Feedback and 1/f Movement Structure** — [PLOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0287571)
 11. **Emulating Human Mouse Movement via Bézier Curves** — [ResearchGate](https://www.researchgate.net/publication/393981520_Emulating_Human-Like_Mouse_Movement_Using_Bezier_Curves_and_Behavioral_Models_for_Advanced_Web_Automation)
 12. **Regulating Neural Data in the Age of BCIs** — [PMC:11951885](https://pmc.ncbi.nlm.nih.gov/articles/PMC11951885/)
+
+---
+
+## About
+
+Cognitive Canary is developed by **ARTIFEX LABS** as part of ongoing research on behavioral and neural privacy, neurorights, and defensive acceleration in surveillance ecosystems.
+
+## How to Cite
+
+If you use this project or the whitepaper in your work, please cite:
+
+> Tues Day, "Cognitive Canary: Behavioral and Neural Obfuscation for Mental Privacy," ARTIFEX LABS, 2026.
 
 ---
 
