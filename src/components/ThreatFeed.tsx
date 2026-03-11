@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { THREAT_TYPE_TO_CAT, CAT_BY_ID } from '@/data/cat';
+import type { CATEntry } from '@/data/cat';
 
 type Severity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 type ThreatType =
@@ -26,6 +28,7 @@ interface ThreatEvent {
   blocked: boolean;
   engine: string;
   vector: number;
+  cat: CATEntry | null;
 }
 
 const SEVERITY_COLOR: Record<Severity, string> = {
@@ -183,6 +186,12 @@ const THREAT_TEMPLATES: {
   },
 ];
 
+function resolveCat(type: ThreatType): CATEntry | null {
+  const ids = THREAT_TYPE_TO_CAT[type];
+  if (!ids?.length) return null;
+  return CAT_BY_ID[ids[0]] ?? null;
+}
+
 function generateThreat(blocked: boolean): ThreatEvent {
   const template = THREAT_TEMPLATES[Math.floor(Math.random() * THREAT_TEMPLATES.length)];
   const desc = template.descriptions[Math.floor(Math.random() * template.descriptions.length)];
@@ -198,6 +207,7 @@ function generateThreat(blocked: boolean): ThreatEvent {
     blocked,
     engine: template.engine,
     vector: Math.random(),
+    cat: resolveCat(template.type),
   };
 }
 
@@ -417,11 +427,36 @@ const ThreatFeed = () => {
                   <div className="text-[9px] font-mono text-white/60 leading-relaxed">
                     {ev.description}
                   </div>
-                  <div className="flex items-center gap-3 mt-0.5">
+                  <div className="flex items-center gap-3 mt-0.5 flex-wrap">
                     <span className="text-[7px] font-mono text-white/20">{ev.engine}</span>
                     <span className="text-[7px] font-mono" style={{ color: 'hsla(142, 71%, 45%, 0.4)' }}>
                       ID:{ev.id}
                     </span>
+                    {ev.cat && (
+                      <span
+                        className="text-[7px] font-mono px-1.5 py-px border uppercase tracking-wider"
+                        style={{
+                          color: ev.cat.category === 'Exploit'
+                            ? 'hsla(15, 90%, 65%, 0.85)'
+                            : ev.cat.category === 'Vulnerability'
+                            ? 'hsla(38, 95%, 60%, 0.85)'
+                            : 'hsla(210, 80%, 65%, 0.85)',
+                          borderColor: ev.cat.category === 'Exploit'
+                            ? 'hsla(15, 90%, 55%, 0.2)'
+                            : ev.cat.category === 'Vulnerability'
+                            ? 'hsla(38, 95%, 55%, 0.2)'
+                            : 'hsla(210, 80%, 55%, 0.2)',
+                          background: ev.cat.category === 'Exploit'
+                            ? 'hsla(15, 90%, 30%, 0.08)'
+                            : ev.cat.category === 'Vulnerability'
+                            ? 'hsla(38, 95%, 30%, 0.07)'
+                            : 'hsla(210, 80%, 30%, 0.07)',
+                        }}
+                        title={`CAT Layer ${ev.cat.layers.join('/')} · ${ev.cat.category}`}
+                      >
+                        {ev.cat.id} · {ev.cat.name}
+                      </span>
+                    )}
                   </div>
                 </div>
 
