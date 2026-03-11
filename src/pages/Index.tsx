@@ -37,6 +37,7 @@ const Index = () => {
 
         <ErrorBoundary>
           <AboutSection />
+          <BCILandscape />
           <LabProgressUpdate />
         </ErrorBoundary>
 
