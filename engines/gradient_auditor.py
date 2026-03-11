@@ -66,7 +66,7 @@ class Severity(Enum):
     CRITICAL = 4
 
     def label(self) -> str:
-        return self.name
+        return str(self.name)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -231,7 +231,7 @@ def _rule_raf_drift_probe(window: list[FeatureVector]) -> float:
     flags = [v.raf_drift_detected for v in window]
     if not flags:
         return 0.0
-    return min(1.0, sum(flags) / max(1, len(flags) * 0.6))
+    return min(1.0, sum(flags) / max(1.0, len(flags) * 0.6))
 
 
 def _rule_gradient_starvation_flood(window: list[FeatureVector]) -> float:
@@ -392,8 +392,9 @@ class GradientAuditor:
                 evt = self._make_event(rule, confidence, window_list)
                 self._events.append(evt)
                 new_events.append(evt)
-                if self._on_threat:
-                    self._on_threat(evt)
+                if self._on_threat is not None:
+                    callback = self._on_threat
+                    callback(evt)  # type: ignore[misc]
 
         return new_events
 
@@ -440,12 +441,12 @@ class GradientAuditor:
         evt_id = f"CC-{self._event_counter:05d}"
 
         # Extract supporting evidence from the window
-        evidence = {
-            "confidence":      round(confidence, 4),
+        evidence: dict[str, float | int] = {
+            "confidence":      float(round(confidence, 4)),  # type: ignore[call-overload]
             "window_size":     len(window),
-            "mean_entropy":    round(_mean_available([v.spectral_entropy for v in window]), 4),
-            "mean_jerk":       round(_mean_available([v.cursor_jerk      for v in window]), 4),
-            "hires_timer_frac":round(sum(v.hires_timer_active for v in window) / len(window), 3),
+            "mean_entropy":    float(round(_mean_available([v.spectral_entropy for v in window]), 4)),  # type: ignore[call-overload]
+            "mean_jerk":       float(round(_mean_available([v.cursor_jerk      for v in window]), 4)),  # type: ignore[call-overload]
+            "hires_timer_frac":float(round(sum(v.hires_timer_active for v in window) / len(window), 3)),  # type: ignore[call-overload]
         }
 
         blocked = confidence >= 0.80   # auto-block high-confidence detections
@@ -568,13 +569,13 @@ if __name__ == "__main__":
         ("normal",            10,  "Recovery — canary countermeasures active"),
     ]
 
-    t = time.perf_counter()
+    t: float = time.perf_counter()
     for attack, n, label in scenarios:
         print(f"\n{CYAN}  ── {label} ({n} vectors) ──{RESET}")
         for _ in range(n):
             fv = _make_attack_fv(t, attack) if attack != "normal" else _make_normal_fv(t)
             auditor.ingest(fv)
-            t += 0.1
+            t = t + 0.1  # type: ignore[operator]
 
     s = auditor.stats
     print(f"""

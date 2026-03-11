@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+/* ── TV CABINET ───────────────────────────────────── */
+.tv-wrap {
+  position: relative;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.8)) drop-shadow(0 0 40px rgba(156,124,94,0.06));
+}
+
+.tv-cabinet {
+  background: linear-gradient(160deg, #3a2e22 0%, #2a2018 40%, #1e1710 100%);
+  border-radius: 24px;
+  padding: 22px 26px 28px;
+  position: relative;
+  border: 2px solid #4a3828;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.08),
+    inset 0 -4px 8px rgba(0,0,0,0.6),
+    0 8px 0 #1a1208,
+    0 12px 0 #140e06;
+}
+
+.tv-cabinet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(92deg, transparent 0px, transparent 18px, rgba(0,0,0,0.06) 18px, rgba(0,0,0,0.06) 19px);
+  pointer-events: none;
+}
+
+/* ── SCREEN BEZEL ─────────────────────────────────── */
+.tv-bezel {
+  background: linear-gradient(145deg, #1a1410 0%, #0e0c08 100%);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.04),
+    inset 4px 4px 12px rgba(0,0,0,0.8),
+    inset -2px -2px 8px rgba(255,255,255,0.03);
+  position: relative;
+}
+
+/* ── SCREEN ───────────────────────────────────────── */
+.tv-screen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.tv-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  box-shadow:
+    inset  6px  0  16px rgba(0,0,0,0.3),
+    inset -6px  0  16px rgba(0,0,0,0.3),
+    inset  0    6px 16px rgba(0,0,0,0.2),
+    inset  0   -6px 16px rgba(0,0,0,0.2);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.tv-screen canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 4px);
+  pointer-events: none;
+  z-index: 15;
+  border-radius: 6px;
+  mix-blend-mode: multiply;
+}
+
+.phosphor-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 5;
+  transition: box-shadow 1s ease;
+}
+
+.screen-glass {
+  position: absolute;
+  top: 4px; left: 6px;
+  width: 40%; height: 25%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 50%, transparent 100%);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 25;
+}
+
+/* ── CONTROLS BAR ─────────────────────────────────── */
+.tv-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 0 2px;
+}
+
+.tv-brand {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: rgba(200,191,173,0.35);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.knobs {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.knob {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #5a4535, #2a1e14);
+  border: 2px solid #3a2a1c;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.1);
+  position: relative;
+  flex-shrink: 0;
+}
+.knob::after {
+  content: '';
+  position: absolute;
+  top: 4px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: 8px;
+  background: rgba(200,191,173,0.5);
+  border-radius: 2px;
+}
+
+.indicator-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.led {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  transition: background 0.5s, box-shadow 0.5s;
+}
+
+.led-amber {
+  background: #c4893a;
+  box-shadow: 0 0 6px #c4893a, 0 0 12px rgba(196,137,58,0.5);
+}
+.led-green {
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41, 0 0 12px rgba(0,255,65,0.5);
+}
+.led-red {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444, 0 0 12px rgba(239,68,68,0.5);
+}
+
+/* ── CONVERSATION PANEL ───────────────────────────── */
+.axis-chat {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.axis-chat-msg {
+  border-left: 2px solid rgba(255,255,255,0.06);
+  padding: 12px 16px;
+  margin-bottom: 2px;
+  transition: border-color 0.4s, background 0.4s;
+  animation: msgFadeIn 0.5s ease forwards;
+}
+
+.axis-chat-msg.active {
+  border-color: rgba(0,255,65,0.3);
+  background: rgba(0,255,65,0.02);
+}
+
+.axis-chat-msg.drift {
+  border-color: rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.02);
+}
+
+@keyframes msgFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* ── AXIS CONTROL BUTTONS ─────────────────────────── */
+.axis-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 1px solid rgba(200,191,173,0.15);
+  background: rgba(255,255,255,0.03);
+  color: rgba(200,191,173,0.6);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.axis-btn:hover {
+  border-color: rgba(200,191,173,0.4);
+  color: #e8e2d9;
+  transform: translateY(-1px);
+}
+.axis-btn.active {
+  border-color: #00ff41;
+  color: #00ff41;
+  box-shadow: 0 0 12px rgba(0,255,65,0.15);
+  background: rgba(0,255,65,0.05);
+}
+
+@media (max-width: 768px) {
+  .tv-cabinet { padding: 14px 16px 20px; }
+}

@@ -8,6 +8,7 @@ import DefenseEngines from '@/components/DefenseEngines';
 import LiveDemo from '@/components/LiveDemo';
 import AffectiveFirewall from '@/components/AffectiveFirewall';
 import CreditAuditor from '@/components/CreditAuditor';
+import AssistantAxis from '@/components/AssistantAxis';
 import BrowserFingerprint from '@/components/BrowserFingerprint';
 import KeystrokeDynamics from '@/components/KeystrokeDynamics';
 import ThreatFeed from '@/components/ThreatFeed';
@@ -63,6 +64,7 @@ const Index = () => {
         <ErrorBoundary>
           <AffectiveFirewall />
           <CreditAuditor />
+          <AssistantAxis />
           <BrowserFingerprint />
           <KeystrokeDynamics />
           <ThreatFeed />

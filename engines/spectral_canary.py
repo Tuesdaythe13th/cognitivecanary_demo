@@ -223,7 +223,7 @@ class AdversarialOscillator:
         offset_ms = 0.0
         targeted  = []
 
-        for band in self._targets:
+        for band in self._targets:  # type: ignore[attr-defined]
             # Scale amplitude by the detected power: stronger signal → more injection
             if band.name == "alpha":
                 band_power = state.alpha_power
@@ -235,10 +235,10 @@ class AdversarialOscillator:
             if band_power < 0.05:
                 continue   # band not significantly active — skip
 
-            φ      = self._phases[band.name]
+            φ      = self._phases[band.name]  # type: ignore[attr-defined]
             ω      = 2 * math.pi * band.center
-            amp    = self._amp_ms * band.weight * (0.5 + band_power)
-            offset_ms += amp * math.sin(ω * t + φ)
+            amp    = self._amp_ms * band.weight * (0.5 + band_power)  # type: ignore[attr-defined]
+            offset_ms += amp * math.sin(ω * t + φ)  # type: ignore[operator]
             targeted.append(band.name)
 
         return offset_ms, targeted

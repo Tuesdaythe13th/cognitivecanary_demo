@@ -9,18 +9,14 @@ interface EngineDemoModalProps {
   desc: string;
   draw: DrawFn;
   index: number;
+  totalCount?: number;
 }
 
-/**
- * Full-screen slide-up modal with an expanded interactive engine visualization.
- * Uses CSS transforms for the slide animation and an enlarged canvas.
- */
-const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: EngineDemoModalProps) => {
+const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index, totalCount = 15 }: EngineDemoModalProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [visible, setVisible] = useState(false);
   const [rendered, setRendered] = useState(false);
 
-  // Manage mount/unmount with animation timing
   useEffect(() => {
     if (open) {
       setRendered(true);
@@ -32,7 +28,6 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
     }
   }, [open]);
 
-  // Lock body scroll when open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -40,7 +35,6 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
     }
   }, [open]);
 
-  // Canvas animation loop — only when visible
   useEffect(() => {
     if (!visible) return;
     const canvas = canvasRef.current;
@@ -74,7 +68,6 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
     };
   }, [visible, draw, index]);
 
-  // Escape key closes
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -86,7 +79,7 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
       style={{
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -95,43 +88,36 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+        className="absolute inset-0 bg-black/85 backdrop-blur-xl"
         onClick={onClose}
-        style={{
-          opacity: visible ? 1 : 0,
-          transition: 'opacity 0.4s ease',
-        }}
       />
 
-      {/* Panel */}
+      {/* Panel — simple rounded card, no complex electric nesting */}
       <div
-        className="relative w-full max-w-5xl mx-4 mb-4 sm:mx-6 sm:mb-6 electric-card-container theme-green flex flex-col"
+        className="relative w-full max-w-5xl overflow-hidden"
         style={{
-          transform: visible ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.95)',
+          transform: visible ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.95)',
           opacity: visible ? 1 : 0,
           transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease',
+          borderRadius: '20px',
           maxHeight: '90vh',
+          border: '2px solid hsla(142, 71%, 45%, 0.3)',
+          boxShadow: '0 0 80px rgba(0, 255, 65, 0.08), 0 0 0 1px rgba(0, 255, 65, 0.05), inset 0 1px 0 rgba(255,255,255,0.05)',
+          background: '#0a0e0d',
         }}
       >
-        <div className="electric-glow-layer-1" />
-        <div className="electric-glow-layer-2" />
-        <div className="electric-background-glow" />
-        
-        <div className="electric-inner-container flex-1 min-h-0 flex flex-col">
-          <div className="electric-border-outer flex-1 min-h-0 flex flex-col">
-            <div className="electric-main-card flex-1 min-h-0 flex flex-col">
-              <div className="electric-overlay-1" />
-              <div className="electric-overlay-2" />
-              
-              {/* Content */}
-              <div className="electric-content-container relative z-10 overflow-y-auto flex-1 h-full max-h-[90vh]">
+        {/* Top glow line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-60" />
 
-          {/* Header bar */}
-          <div className="flex items-center justify-between p-6 pb-0">
+        {/* Scrollable content */}
+        <div className="overflow-y-auto" style={{ maxHeight: '90vh' }}>
+
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 pb-4">
             <div className="flex items-center gap-4">
               <span
-                className="w-3 h-3 rounded-full bg-primary"
-                style={{ boxShadow: '0 0 10px hsla(142, 71%, 50%, 0.8)', animation: 'pulse 2s ease-in-out infinite' }}
+                className="w-3 h-3 rounded-full bg-primary flex-shrink-0"
+                style={{ boxShadow: '0 0 10px hsla(142, 71%, 50%, 0.8)' }}
               />
               <div>
                 <div className="flex items-center gap-3">
@@ -150,8 +136,8 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
             </button>
           </div>
 
-          {/* Canvas visualization — large */}
-          <div className="p-6">
+          {/* Canvas */}
+          <div className="px-6 pb-4">
             <div
               className="relative overflow-hidden"
               style={{
@@ -162,65 +148,54 @@ const EngineDemoModal = ({ open, onClose, name, tag, desc, draw, index }: Engine
             >
               <canvas
                 ref={canvasRef}
-                className="w-full"
+                className="w-full block"
                 style={{ height: '380px' }}
                 aria-label={`${name} interactive visualization`}
                 role="img"
               />
-              {/* Scanline overlay */}
-              <div className="absolute inset-0 scanline-overlay pointer-events-none opacity-30" />
-              {/* Corner decorations */}
+              <div className="absolute inset-0 scanline-overlay pointer-events-none opacity-20" />
               <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/30" />
               <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/30" />
               <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30" />
               <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30" />
-              {/* Status overlay with user's loader */}
-              <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                <div className="loader-container transform scale-50 -ml-1">
-                  <div className="radar" style={{ '--size': '16px' } as any}></div>
-                </div>
-                <span className="text-[10px] font-mono font-bold text-primary uppercase tracking-widest drop-shadow-[0_0_8px_rgba(0,255,65,0.8)]">Live Render</span>
+              <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="text-[9px] font-mono text-primary/60 uppercase tracking-widest">Live Render</span>
               </div>
               <div className="absolute top-4 right-4">
-                <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">Engine {String(index + 1).padStart(2, '0')} / 07</span>
+                <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">Engine {String(index + 1).padStart(2, '0')} / {String(totalCount).padStart(2, '0')}</span>
               </div>
             </div>
           </div>
 
-          {/* Engine description */}
+          {/* Description + Stats */}
           <div className="px-6 pb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Description card */}
-              <div className="md:col-span-2 glass-panel p-5 bg-white/[0.02]">
+              <div className="md:col-span-2 glass-panel p-5 bg-white/[0.02] rounded-xl">
                 <div className="text-[9px] font-mono text-primary/50 uppercase tracking-widest mb-3">Engine Description</div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
               </div>
-
-              {/* Stats card */}
-              <div className="glass-panel p-5 bg-white/[0.02]">
+              <div className="glass-panel p-5 bg-white/[0.02] rounded-xl">
                 <div className="text-[9px] font-mono text-primary/50 uppercase tracking-widest mb-3">Status</div>
                 <div className="space-y-3">
                   {[
-                    { label: 'Status', value: 'ACTIVE', color: 'text-primary' },
-                    { label: 'Latency', value: '<1ms', color: 'text-primary' },
-                    { label: 'Coverage', value: '100%', color: 'text-primary' },
-                    { label: 'Module', value: tag, color: 'text-muted-foreground' },
-                  ].map(stat => (
-                    <div key={stat.label} className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-white/30 uppercase">{stat.label}</span>
-                      <span className={`text-[10px] font-mono font-bold ${stat.color}`}>{stat.value}</span>
+                    { label: 'Status',   value: 'ACTIVE', color: 'text-primary' },
+                    { label: 'Latency',  value: '<1ms',   color: 'text-primary' },
+                    { label: 'Coverage', value: '100%',   color: 'text-primary' },
+                    { label: 'Module',   value: tag,      color: 'text-muted-foreground' },
+                  ].map(s => (
+                    <div key={s.label} className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono text-white/30 uppercase">{s.label}</span>
+                      <span className={`text-[10px] font-mono font-bold ${s.color}`}>{s.value}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 

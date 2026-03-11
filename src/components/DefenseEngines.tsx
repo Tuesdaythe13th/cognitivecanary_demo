@@ -26,7 +26,7 @@ const DefenseEngines = () => {
         >
           <span className="tag-badge mb-6 inline-block">{ENGINE_COUNT} ENGINES</span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
-            The defense<br />stack.
+            The defense &<br />forensic stack.
           </h2>
           <p className="text-xs font-mono text-muted-foreground/50 mt-4 uppercase tracking-widest">
             Click any engine to explore its live visualization
