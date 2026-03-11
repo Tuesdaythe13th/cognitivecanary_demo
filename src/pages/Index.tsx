@@ -39,6 +39,7 @@ const Index = () => {
         <ErrorBoundary>
           <AboutSection />
           <BCILandscape />
+          <NeuroRightsSection />
           <LabProgressUpdate />
         </ErrorBoundary>
 
