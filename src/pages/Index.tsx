@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero';
 import SiteNav from '@/components/SiteNav';
 import AboutSection from '@/components/AboutSection';
+import BCILandscape from '@/components/BCILandscape';
 import LabProgressUpdate from '@/components/LabProgressUpdate';
 import ProblemSection from '@/components/ProblemSection';
 import ImportanceSection from '@/components/ImportanceSection';
