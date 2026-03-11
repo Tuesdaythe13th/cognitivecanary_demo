@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { APP_VERSION } from '@/lib/constants';
 
 const LissajousCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +8,9 @@ const LissajousCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let animId: number;
     let t = 0;
 
@@ -134,7 +137,7 @@ const LissajousCanvas = () => {
         }
       }
 
-      t += 0.007;
+      t += prefersReducedMotion ? 0 : 0.007;
       animId = requestAnimationFrame(draw);
     };
 
@@ -196,7 +199,7 @@ const Hero = () => {
       <div className="relative z-10 text-center px-6 max-w-5xl">
         {/* Version badge */}
         <div className="flex items-center justify-center gap-3 mb-8 animate-slide-up">
-          <span className="tag-badge">v6.2</span>
+          <span className="tag-badge">v{APP_VERSION}</span>
           <span className="tag-badge" style={{ borderColor: 'hsl(175 60% 45% / 0.3)', color: 'hsl(175, 60%, 45%)', background: 'hsl(175 60% 45% / 0.08)' }}>d/acc</span>
           <span className="tag-badge" style={{ borderColor: 'hsl(280 60% 60% / 0.3)', color: 'hsl(280, 60%, 60%)', background: 'hsl(280 60% 60% / 0.08)' }}>ACTIVE DEFENSE</span>
         </div>

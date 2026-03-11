@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import SiteNav from '@/components/SiteNav';
 import AboutSection from '@/components/AboutSection';
 import LabProgressUpdate from '@/components/LabProgressUpdate';
 import ProblemSection from '@/components/ProblemSection';
@@ -10,11 +11,13 @@ import CreditAuditor from '@/components/CreditAuditor';
 import BrowserFingerprint from '@/components/BrowserFingerprint';
 import KeystrokeDynamics from '@/components/KeystrokeDynamics';
 import ThreatFeed from '@/components/ThreatFeed';
+import DeceptionPipeline from '@/components/DeceptionPipeline';
 import StrategicRisks from '@/components/StrategicRisks';
 import Results from '@/components/Results';
 import Architecture from '@/components/Architecture';
 import Roadmap from '@/components/Roadmap';
 import SiteFooter from '@/components/SiteFooter';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const Index = () => {
   return (
@@ -23,36 +26,23 @@ const Index = () => {
       <div className="fixed inset-0 grid-bg pointer-events-none opacity-40" />
       <div className="fixed inset-0 grain-overlay pointer-events-none opacity-50 mix-blend-overlay" />
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/70 backdrop-blur-xl border border-primary/20 px-6 py-3 pointer-events-auto shadow-[0_0_60px_rgba(0,0,0,0.9)]">
-          <div className="flex items-center gap-3">
-            <span className="text-primary font-black tracking-tighter text-xl font-mono" style={{ textShadow: '0 0 10px var(--neon-green)' }}>CC // ARTIFEX</span>
-            <span className="text-[9px] bg-primary text-black px-2 py-0.5 font-mono font-black tracking-widest uppercase">v6.2</span>
-          </div>
-          <div className="hidden md:flex gap-8 items-center font-mono text-[10px] uppercase tracking-[0.3em] font-black">
-            <a href="#about" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">About</a>
-            <a href="#lab-update" className="text-primary/70 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Lab</a>
-            <a href="#problem" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Threats</a>
-            <a href="#engines" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Engines</a>
-            <a href="#affective" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Affective</a>
-            <a href="#fingerprint" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">FP Audit</a>
-            <a href="#keystroke" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Keystroke</a>
-            <a href="#threatfeed" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Feed</a>
-            <a href="#demo" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Demo</a>
-            <a href="#roadmap" className="text-white/40 hover:text-primary transition-all duration-300 hover:tracking-[0.4em]">Roadmap</a>
-            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" className="bg-primary text-black px-5 py-2 hover:bg-white transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">Source</a>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main className="relative">
-        <Hero />
-        <AboutSection />
-        <LabProgressUpdate />
-        <ProblemSection />
-        <ImportanceSection />
-        <DefenseEngines />
+        <ErrorBoundary>
+          <Hero />
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <AboutSection />
+          <LabProgressUpdate />
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <ProblemSection />
+          <ImportanceSection />
+          <DefenseEngines />
+        </ErrorBoundary>
 
         {/* Lab Case Studies Section Header */}
         <section className="py-40 px-6 border-t border-white/5 bg-black relative">
@@ -70,20 +60,27 @@ const Index = () => {
           </div>
         </section>
 
-        <AffectiveFirewall />
-        <CreditAuditor />
-        <BrowserFingerprint />
-        <KeystrokeDynamics />
-        <ThreatFeed />
+        <ErrorBoundary>
+          <AffectiveFirewall />
+          <CreditAuditor />
+          <BrowserFingerprint />
+          <KeystrokeDynamics />
+          <ThreatFeed />
+          <DeceptionPipeline />
+        </ErrorBoundary>
 
-        <StrategicRisks />
+        <ErrorBoundary>
+          <StrategicRisks />
+        </ErrorBoundary>
 
         <div className="h-40 bg-gradient-to-b from-black to-black/20" />
 
-        <LiveDemo />
-        <Results />
-        <Architecture />
-        <Roadmap />
+        <ErrorBoundary>
+          <LiveDemo />
+          <Results />
+          <Architecture />
+          <Roadmap />
+        </ErrorBoundary>
       </main>
 
       <SiteFooter />
