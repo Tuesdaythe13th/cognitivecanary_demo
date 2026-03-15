@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syncopate:wght@700&display=swap');
 @import './demo-styles.css';
 @import './axis-monitor.css';
 
@@ -296,6 +297,53 @@
     font-size: 0.7em;
     margin-left: 2px;
   }
+
+  /* Brutalist utilities */
+  .brutal-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    mix-blend-mode: difference;
+  }
+  
+  .tape-wrapper {
+    background: #BFFF00;
+    color: #050505;
+    padding: 1rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    border-top: 2px solid #050505;
+    border-bottom: 2px solid #050505;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    transform: rotate(-2deg) scale(1.1);
+    margin: 4rem 0;
+    box-shadow: 0 10px 30px rgba(191, 255, 0, 0.1);
+  }
+  
+  .tape-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: tape-scroll 20s linear infinite;
+  }
+  
+  .hero-word {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    line-height: 0.85;
+  }
+}
+
+@keyframes tape-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
 @keyframes slideUp {

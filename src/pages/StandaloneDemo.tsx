@@ -8,6 +8,11 @@ import DeceptionPipeline from '@/components/DeceptionPipeline';
 import LiveDemo from '@/components/LiveDemo';
 import ThreatFeed from '@/components/ThreatFeed';
 import Lissajous3D from '@/components/Lissajous3D';
+import AdaptiveTremor from '@/components/AdaptiveTremor';
+import KeystrokeJitter from '@/components/KeystrokeJitter';
+import NeuroAudit from '@/components/NeuroAudit';
+import InspectHarness from '@/components/InspectHarness';
+import StrategicFidelity from '@/components/StrategicFidelity';
 import { ExternalLink } from 'lucide-react';
 import { engineRegistry } from '@/data/engineRegistry';
 
@@ -21,9 +26,13 @@ const DEMOS: Record<string, React.FC> = {
   'live-demo': LiveDemo,
   'threat-feed': ThreatFeed,
   'lissajous-3d': Lissajous3D,
+  'adaptive-tremor': AdaptiveTremor,
+  'keystroke-jitter': KeystrokeJitter,
+  'neuro-audit': NeuroAudit,
+  'inspect-harness': InspectHarness,
+  'strategic-fidelity': StrategicFidelity,
   
   // Temporary mappings for continuity during refactor
-  'keystroke-jitter': KeystrokeDynamics,
   'gradient-auditor': ThreatFeed,
 };
 

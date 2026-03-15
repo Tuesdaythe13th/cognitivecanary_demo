@@ -19,6 +19,8 @@ export default {
         display: ['"Plus Jakarta Sans"', 'sans-serif'],
         mono: ['"Geist Mono"', 'monospace'],
         body: ['"Inter"', 'sans-serif'],
+        brutal: ['"Syncopate"', 'sans-serif'],
+        grotesque: ['"Space Grotesk"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
