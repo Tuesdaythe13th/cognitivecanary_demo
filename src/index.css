@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
 @import './demo-styles.css';
 @import './axis-monitor.css';
 
@@ -8,62 +8,47 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 142 100% 95%;
+    --background: 0 0% 2%; /* #050505 approx */
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 3%;
-    --card-foreground: 142 100% 95%;
+    --card: 0 0% 2%;
+    --card-foreground: 0 0% 100%;
 
     --popover: 0 0% 3%;
-    --popover-foreground: 142 100% 95%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 142 71% 45%;
-    --primary-foreground: 200 10% 4%;
+    --primary: 74 100% 50%; /* #BFFF00 */
+    --primary-foreground: 0 0% 2%;
 
-    --secondary: 175 60% 45%;
-    --secondary-foreground: 200 10% 4%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 2%;
 
-    --muted: 200 8% 14%;
-    --muted-foreground: 160 10% 55%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 280 60% 60%;
-    --accent-foreground: 150 100% 95%;
+    --accent: 74 100% 50%;
+    --accent-foreground: 0 0% 2%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 160 15% 18%;
-    --input: 160 15% 18%;
-    --ring: 142 71% 45%;
+    --border: 0 0% 100%; /* controlled by opacity usually, or set to 100% with alpha in components */
+    --input: 0 0% 100%;
+    --ring: 74 100% 50%;
 
     --radius: 2px;
-
-    --sidebar-background: 200 10% 6%;
-    --sidebar-foreground: 150 100% 95%;
-    --sidebar-primary: 142 71% 45%;
-    --sidebar-primary-foreground: 200 10% 4%;
-    --sidebar-accent: 280 60% 60%;
-    --sidebar-accent-foreground: 150 100% 95%;
-    --sidebar-border: 160 15% 18%;
-    --sidebar-ring: 142 71% 45%;
-
-    --neon-green: #00ff41;
-    --neon-cyan: #00e5ff;
-    --neon-purple: #b44aff;
-    --deep-black: #0a0e0d;
-    --grid-color: rgba(0, 255, 65, 0.04);
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-white/10;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Satoshi', sans-serif;
-    font-weight: 400;
+    @apply bg-[#050505] text-white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
     scroll-behavior: smooth;
     cursor: default;
   }
@@ -74,15 +59,15 @@
   h4,
   h5,
   h6 {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
     letter-spacing: -0.05em;
-    line-height: 0.85;
+    text-transform: uppercase;
   }
 
   ::selection {
-    background-color: hsl(142, 71%, 45%);
-    color: hsl(200, 10%, 4%);
+    background-color: hsl(74, 100%, 50%, 0.3);
+    color: hsl(74, 100%, 50%);
   }
 
   ::-webkit-scrollbar {
@@ -90,37 +75,38 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(200, 10%, 6%);
+    background: #050505;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(142, 71%, 45%);
+    background: #BFFF00;
     border-radius: 0;
   }
 }
 
 @layer utilities {
   .text-display {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
     letter-spacing: -0.05em;
-    line-height: 0.85;
+    text-transform: uppercase;
   }
 
   .text-mono {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-family: 'Geist Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
 
   .text-body {
-    font-family: 'Satoshi', sans-serif;
-    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
   }
 
   .text-body-medium {
-    font-family: 'Satoshi', sans-serif;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
   }
 
   /* Animated grid background */

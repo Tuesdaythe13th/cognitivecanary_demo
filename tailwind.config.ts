@@ -15,8 +15,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Clash Display"', 'sans-serif'],
-        body: ['"Satoshi"', 'sans-serif'],
+        sans: ['"Inter"', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        mono: ['"Geist Mono"', 'monospace'],
+        body: ['"Inter"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

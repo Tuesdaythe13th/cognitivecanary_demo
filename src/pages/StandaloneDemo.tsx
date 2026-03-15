@@ -7,7 +7,9 @@ import KeystrokeDynamics from '@/components/KeystrokeDynamics';
 import DeceptionPipeline from '@/components/DeceptionPipeline';
 import LiveDemo from '@/components/LiveDemo';
 import ThreatFeed from '@/components/ThreatFeed';
+import Lissajous3D from '@/components/Lissajous3D';
 import { ExternalLink } from 'lucide-react';
+import { engineRegistry } from '@/data/engineRegistry';
 
 const DEMOS: Record<string, React.FC> = {
   'affective-firewall': AffectiveFirewall,
@@ -18,20 +20,39 @@ const DEMOS: Record<string, React.FC> = {
   'deception-pipeline': DeceptionPipeline,
   'live-demo': LiveDemo,
   'threat-feed': ThreatFeed,
+  'lissajous-3d': Lissajous3D,
+  
+  // Temporary mappings for continuity during refactor
+  'keystroke-jitter': KeystrokeDynamics,
+  'gradient-auditor': ThreatFeed,
 };
 
 export default function StandaloneDemo() {
   const { id } = useParams<{ id: string }>();
   
-  if (!id || !DEMOS[id]) {
+  const engineDef = engineRegistry.find(e => e.id === id);
+
+  if (!id) return null;
+
+  const DemoComponent = DEMOS[id];
+
+  if (!DemoComponent) {
+    if (engineDef) {
+       return (
+          <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center font-mono p-6">
+             <div className="text-display text-4xl mb-4 text-white/50">{engineDef.title}</div>
+             <div className="text-xs uppercase tracking-widest text-[#BFFF00] mb-8 px-3 py-1 bg-[#BFFF00]/10 border border-[#BFFF00]/30">System Under Construction</div>
+             <p className="max-w-md text-center text-white/40 leading-relaxed mb-8 text-sm">This engine is currently being refactored into the new ExhibitLayout unified grammar for v7.0.</p>
+             <Link to="/lab" className="text-[10px] text-white/50 hover:text-[#BFFF00] uppercase tracking-widest transition-colors border border-white/20 px-4 py-2 hover:bg-white/5">Return to Hub</Link>
+          </div>
+       );
+    }
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center font-mono text-sm">
-        <div>Demo not found. <Link to="/" className="text-primary hover:underline ml-2">Return Home</Link></div>
+        <div>Demo not found. <Link to="/lab" className="text-[#BFFF00] hover:underline ml-2">Return to Hub</Link></div>
       </div>
     );
   }
-
-  const DemoComponent = DEMOS[id];
 
   return (
     <div className="min-h-screen bg-[#050706] text-white selection:bg-primary/30 selection:text-primary relative font-sans overflow-x-hidden">
