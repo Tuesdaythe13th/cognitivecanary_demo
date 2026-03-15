@@ -32,7 +32,7 @@ export default function CreditAuditor() {
     if (!isInView || verdict !== 'NONE') return;
 
     let animId: number;
-    let decay = 0.95;
+    const decay = 0.95;
 
     const loop = () => {
       setMetrics(prev => prev.map(m => {
@@ -299,7 +299,7 @@ export default function CreditAuditor() {
             {isSubmitting && (
               <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center p-8">
                  <div className="loader-container transform scale-150 mb-8">
-                    <div className="radar" style={{ '--size': '24px', '--loader-accent': 'var(--primary)' } as any}></div>
+                    <div className="radar" style={{ '--size': '24px', '--loader-accent': 'var(--primary)' } as React.CSSProperties}></div>
                  </div>
                  <div className="text-[10px] font-mono text-primary animate-pulse tracking-widest uppercase">
                    Cross-referencing behavioral databanks...

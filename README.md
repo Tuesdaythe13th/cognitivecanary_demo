@@ -153,7 +153,7 @@ Calculates H_strat (strategic misalignment) utilizing transcript data to render 
 
 ## Interactive Demo Sections
 
-The live demo (`https://cognitivecanary.lovable.app`) includes **interactive exhibits**:
+The live demo (`https://cognitivecanary.lovable.app`) includes **interactive exhibits**, now with **standalone mode** for focused exploration of individual defense and forensic modules:
 
 ### Lab Exhibit 01 — Affective Firewall
 Chat interface demonstrating sycophancy detection. Measures the "Locus Internus" — the boundary between utility and affective exploitation.
@@ -171,7 +171,7 @@ Live scan of your actual browser session using real APIs, demonstrating how 45+ 
 Type text and see your dwell time and flight time visualized in milliseconds. Toggle Keystroke Jitter to inject pink noise.
 
 ### Lab Exhibit 06 — Threat Intercept Stream
-Live threat intelligence feed across 12 attack vectors with real-time severity classification and per-engine block counts.
+Live threat intelligence feed across 12 attack vectors with real-time severity classification, Cognitive Attack Taxonomy (CAT) enrichments, and per-engine block counts.
 
 ### Lab Exhibit 07 — Deception Pipeline / Forensics *(New in v7.0)*
 Explore the 8 new forensic engines analyzing frontier AI behavior for sandbagging, sycophancy, and evaluation awareness.

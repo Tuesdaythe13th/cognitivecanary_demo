@@ -193,7 +193,7 @@ export const drawSpectral: DrawFn = (ctx, w, h, t) => {
     ctx.setLineDash([2, 4]);
     for (let x = 0; x < w; x++) {
       const y = yBase + amp * Math.sin((x / w) * freq * Math.PI * 2 + t * 1.8);
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
     }
     ctx.stroke();
     ctx.setLineDash([]);
@@ -205,7 +205,7 @@ export const drawSpectral: DrawFn = (ctx, w, h, t) => {
       const raw = amp * Math.sin((x / w) * freq * Math.PI * 2 + t * 1.8);
       const adv = advAmp * Math.sin((x / w) * advFreq * Math.PI * 2 + t * 1.9 + advPhase) * (0.85 + Math.sin(t * 0.4) * 0.15);
       const y = yBase + (raw + adv) * yRange;
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
     }
     ctx.stroke();
     ctx.fillStyle = strokeColor;
@@ -322,7 +322,7 @@ export const drawEEGShield: DrawFn = (ctx, w, h, t) => {
     const signal = 16 * Math.sin(tx * 10) + 11 * Math.sin(tx * 6) + 3 * Math.sin(tx * 28) + p300;
     rawRMS.sum += signal * signal; rawRMS.n++;
     const y = topBase + signal;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
   }
   ctx.strokeStyle = 'hsla(0, 65%, 55%, 0.7)';
   ctx.lineWidth = 1.2;
@@ -343,7 +343,7 @@ export const drawEEGShield: DrawFn = (ctx, w, h, t) => {
     const shield = (raw + adv) * 0.45 + dp;
     shieldRMS.sum += shield * shield; shieldRMS.n++;
     const y = botBase + shield;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
   }
   ctx.strokeStyle = 'hsla(142, 71%, 48%, 0.75)';
   ctx.lineWidth = 1.2;
