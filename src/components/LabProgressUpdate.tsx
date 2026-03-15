@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar10');
+  const [activeTab, setActiveTab] = useState<'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar15');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,17 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
-                onClick={() => setActiveTab('mar10')}
-                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar10' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+                onClick={() => setActiveTab('mar15')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar15' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
                 <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'mar15' ? 'text-primary' : 'text-foreground/40'}`}>MAR 15 2026</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('mar10')}
+                className={`px-5 py-3 border transition-all duration-200 text-left ${activeTab === 'mar10' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'mar10' ? 'text-primary' : 'text-foreground/40'}`}>MAR 10 2026</span>
               </button>
@@ -53,6 +60,64 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── March 15 2026 ── */}
+          {activeTab === 'mar15' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">15 March 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">Update: Standalone Exhibit environments incorporated.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Enhancements */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🪟</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Standalone Interactive Environments</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Created dedicated full-screen views (/demo/:id) for immersive demonstration of exhibits.' },
+                      { icon: '→', text: 'All 8 exhibits now support pop-out interactions, decluttering the presentation.' },
+                      { icon: '→', text: 'Enhanced UI rendering logic and cleared duplicates in Threat Feed layout.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🚀</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Cognitive Canary System Upgrade</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    The platform architecture has been heavily refined. Standalone links offer isolated environments for each of our models. It sets the baseline for the upcoming Neural Adversary upgrades.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['v6.3 Deployed', 'React Router Dynamic Segments', 'UI Polish', 'Focus Environments'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── March 10 2026 ── */}
           {activeTab === 'mar10' && (

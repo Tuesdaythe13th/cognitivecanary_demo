@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 
 interface PipelineStage {
   id: string;
@@ -168,9 +170,12 @@ const DeceptionPipeline = () => {
             transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-4 mb-6">
             <span className="tag-badge">LAB EXHIBIT 06</span>
             <span className="tag-badge" style={{ borderColor: 'hsla(280, 60%, 60%, 0.4)', color: 'hsla(280, 60%, 70%, 0.9)' }}>FORENSIC SCOPE</span>
+            <Link to="/demo/deception-pipeline" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-white transition-colors uppercase tracking-widest border border-white/10 hover:border-white/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+              <ExternalLink size={10} /> Standalone
+            </Link>
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl text-foreground font-black">
             Deception Forensic<br />

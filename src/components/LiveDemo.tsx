@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 
 interface Point {
   x: number;
@@ -187,7 +189,12 @@ const LiveDemo = () => {
 
       <div className="max-w-6xl mx-auto">
         <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <span className="tag-badge mb-6 inline-block">INTERACTIVE</span>
+          <div className="flex items-center gap-4 mb-6">
+            <span className="tag-badge">INTERACTIVE</span>
+            <Link to="/demo/live-demo" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-primary transition-colors uppercase tracking-widest border border-white/10 hover:border-primary/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+              <ExternalLink size={10} /> Standalone
+            </Link>
+          </div>
           <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
             Move your mouse.<br />See the difference.
           </h2>

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 
 interface KeyEvent {
   key: string;
@@ -236,8 +238,13 @@ const KeystrokeDynamics = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div className="space-y-4">
-            <div className="inline-block px-3 py-1 border border-secondary/30 text-[9px] font-mono text-secondary uppercase tracking-[0.4em] bg-secondary/5">
-              Lab Exhibit 04
+            <div className="flex items-center gap-4">
+              <div className="inline-block px-3 py-1 border border-secondary/30 text-[9px] font-mono text-secondary uppercase tracking-[0.4em] bg-secondary/5">
+                Lab Exhibit 04
+              </div>
+              <Link to="/demo/keystroke-dynamics" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-secondary transition-colors uppercase tracking-widest border border-white/10 hover:border-secondary/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+                <ExternalLink size={10} /> Standalone
+              </Link>
             </div>
             <h2 className="text-5xl md:text-6xl font-black font-mono tracking-tighter uppercase italic leading-none">
               KEYSTROKE <span className="text-primary not-italic block mt-2">DYNAMICS<span className="text-white opacity-20"> ANALYZER</span></span>

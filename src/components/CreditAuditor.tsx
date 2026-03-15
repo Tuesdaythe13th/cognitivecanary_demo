@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 
 interface RiskMetric {
   label: string;
@@ -114,8 +116,13 @@ export default function CreditAuditor() {
       <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
         
         <div className="mb-16">
-          <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5 mb-6">
-            Lab Exhibit 02
+          <div className="flex items-center gap-4 mb-6">
+            <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
+              Lab Exhibit 02
+            </div>
+            <Link to="/demo/credit-auditor" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-primary transition-colors uppercase tracking-widest border border-white/10 hover:border-primary/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+              <ExternalLink size={10} /> Standalone
+            </Link>
           </div>
           <h2 className="text-4xl sm:text-6xl text-foreground font-display mb-4">
             Credit Auditor

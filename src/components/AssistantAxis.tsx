@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 import '../axis-monitor.css';
 
 // ─── Conversation Data (inspired by Lu et al. 2026) ──────────────────────────
@@ -337,8 +339,13 @@ export default function AssistantAxis() {
 
         {/* Header */}
         <div className="mb-16">
-          <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5 mb-6">
-            Lab Exhibit 03
+          <div className="flex items-center gap-4 mb-6">
+            <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
+              Lab Exhibit 03
+            </div>
+            <Link to="/demo/assistant-axis" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-primary transition-colors uppercase tracking-widest border border-white/10 hover:border-primary/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+              <ExternalLink size={10} /> Standalone
+            </Link>
           </div>
           <h2 className="text-4xl sm:text-6xl text-foreground font-display mb-4">
             Axis Monitor

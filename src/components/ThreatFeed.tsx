@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useInView } from '@/hooks/useInView';
 import { THREAT_TYPE_TO_CAT, CAT_BY_ID } from '@/data/cat';
 import type { CATEntry } from '@/data/cat';
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
 
 type Severity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 type ThreatType =
@@ -282,8 +284,13 @@ const ThreatFeed = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div className="space-y-4">
-            <div className="inline-block px-3 py-1 border border-destructive/30 text-[9px] font-mono text-destructive uppercase tracking-[0.4em] bg-destructive/5">
-              Live Intelligence Feed
+            <div className="flex items-center gap-4">
+              <div className="inline-block px-3 py-1 border border-destructive/30 text-[9px] font-mono text-destructive uppercase tracking-[0.4em] bg-destructive/5">
+                Live Intelligence Feed
+              </div>
+              <Link to="/demo/threat-feed" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-destructive transition-colors uppercase tracking-widest border border-white/10 hover:border-destructive/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+                <ExternalLink size={10} /> Standalone
+              </Link>
             </div>
             <h2 className="text-5xl md:text-6xl font-black font-mono tracking-tighter uppercase italic leading-none">
               THREAT <span className="text-primary not-italic block mt-2">INTERCEPT<span className="text-white opacity-20"> STREAM</span></span>
@@ -292,6 +299,7 @@ const ThreatFeed = () => {
               Real-time behavioral surveillance attempts intercepted by Canary v6.0 defense engines.
             </p>
           </div>
+
 
           <div className="flex items-center gap-3 shrink-0">
             <button

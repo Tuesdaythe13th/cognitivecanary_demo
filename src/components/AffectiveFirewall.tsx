@@ -16,6 +16,9 @@ interface Message {
 const FILLERS = ['Uhm', 'Heh', 'Interesting point...', 'I see what you mean', 'Exactly!'];
 const FLATTERY = ['Your insight is remarkable', 'I completely agree with your brilliant take', 'That is a very sophisticated observation'];
 
+import { Link } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
+
 export default function AffectiveFirewall() {
    const [messages, setMessages] = useState<Message[]>([]);
    const [input, setInput] = useState('');
@@ -184,8 +187,13 @@ export default function AffectiveFirewall() {
                {/* Context Panel */}
                <div className="md:w-1/3 flex flex-col justify-center space-y-12">
                   <div className="space-y-6">
-                     <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
-                        Lab Exhibit 01
+                     <div className="flex items-center gap-4">
+                        <div className="inline-block px-3 py-1 border border-primary/30 text-[9px] font-mono text-primary uppercase tracking-[0.4em] bg-primary/5">
+                           Lab Exhibit 01
+                        </div>
+                        <Link to="/demo/affective-firewall" target="_blank" className="flex items-center gap-2 text-[9px] font-mono text-white/50 hover:text-primary transition-colors uppercase tracking-widest border border-white/10 hover:border-primary/30 px-3 py-1 bg-black/50 backdrop-blur-md rounded">
+                           <ExternalLink size={10} /> Standalone
+                        </Link>
                      </div>
                      <h3 className="text-5xl font-black font-mono tracking-tighter leading-none">
                         <span className="text-primary block">AFFECTIVE</span>
