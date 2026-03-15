@@ -55,7 +55,10 @@ export default function Landing() {
       
       {/* Brutalist Nav */}
       <nav className="brutal-nav">
-        <div className="text-xl font-brutal tracking-tighter text-[#BFFF00]">ARTIFEX</div>
+        <div className="flex flex-col select-none">
+          <div className="text-xl font-brutal tracking-tighter text-[#BFFF00]">ARTIFEX LABS</div>
+          <div className="text-[8px] font-mono tracking-[0.4em] text-white/40 -mt-1 uppercase">Tuesday // Principal Investigator</div>
+        </div>
         <ul className="hidden md:flex gap-8 text-[11px] font-mono tracking-[0.3em] uppercase text-white/40">
           <li className="hover:text-white transition-colors cursor-pointer">Defenses</li>
           <li className="hover:text-white transition-colors cursor-pointer">Forensics</li>
@@ -170,8 +173,11 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="py-20 px-6 md:px-20 bg-black border-t-4 border-[#BFFF00] relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center space-y-12">
-          <h2 className="text-[8vw] md:text-[4vw] font-brutal tracking-tighter text-[#BFFF00]">ALERAK x ARTIFEX</h2>
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-[8vw] md:text-[4vw] font-brutal tracking-tighter text-[#BFFF00]">ARTIFEX LABS</h2>
+            <p className="text-[10px] font-mono tracking-[0.8em] text-white/40 uppercase">Tuesday // Principal Investigator</p>
+          </div>
           
           <div className="flex gap-12 text-[11px] font-mono tracking-[0.4em] uppercase text-white/60">
             <Link to="/lab" className="hover:text-white transition-all">Enter Lab</Link>
