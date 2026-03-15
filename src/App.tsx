@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import StandaloneDemo from "./pages/StandaloneDemo";
 
+import Landing from "./pages/Landing";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -16,7 +18,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/lab" element={<Index />} />
           <Route path="/demo/:id" element={<StandaloneDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
