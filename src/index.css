@@ -38,6 +38,17 @@
     --ring: 74 100% 50%;
 
     --radius: 2px;
+
+    /* ─── Design tokens ─── */
+    --grid-color: hsl(142 71% 45% / 0.06);
+    --neon-green: hsl(142, 71%, 45%);
+    --neon-cyan: hsl(175, 60%, 45%);
+    --neon-purple: hsl(280, 60%, 60%);
+    --neon-amber: hsl(38, 90%, 55%);
+
+    /* SVG ring animation helper — override per element */
+    --circumference: 283;
+    --target-offset: 0;
   }
 }
 
@@ -236,14 +247,18 @@
   }
 
   /* Stagger animation delays for grid children */
-  .stagger-1 { animation-delay: 0ms; }
-  .stagger-2 { animation-delay: 80ms; }
-  .stagger-3 { animation-delay: 160ms; }
-  .stagger-4 { animation-delay: 240ms; }
-  .stagger-5 { animation-delay: 320ms; }
-  .stagger-6 { animation-delay: 400ms; }
-  .stagger-7 { animation-delay: 480ms; }
-  .stagger-8 { animation-delay: 560ms; }
+  .stagger-1  { animation-delay:   0ms; }
+  .stagger-2  { animation-delay:  80ms; }
+  .stagger-3  { animation-delay: 160ms; }
+  .stagger-4  { animation-delay: 240ms; }
+  .stagger-5  { animation-delay: 320ms; }
+  .stagger-6  { animation-delay: 400ms; }
+  .stagger-7  { animation-delay: 480ms; }
+  .stagger-8  { animation-delay: 560ms; }
+  .stagger-9  { animation-delay: 640ms; }
+  .stagger-10 { animation-delay: 720ms; }
+  .stagger-11 { animation-delay: 800ms; }
+  .stagger-12 { animation-delay: 880ms; }
 
   /* Scan card — horizontal scan line on hover */
   .scan-card {
@@ -338,6 +353,97 @@
     font-family: 'Syncopate', sans-serif;
     font-weight: 700;
     line-height: 0.85;
+  }
+
+  /* Shimmer highlight for loading states / badges */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(142 71% 45% / 0.15) 40%,
+      hsl(142 71% 45% / 0.25) 50%,
+      hsl(142 71% 45% / 0.15) 60%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Focus-visible ring — keyboard navigation */
+  :focus-visible {
+    outline: 2px solid hsl(142 71% 45% / 0.7);
+    outline-offset: 3px;
+  }
+
+  /* Reduced-motion overrides */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-pulse-glow,
+    .animate-flicker,
+    .animate-scan-line,
+    .animate-grid-drift,
+    .animate-tape-scroll,
+    .animate-data-flow,
+    .animate-shimmer {
+      animation: none !important;
+    }
+
+    .reveal-hidden,
+    .reveal-left-hidden {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .grain-overlay::before {
+      display: none;
+    }
+  }
+
+  /* Neon text variants */
+  .neon-glow-cyan {
+    text-shadow:
+      0 0 7px  hsl(175 60% 45% / 0.6),
+      0 0 20px hsl(175 60% 45% / 0.3),
+      0 0 42px hsl(175 60% 45% / 0.15);
+  }
+
+  .neon-glow-purple {
+    text-shadow:
+      0 0 7px  hsl(280 60% 60% / 0.6),
+      0 0 20px hsl(280 60% 60% / 0.3),
+      0 0 42px hsl(280 60% 60% / 0.15);
+  }
+
+  /* Glowing border variants */
+  .neon-border-cyan {
+    box-shadow:
+      0 0 5px  hsl(175 60% 45% / 0.2),
+      0 0 20px hsl(175 60% 45% / 0.08),
+      inset 0 0 5px hsl(175 60% 45% / 0.05);
+    border-color: hsl(175 60% 45% / 0.35) !important;
+  }
+
+  .neon-border-amber {
+    box-shadow:
+      0 0 5px  hsl(38 90% 55% / 0.2),
+      0 0 20px hsl(38 90% 55% / 0.08),
+      inset 0 0 5px hsl(38 90% 55% / 0.05);
+    border-color: hsl(38 90% 55% / 0.35) !important;
+  }
+
+  /* Engine card hover glow */
+  .engine-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+  }
+
+  .engine-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 32px hsl(142 71% 45% / 0.06),
+      0 2px 8px  hsl(0 0% 0% / 0.4);
   }
 }
 
@@ -459,4 +565,19 @@
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }

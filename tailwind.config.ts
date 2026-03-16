@@ -115,6 +115,44 @@ export default {
           "96%": { opacity: "0.6" },
           "97%": { opacity: "1" },
         },
+        "grid-drift": {
+          "0%": { backgroundPosition: "0 0" },
+          "100%": { backgroundPosition: "60px 60px" },
+        },
+        "tape-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        "typewriter-cursor": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        "data-flow": {
+          "0%": { transform: "translateX(-10px)", opacity: "0" },
+          "20%": { opacity: "1" },
+          "80%": { opacity: "1" },
+          "100%": { transform: "translateX(10px)", opacity: "0" },
+        },
+        "progress-fill": {
+          from: { width: "0%" },
+          to: { width: "var(--target-width)" },
+        },
+        "ring-fill": {
+          from: { strokeDashoffset: "var(--circumference)" },
+          to: { strokeDashoffset: "var(--target-offset)" },
+        },
+        "reveal-up": {
+          from: { opacity: "0", transform: "translateY(24px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "reveal-left": {
+          from: { opacity: "0", transform: "translateX(-24px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -126,6 +164,15 @@ export default {
         "scan-line": "scan-line 3s ease-in-out infinite",
         "bar-grow": "bar-grow 1.2s cubic-bezier(0.16, 1, 0.3, 1) both",
         "flicker": "flicker 8s ease-in-out infinite",
+        "grid-drift": "grid-drift 20s linear infinite",
+        "tape-scroll": "tape-scroll 20s linear infinite",
+        "typewriter-cursor": "typewriter-cursor 1s step-end infinite",
+        "data-flow": "data-flow 2s ease-in-out infinite",
+        "progress-fill": "progress-fill 1.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "ring-fill": "ring-fill 1.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "reveal-up": "reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "reveal-left": "reveal-left 0.9s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "shimmer": "shimmer 2s linear infinite",
       },
     },
   },

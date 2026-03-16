@@ -91,7 +91,7 @@ const Index = () => {
                     <Link 
                       key={engine.id}
                       to={`/demo/${engine.id}`}
-                      className="group p-6 border border-white/10 bg-black/40 hover:bg-black/60 hover:border-white/30 transition-all flex flex-col h-full relative overflow-hidden backdrop-blur-md"
+                      className="group engine-card p-6 border border-white/10 bg-black/40 hover:bg-black/60 hover:border-white/30 transition-all flex flex-col h-full relative overflow-hidden backdrop-blur-md scan-card"
                     >
                       <div className="flex items-center justify-between mb-4 relative z-10 w-full">
                         <span className="text-display text-2xl text-white/20 leading-none group-hover:text-white/40 transition-colors">
