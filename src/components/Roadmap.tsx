@@ -6,8 +6,10 @@ const milestones = [
   { version: 'v6.0', date: '2025 Q1', title: 'Entropy Mixer', desc: '3D Lissajous, spectral defense, gradient auditing, session decorrelation.', done: true },
   { version: 'v6.2', date: '2026 Q1', title: 'Neurorights Suite', desc: 'EEG Shield (3-layer differential privacy), Neuro Audit (multi-jurisdiction compliance), neurorights whitepaper, 7-engine suite complete.', done: true },
   { version: 'v7.0', date: '2026 Q3', title: 'Neural Adversary', desc: 'GAN-based behavioral synthesis, OS-level driver integration, WebExtension, federated learning attack detection.', done: false, current: true },
-  { version: 'v8.0', date: '2026 Q4', title: 'BCI Edge Shield', desc: 'Neural Canary for BCI edge processing. Zero-knowledge proof-of-humanity without behavioral exposure.', done: false },
-  { version: 'v9.0', date: '2027 Q2', title: 'Sovereign Stack', desc: 'Full neuro-sovereignty stack: cross-device identity unlinking, regulatory API bridge, open neurorights standard.', done: false },
+  { version: 'v7.1', date: '2026 Q4', title: 'Adversarial Hardening', desc: 'Adaptive adversary benchmarks: classifiers retrained on obfuscated data. Red-team co-evolution loop. Formal ε-δ privacy proofs for behavioral engines. Digraph-aware keystroke jitter. PGD upgrade for EEG Shield (replaces FGSM). Peer-reviewed paper submission.', done: false, research: true },
+  { version: 'v7.5', date: '2027 Q1', title: 'Mobile & Gaze', desc: 'Touch biometric obfuscation (pressure, swipe curvature, thumb-reach). Accelerometer/gyroscope noise injection. Gaze Canary: microsaccade noise, fixation duration perturbation, pupil dilation masking. Biomechanical plausibility constraints for touch (Fitts\'s Law for touch targets).', done: false },
+  { version: 'v8.0', date: '2027 Q2', title: 'Collective Defense', desc: 'Federated behavioral mixing: N-user mixnet for behavioral k-anonymity. Surveillance Detection Canary (tripwire mode): detect sites using behavioral fingerprinting against users. BCI Edge Shield for consumer EEG platforms.', done: false },
+  { version: 'v9.0', date: '2027 Q4', title: 'Sovereign Stack', desc: 'Full neuro-sovereignty stack: cross-device identity unlinking, regulatory API bridge, open neurorights standard. Formal verification of privacy properties. Certification program for third-party implementations.', done: false },
 ];
 
 const Roadmap = () => {
@@ -78,7 +80,7 @@ const Roadmap = () => {
                 <div
                   className={`glass-panel p-5 ml-6 flex-1 group hover:neon-border-glow transition-all duration-300 ${
                     m.done ? '' : 'opacity-60'
-                  }`}
+                  } ${(m as { research?: boolean }).research ? 'border-yellow-500/20' : ''}`}
                 >
                   <div className="flex items-center gap-3 mb-2 flex-wrap">
                     <span className="text-mono text-sm text-primary">{m.version}</span>
@@ -91,6 +93,11 @@ const Roadmap = () => {
                     {(m as { current?: boolean }).current && (
                       <span className="text-mono text-[9px] bg-secondary/10 text-secondary px-2 py-0.5 tracking-wider uppercase border border-secondary/20">
                         In Progress
+                      </span>
+                    )}
+                    {(m as { research?: boolean }).research && (
+                      <span className="text-mono text-[9px] bg-yellow-500/10 text-yellow-400 px-2 py-0.5 tracking-wider uppercase border border-yellow-500/20">
+                        Research Priority
                       </span>
                     )}
                   </div>

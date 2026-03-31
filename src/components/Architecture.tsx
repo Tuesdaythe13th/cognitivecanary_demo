@@ -2,12 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useInView } from '@/hooks/useInView';
 
 const steps = [
-  { id: 'INPUT', label: 'Raw Input', desc: 'Mouse, keyboard, scroll, EEG events', color: 'hsla(0, 0%, 60%, 0.8)' },
-  { id: 'INTERCEPT', label: 'Event Interceptor', desc: 'Captures all behavioral signals', color: 'hsla(175, 60%, 45%, 0.8)' },
-  { id: 'CLASSIFY', label: 'Task Classifier', desc: 'Detects context, selects profile', color: 'hsla(175, 60%, 45%, 0.8)' },
-  { id: 'OBFUSCATE', label: 'Obfuscation Core', desc: '7 engines run in parallel', color: 'hsla(142, 71%, 45%, 0.9)' },
-  { id: 'AUDIT', label: 'Gradient Auditor', desc: 'Detects ML attacks in real-time', color: 'hsla(280, 60%, 60%, 0.8)' },
-  { id: 'OUTPUT', label: 'Clean Output', desc: 'Unidentifiable behavioral data', color: 'hsla(142, 71%, 55%, 0.9)' },
+  { id: 'CAPTURE', label: 'Raw Capture', desc: 'Raw behavioral and EEG signals', color: 'hsla(0, 0%, 60%, 0.8)' },
+  { id: 'INTERCEPT', label: 'Feature Interception', desc: 'Blocks direct event propagation', color: 'hsla(175, 60%, 45%, 0.8)' },
+  { id: 'SELECT', label: 'Profile Selection', desc: 'Threat-model specific routing', color: 'hsla(175, 60%, 45%, 0.8)' },
+  { id: 'OBFUSCATE', label: 'Perturbation Engine', desc: 'Kinematic & timing noise injected', color: 'hsla(142, 71%, 45%, 0.9)' },
+  { id: 'AUDIT', label: 'Local Audit', desc: 'Gradient starvation verification', color: 'hsla(280, 60%, 60%, 0.8)' },
+  { id: 'BOUNDARY', label: 'Export Boundary', desc: 'Sanitized signals handed to DOM', color: 'hsla(142, 71%, 55%, 0.9)' },
+  { id: 'LOGGING', label: 'Compliance Logging', desc: 'Tamper-evident privacy trails', color: 'hsla(38, 95%, 55%, 0.8)' }
 ];
 
 const FlowCanvas = () => {
@@ -146,7 +147,7 @@ const Architecture = () => {
           <FlowCanvas />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
           {steps.map((step, i) => (
             <div
               key={step.id}

@@ -95,7 +95,7 @@ const ProgressBar = ({ value, prev, isInView, delay }: { value: number; prev?: n
         <span className="text-mono text-[9px] text-muted-foreground/35 w-10 text-right">{prev}%</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-mono text-[9px] text-primary w-8">v6.2</span>
+        <span className="text-mono text-[9px] text-primary w-8">v7.0</span>
         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
           <div
             className="h-full rounded-full"
@@ -122,14 +122,51 @@ const Results = () => {
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-primary/8 rounded-full gradient-blob" />
 
       <div className="max-w-6xl mx-auto">
-        <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="tag-badge mb-6 inline-block">BENCHMARKS</span>
-          <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
-            The numbers<br />speak.
-          </h2>
-          <p className="text-body text-muted-foreground text-lg max-w-2xl mt-6 leading-relaxed">
-            Tested against TypingDNA, BehavioSec, and custom neural classifiers. Results from v6.2 release.
-          </p>
+        <div className="grid md:grid-cols-2 gap-12 mb-16 items-start">
+          <div className={`transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="tag-badge mb-6 inline-block">BENCHMARKS</span>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
+              The numbers<br />speak.
+            </h2>
+            <p className="text-body text-muted-foreground text-lg max-w-xl mt-6 leading-relaxed">
+              Tested against state-of-the-art behavioral neural classifiers. Results reflect v7.0 engine suite on static (non-adaptive) adversaries.
+            </p>
+            <div className="mt-6 p-4 border border-yellow-500/20 bg-yellow-500/5">
+              <p className="text-[9px] font-mono uppercase tracking-widest text-yellow-400 mb-2">Important Scope Note</p>
+              <p className="text-xs text-white/40 font-mono leading-relaxed">
+                All results use classifiers trained on clean (pre-obfuscation) data. Adaptive adversaries — those who retrain on Canary-obfuscated output — are not yet evaluated. This is the primary open research problem (see Research Basis). Missing baselines: random-noise injection and static-offset jitter not yet benchmarked for comparison.
+              </p>
+            </div>
+          </div>
+
+          <div className={`grid sm:grid-cols-2 gap-4 transition-all duration-1000 delay-200 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="glass-panel p-5 border-white/5 space-y-3 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-3 opacity-10"><span className="text-4xl font-brutal">01</span></div>
+              <h4 className="text-[10px] font-mono tracking-widest uppercase text-primary mb-4">Methodology</h4>
+              <ul className="text-xs text-white/60 space-y-2 font-mono leading-relaxed">
+                <li className="flex gap-2"><span className="text-primary/70">Corpus:</span> 120 Sessions / 80 Users</li>
+                <li className="flex gap-2"><span className="text-primary/70">Task:</span> Unconstrained web audit (30–90 min)</li>
+                <li className="flex gap-2"><span className="text-primary/70">Split:</span> 70% Train / 30% Test (stratified)</li>
+                <li className="flex gap-2"><span className="text-primary/70">Baseline:</span> Raw DOM event stream, no obfuscation</li>
+                <li className="flex gap-2"><span className="text-primary/70">Classifiers:</span> 7 architectures (see table)</li>
+                <li className="flex gap-2"><span className="text-primary/70">Bypass def:</span> Classifier confidence &lt; 0.5 on ID task</li>
+                <li className="flex gap-2"><span className="text-primary/70">Adversary:</span> Static only — trained on clean data</li>
+              </ul>
+            </div>
+            <div className="glass-panel p-5 border-white/5 space-y-3 relative overflow-hidden">
+             <div className="absolute top-0 right-0 p-3 opacity-10"><span className="text-4xl font-brutal text-red-500">02</span></div>
+              <h4 className="text-[10px] font-mono tracking-widest uppercase text-red-400 mb-4">Known Limitations</h4>
+              <ul className="text-xs text-white/60 space-y-2 font-mono leading-relaxed">
+                <li className="flex gap-2"><span className="text-red-400/70">Gap:</span> Adaptive adversary not yet tested</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Gap:</span> No random-noise or static-jitter baseline</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Gap:</span> Fitts's Law tradeoff curve not published</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Gap:</span> Usability N=80 — not IRB-scale</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Fails:</span> Multi-modal transfer targets</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Disable:</span> High-APM contexts, eSports</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Overhead:</span> Peak jitter &gt; 40ms in legacy browsers</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

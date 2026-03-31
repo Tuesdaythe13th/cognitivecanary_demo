@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ExternalLink, Terminal, Shield, FileText, Activity, ArrowRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-
+import UseCases from '@/components/UseCases';
+import ThreatModels from '@/components/ThreatModels';
+import TripwireCanary from '@/components/TripwireCanary';
+import SafetyGovernance from '@/components/SafetyGovernance';
+import ResearchBasis from '@/components/ResearchBasis';
+import TrustCenter from '@/components/TrustCenter';
+import CaseStudies from '@/components/CaseStudies';
 export const landingCopy = {
   hero: {
     eyebrow: "ARTIFEX LABS // RESEARCH PROTOTYPE",
@@ -191,6 +197,8 @@ export default function Landing() {
           </div>
         </div>
       </section>
+      
+      <TrustCenter />
 
       {/* ── Marquee Tape ─────────────────────────────────────────────────── */}
       <div className="tape-wrapper" aria-hidden="true">
@@ -266,6 +274,13 @@ export default function Landing() {
           ))}
         </div>
       </section>
+
+      <UseCases />
+      <ThreatModels />
+      <TripwireCanary />
+      <CaseStudies />
+      <SafetyGovernance />
+      <ResearchBasis />
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer className="py-20 px-6 md:px-20 bg-black border-t-4 border-[#BFFF00] relative z-10">
