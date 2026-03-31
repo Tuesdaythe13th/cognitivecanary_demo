@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar15');
+  const [activeTab, setActiveTab] = useState<'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar31');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,17 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
+                onClick={() => setActiveTab('mar31')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar31' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'mar31' ? 'text-primary' : 'text-foreground/40'}`}>MAR 31 2026</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('mar15')}
                 className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar15' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
-                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'mar15' ? 'text-primary' : 'text-foreground/40'}`}>MAR 15 2026</span>
               </button>
@@ -60,6 +67,109 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── March 31 2026 ── */}
+          {activeTab === 'mar31' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">31 March 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">Research hardening session — product narrative, security rigor, and evidentiary scaffolding overhaul.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Formal Adversary Model */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚔</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Formal Adversary Model</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Added Dolev-Yao-style adversary specification to Threat Models — 5 capability tiers (A1 passive DOM → A5 adaptive retraining).' },
+                      { icon: '→', text: 'Named the adaptive adversary / "Tor problem" as the primary open research gap.' },
+                      { icon: '→', text: 'Explicit security claims per adversary class with v7.1 tracking.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Research Basis */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📐</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Research Basis Expanded</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Empirical Basis: proper citations added — Pezeshki 2021 (gradient starvation), FPF BCI Report, arXiv:2412.11394, Antal 2016.' },
+                      { icon: '→', text: 'Math Intuition: Lissajous parametric equations, Laplace noise sensitivity formula, Pearson correlation target, Flash-Hogan minimum-jerk constraint.' },
+                      { icon: '→', text: 'Open Questions: 8 named unresolved problems — adaptive adversaries, ε-δ proofs gap, mobile/gaze/touch unaddressed, cross-device correlation.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Benchmark honesty + Case Studies */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📊</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Benchmark Scope + Case Studies</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Results section now prominently labels all classifier results as static adversary only — missing baselines and Fitts\'s Law tradeoff curve flagged as gaps.' },
+                      { icon: '→', text: 'Version label corrected: v6.2 → v7.0 in progress bars.' },
+                      { icon: '→', text: 'Added third case study: Activist cross-site tracking (3-week longitudinal, r=0.04 cross-session correlation).' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Full-width: Tripwire + Roadmap + Safety */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🐤</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Surveillance Detection Canary + Roadmap + Safety</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    New <span className="text-primary">Tripwire Mode</span> section added to landing page — Canary emits a known behavioral signature and monitors whether the platform responds, turning passive defense into active fingerprinting detection. BCI Safety Interlock card added to governance: Spectral Defender enters OBSERVE-ONLY mode when a medical or assistive BCI control loop is detected. Roadmap updated with <span className="text-primary">v7.1 (Adversarial Hardening)</span> — adaptive benchmarks, ε-δ proofs, PGD upgrade — tagged Research Priority, and <span className="text-primary">v7.5 (Mobile & Gaze)</span> — touch biometric obfuscation, microsaccade noise, pupil dilation masking.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Tripwire Detection', 'BCI Safety Interlock', 'v7.1 Adversarial Hardening', 'v7.5 Mobile & Gaze', 'Trust Center Fixed', 'README Changelog'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── March 15 2026 ── */}
           {activeTab === 'mar15' && (
