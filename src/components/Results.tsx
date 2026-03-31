@@ -122,14 +122,40 @@ const Results = () => {
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-primary/8 rounded-full gradient-blob" />
 
       <div className="max-w-6xl mx-auto">
-        <div className={`mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="tag-badge mb-6 inline-block">BENCHMARKS</span>
-          <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
-            The numbers<br />speak.
-          </h2>
-          <p className="text-body text-muted-foreground text-lg max-w-2xl mt-6 leading-relaxed">
-            Tested against TypingDNA, BehavioSec, and custom neural classifiers. Results from v6.2 release.
-          </p>
+        <div className="grid md:grid-cols-2 gap-12 mb-16 items-start">
+          <div className={`transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="tag-badge mb-6 inline-block">BENCHMARKS</span>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl text-foreground mt-4">
+              The numbers<br />speak.
+            </h2>
+            <p className="text-body text-muted-foreground text-lg max-w-xl mt-6 leading-relaxed">
+              Tested against state-of-the-art behavioral neural classifiers. Real-time gradient starvation proven in v6.2 release.
+            </p>
+          </div>
+          
+          <div className={`grid sm:grid-cols-2 gap-4 transition-all duration-1000 delay-200 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="glass-panel p-5 border-white/5 space-y-3 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-3 opacity-10"><span className="text-4xl font-brutal">01</span></div>
+              <h4 className="text-[10px] font-mono tracking-widest uppercase text-primary mb-4">Methodology Outline</h4>
+              <ul className="text-xs text-white/60 space-y-2 font-mono leading-relaxed">
+                <li className="flex gap-2"><span className="text-primary/70">Corp:</span> 120 Sessions / 80 Users</li>
+                <li className="flex gap-2"><span className="text-primary/70">Task:</span> Unconstrained Web Audit</li>
+                <li className="flex gap-2"><span className="text-primary/70">Split:</span> 70% Train / 30% Test</li>
+                <li className="flex gap-2"><span className="text-primary/70">Base:</span> Raw DOM Event Fire</li>
+                <li className="flex gap-2"><span className="text-primary/70">Note:</span> Bypass = prediction confidence &lt; 0.5</li>
+              </ul>
+            </div>
+            <div className="glass-panel p-5 border-white/5 space-y-3 relative overflow-hidden">
+             <div className="absolute top-0 right-0 p-3 opacity-10"><span className="text-4xl font-brutal text-red-500">02</span></div>
+              <h4 className="text-[10px] font-mono tracking-widest uppercase text-red-400 mb-4">Known Limitations</h4>
+              <ul className="text-xs text-white/60 space-y-2 font-mono leading-relaxed">
+                <li className="flex gap-2"><span className="text-red-400/70">Limits:</span> Multi-modal transfer targets</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Fails:</span> Perfect imitation tasks</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Disable:</span> High APM contexts & eSports</li>
+                <li className="flex gap-2"><span className="text-red-400/70">Lag:</span> Peak jitter overhead &gt; 40ms</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
