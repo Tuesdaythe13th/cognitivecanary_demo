@@ -1,4 +1,4 @@
-import { Activity, Lock, Database, Trash2, FileCheck } from 'lucide-react';
+import { Activity, Lock, Database, Trash2, ShieldOff, AlertCircle } from 'lucide-react';
 
 export default function SafetyGovernance() {
   return (
@@ -32,6 +32,19 @@ export default function SafetyGovernance() {
             <Activity className="w-6 h-6 text-[#BFFF00] mb-4" />
             <h3 className="text-lg font-brutal text-white mb-2">Tamper-Evident Logs</h3>
             <p className="text-sm font-grotesque text-white/50">Compliance logging uses an append-only, tamper-evident architecture, ensuring operators can verify the integrity of the obfuscation pipeline.</p>
+          </div>
+          <div className="p-6 border border-white/10 bg-black/40 relative sm:col-span-2">
+            <ShieldOff className="w-6 h-6 text-yellow-400 mb-4" />
+            <h3 className="text-lg font-brutal text-white mb-2">BCI Safety Interlock</h3>
+            <p className="text-sm font-grotesque text-white/50 mb-3">
+              Spectral Defender and EEG Shield must not disrupt legitimate BCI control loops. If a P300 speller, motor imagery classifier, or medical BCI control pathway is detected, affected engines enter <span className="font-mono text-yellow-400">OBSERVE-ONLY</span> mode: surveillance is logged without counter-phase injection.
+            </p>
+            <div className="flex items-start gap-2 mt-3 pt-3 border-t border-white/10">
+              <AlertCircle className="w-4 h-4 text-yellow-400/60 flex-shrink-0 mt-0.5" />
+              <p className="text-[10px] font-mono text-white/30 leading-relaxed">
+                This safeguard is critical: interference with medical BCI devices is a hard no-go condition. Engine parameters must always be validated against known BCI platform APIs before deployment in clinical or assistive technology contexts.
+              </p>
+            </div>
           </div>
         </div>
       </div>

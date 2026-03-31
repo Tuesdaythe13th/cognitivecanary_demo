@@ -3,6 +3,7 @@ import { ExternalLink, Terminal, Shield, FileText, Activity, ArrowRight } from '
 import { useEffect, useRef, useState } from 'react';
 import UseCases from '@/components/UseCases';
 import ThreatModels from '@/components/ThreatModels';
+import TripwireCanary from '@/components/TripwireCanary';
 import SafetyGovernance from '@/components/SafetyGovernance';
 import ResearchBasis from '@/components/ResearchBasis';
 import TrustCenter from '@/components/TrustCenter';
@@ -276,6 +277,7 @@ export default function Landing() {
 
       <UseCases />
       <ThreatModels />
+      <TripwireCanary />
       <CaseStudies />
       <SafetyGovernance />
       <ResearchBasis />

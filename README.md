@@ -31,6 +31,30 @@
 
 ---
 
+## Changelog
+
+### March 31, 2026 — Research Hardening & Product Narrative Update
+
+This update addresses critical gaps identified in external review across two dimensions: security rigor and product legibility.
+
+**Formal adversary model.** `ThreatModels` now includes a Dolev-Yao-style adversary specification with five capability tiers (A1 passive DOM observation → A5 adaptive classifier retraining) and explicit security claims per adversary class. The primary open problem — an adversary that retrains on Canary-obfuscated output (the "Tor problem" for behavioral obfuscation) — is now named and tracked as the v7.1 research target.
+
+**Research basis expanded.** `ResearchBasis` now exposes full citations (Pezeshki et al. 2021, FPF BCI Report, arXiv:2412.11394, Flash & Hogan 1985), the Lissajous parametric equations and Laplace noise sensitivity formula, and a named list of eight unresolved open problems. Honesty about limits increases credibility.
+
+**Benchmark scope clarified.** `Results` now prominently labels all classifier results as *static adversary only* — classifiers trained on clean pre-obfuscation data. Missing baselines (random-noise injection, static-offset jitter) and the absent Fitts's Law tradeoff curve are called out as gaps rather than buried. Version label corrected from v6.2 → v7.0.
+
+**Three case studies.** `CaseStudies` adds a third scenario: activist cross-site tracking over a 3-week longitudinal session, with cross-session correlation falling to r=0.04. All cases now show key metric and UX tradeoff in a footer row.
+
+**BCI safety interlock.** `SafetyGovernance` adds an explicit card: when a P300 speller, motor imagery classifier, or other medical/assistive BCI control loop is detected, Spectral Defender and EEG Shield enter `OBSERVE-ONLY` mode. Counter-phase injection is suppressed to prevent interference with medical devices.
+
+**Surveillance Detection Canary.** New `TripwireCanary` section on the landing page explains the tripwire concept: emit a known behavioral signature, monitor whether the platform responds, confirm fingerprinting is active, alert the user. This turns Canary from pure defense into an active detection system. Targeted for v8.0.
+
+**Roadmap updated.** v7.1 (Adversarial Hardening) and v7.5 (Mobile & Gaze) inserted into the roadmap. v7.1 is tagged Research Priority and covers: adaptive adversary benchmarks, ε-δ privacy proofs for behavioral engines, digraph-aware keystroke jitter, PGD upgrade for EEG Shield (replacing FGSM), and paper submission. v7.5 covers touch biometric obfuscation and gaze tracking (microsaccade noise, pupil dilation masking).
+
+**Trust center fixed.** All `#` placeholder artifact links replaced with real targets (GitHub, whitepaper, Colab). In-progress artifacts (Methodology Spec, Formal Privacy Proofs) now show version targets rather than dead links.
+
+---
+
 ## Overview
 
 Cognitive Canary is a **behavioral obfuscation and model alignment layer** that collapses fingerprinting and re-identification on the client side, while providing deep forensic auditing of AI models to detect deception and sandbagging.
@@ -109,7 +133,7 @@ Detects real-time ML fingerprinting and poisoning attempts via dynamic temporal 
 
 ### `06` EEG Shield
 **File:** `engines/eeg_shield.py`
-Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data.
+Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data. *v7.1 target: upgrade adversarial layer from FGSM to PGD (Projected Gradient Descent) with random restarts — FGSM is a single-step attack and state-of-the-art classifiers are increasingly robust to it.*
 
 ### `07` Neuro Audit
 **File:** `engines/neuro_audit.py`
@@ -217,9 +241,11 @@ Use this as a reference implementation and starting point, not a guarantee of ab
 | `v5.0` | Core Lissajous + Tremor engines | ✅ Complete |
 | `v6.0` | 3D Lissajous, Gradient Auditor, Browser FP, Keystroke Analyzer | ✅ Complete |
 | `v6.2` | EEG Shield, Neuro Audit, Neurorights Whitepaper | ✅ Complete |
-| `v7.0` | Forensic/Interpretability Engines, Assistant Axis demo, Deception Pipeline | ✅ Complete |
-| `v8.0` | OS-level driver integration, WebExtension | 🔵 Research |
-| `v9.0` | Zero-knowledge behavioral attestation | 🔵 Research |
+| `v7.0` | Forensic/Interpretability Engines, Assistant Axis demo, Deception Pipeline | 🟡 In Progress |
+| `v7.1` | Adaptive adversary benchmarks, ε-δ privacy proofs, digraph-aware jitter, PGD upgrade, paper | 🔴 Research Priority |
+| `v7.5` | Touch biometric obfuscation, gaze tracking (microsaccade noise, pupil dilation masking) | 🔵 Planned |
+| `v8.0` | Federated behavioral mixing, Surveillance Detection Canary (tripwire mode), BCI Edge Shield | 🔵 Planned |
+| `v9.0` | Sovereign Stack: cross-device unlinking, regulatory API bridge, formal privacy verification | 🔵 Planned |
 
 ---
 
