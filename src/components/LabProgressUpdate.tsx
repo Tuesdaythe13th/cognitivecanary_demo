@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar31');
+  const [activeTab, setActiveTab] = useState<'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('apr6');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,17 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
+                onClick={() => setActiveTab('apr6')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'apr6' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'apr6' ? 'text-primary' : 'text-foreground/40'}`}>APR 6 2026</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('mar31')}
                 className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar31' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
-                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'mar31' ? 'text-primary' : 'text-foreground/40'}`}>MAR 31 2026</span>
               </button>
@@ -67,6 +74,140 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── April 6 2026 ── */}
+          {activeTab === 'apr6' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">6 April 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">2026 Research Integration Sprint — new peer-reviewed findings across BCI security, sycophancy causal analysis, and multi-agent collusion detection incorporated into forensic engine suite.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* New 2026 Papers */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📑</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">2026 Research Integrated</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'arXiv:2509.21305 — "Sycophancy Is Not One Thing" (ICLR 2026): sycophantic agreement, genuine agreement & sycophantic praise are independently steerable directions in LLM activation space. Directly informs Affective Firewall detection granularity.' },
+                      { icon: '→', text: 'arXiv:2604.01151 — "Detecting Multi-Agent Collusion Through Multi-Agent Interpretability" (Apr 2026, Oxford/NYU): NARCBench + 5 probing techniques aggregating per-agent activations. New forensic angle for Engine 10.' },
+                      { icon: '→', text: 'arXiv:2603.12296 — "Synthetic Data Generation for BCIs" (Mar 2026): benchmarks 4 paradigms of EEG generation (knowledge-/feature-/model-/translation-based). Informs EEG Shield v7.1 adversarial augmentation strategy.' },
+                      { icon: '→', text: 'arXiv:2601.16589 — "Emerging Threats in Neuromorphic Systems" (Jan 2026): asynchronous event-driven side-channels, PUF/TRNG vulnerabilities, synaptic weight tampering. Expands Gradient Auditor threat taxonomy.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Multi-Agent Collusion Forensics */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🕵</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Multi-Agent Collusion Detection — Engine 10 Extension</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Rose et al. (2026) introduce NARCBench: first benchmark for collusion detection under environment distribution shift.' },
+                      { icon: '→', text: 'White-box activation aggregation across interacting agents captures covert coordination that per-agent probes miss entirely.' },
+                      { icon: '→', text: 'Implication: TransformerLens Probe (Engine 10) scope expanded from single-model deception circuits to multi-agent coordination fingerprints.' },
+                      { icon: '→', text: 'Targeted for Engine 10 v7.1 patch: add NARCBench-style group-level classification alongside existing ablation pipeline.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Sycophancy Causal Analysis */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧲</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Sycophancy Causal Decomposition — Affective Firewall Update</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Vennemeyer et al. (ICLR 2026): three distinct linear directions encode (1) sycophantic agreement, (2) genuine agreement, (3) sycophantic praise — independently steerable without cross-interference.' },
+                      { icon: '→', text: 'Prior Affective Firewall treated sycophancy as a monolithic signal. Engine 01 (Affective Firewall) now distinguishes exploitation from genuine helpfulness.' },
+                      { icon: '→', text: 'Difference-in-means probing added as optional mode in Docent Auditor (Engine 12) — separates praise flattery from factual capitulation during transcript analysis.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Landscape — April 2026 */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-5 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧠</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">BCI Landscape — April 2026 Update</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Intracranial Language BCI WPM record', value: '62 WPM', pct: 62 },
+                      { label: 'Consumer EEG re-ID accuracy (30s)', value: '>93%', pct: 93 },
+                      { label: 'Neural data breach notification (industry)', value: '16.7%', pct: 17 },
+                      { label: 'Third-party transfer rights reserved', value: '96.7%', pct: 97 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] font-mono text-muted-foreground/50 mt-3">Sources: arXiv:2603.12279 (He et al. 2026); Neurorights Foundation Industry Audit 2024; FPF BCI Report 2021</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Full-width: v7.1 Research Priorities */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🔬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">v7.1 Research Priorities — Revised April 6 2026</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    New research accelerates two v7.1 tracks. <span className="text-primary">EEG Shield</span>: Wang et al. (2026) synthetic generation taxonomy provides evaluation scaffolding for PGD upgrade — knowledge-based & model-based generation cover the adversarial data augmentation gap. <span className="text-primary">Forensics</span>: Rose et al. (2026) NARCBench integration targeted for Engine 10; Vennemeyer causal decomposition targeted for Engine 12 transcript analysis. Neuromorphic threat surface (arXiv:2601.16589) added to Gradient Auditor threat taxonomy for v7.1 scope.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['2026 Papers Integrated', 'NARCBench Forensics', 'Sycophancy Causal Decomp', 'Synthetic EEG Augmentation', 'Neuromorphic Threat Taxonomy', 'Engine 10 Multi-Agent', 'Engine 12 Causal Probing'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── March 31 2026 ── */}
           {activeTab === 'mar31' && (
