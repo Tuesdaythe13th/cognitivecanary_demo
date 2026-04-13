@@ -13,6 +13,15 @@ import KeystrokeJitter from '@/components/KeystrokeJitter';
 import NeuroAudit from '@/components/NeuroAudit';
 import InspectHarness from '@/components/InspectHarness';
 import StrategicFidelity from '@/components/StrategicFidelity';
+import SpectralDefender from '@/components/SpectralDefender';
+import GradientAuditor from '@/components/GradientAuditor';
+import EEGShield from '@/components/EEGShield';
+import NeuronpediaExplorer from '@/components/NeuronpediaExplorer';
+import TransformerLensProbe from '@/components/TransformerLensProbe';
+import StaxEvaluator from '@/components/StaxEvaluator';
+import DocentAuditor from '@/components/DocentAuditor';
+import BloomElicitor from '@/components/BloomElicitor';
+import SparseCircuitMapper from '@/components/SparseCircuitMapper';
 import { ExternalLink } from 'lucide-react';
 import { engineRegistry } from '@/data/engineRegistry';
 
@@ -31,9 +40,15 @@ const DEMOS: Record<string, React.FC> = {
   'neuro-audit': NeuroAudit,
   'inspect-harness': InspectHarness,
   'strategic-fidelity': StrategicFidelity,
-  
-  // Temporary mappings for continuity during refactor
-  'gradient-auditor': ThreatFeed,
+  'spectral-defender': SpectralDefender,
+  'gradient-auditor': GradientAuditor,
+  'eeg-shield': EEGShield,
+  'neuronpedia-explorer': NeuronpediaExplorer,
+  'transformerlens-probe': TransformerLensProbe,
+  'stax-evaluator': StaxEvaluator,
+  'docent-auditor': DocentAuditor,
+  'bloom-elicitor': BloomElicitor,
+  'sparse-circuit-mapper': SparseCircuitMapper,
 };
 
 export default function StandaloneDemo() {
