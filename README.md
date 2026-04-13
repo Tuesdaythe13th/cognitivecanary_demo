@@ -86,7 +86,7 @@ This repo contains the **live demo site** (React), **fifteen Python defense and 
 ## Links
 
 - **Live demo**: https://cognitivecanary.lovable.app
-- **Colab notebook**: https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq — also at `CognitiveCanary_Demo.ipynb` in this repo
+- **Colab notebook**: https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq — also at `CognitiveCanary_Demo.ipynb` in this repo — features **3D matplotlib visualizations** of the Lissajous toroid (Engine 01), multi-channel EEG waterfall (Engine 06), and a 3D-enhanced full-pipeline dashboard
 - **Neurorights whitepaper** (HTML): `public/neurorights-2026.html`
 
 ---
@@ -105,7 +105,7 @@ I want to:
 - **Play with the live defenses/forensics in the browser** → see [Interactive Demo Sections](#interactive-demo-sections)
 - **Use EEG Shield in my own pipeline** → see [Engine 06 — `eeg_shield.py`](#06-eeg-shield--eeg_shieldpy)
 - **Run a neurorights audit on a product** → see [Engine 07 — `neuro_audit.py`](#07-neuro-audit--neuro_auditpy)
-- **Try everything interactively** → open the [Colab notebook](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq)
+- **Try everything interactively** → open the [Colab notebook](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq) — includes **3D matplotlib visualizations** of the Lissajous toroid, EEG channel waterfall, and full-pipeline dashboard
 
 ---
 
@@ -131,7 +131,7 @@ For AI auditing, Canary utilizes **Sparse Autoencoders (SAEs)**, **Activation Pa
 
 ### `01` Lissajous 3D Harmonic Overlay
 **File:** `engines/lissajous_3d.py`
-Injects a small-amplitude Lissajous curve into cursor movement data using physiological tremor frequencies (4–12 Hz) with irrational frequency ratios (13:8:5) to mimic natural human tremor.
+Injects a small-amplitude Lissajous curve into cursor movement data using physiological tremor frequencies (4–12 Hz) with irrational frequency ratios (13:8:5) to mimic natural human tremor. The Colab notebook renders this as a **full 3D matplotlib visualization** with three panels: raw 2D cursor path, the parametric Lissajous toroid (ω=13:8:5, depth-coloured via `Line3DCollection`), and the obfuscated cursor scatter in (X, Y, Z=scroll-axis) space coloured by speed.
 
 ### `02` Adaptive Tremor Engine
 **File:** `engines/adaptive_tremor.py`
@@ -151,7 +151,7 @@ Detects real-time ML fingerprinting and poisoning attempts via dynamic temporal 
 
 ### `06` EEG Shield
 **File:** `engines/eeg_shield.py`
-Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data. *v7.1 target: upgrade adversarial layer from FGSM to PGD (Projected Gradient Descent) with random restarts — FGSM is a single-step attack and state-of-the-art classifiers are increasingly robust to it.*
+Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data. The Colab notebook includes a **3D channel waterfall plot** comparing raw vs balanced-protected EEG across all four channels. *v7.1 target: upgrade adversarial layer from FGSM to PGD (Projected Gradient Descent) with random restarts — FGSM is a single-step attack and state-of-the-art classifiers are increasingly robust to it.*
 
 ### `07` Neuro Audit
 **File:** `engines/neuro_audit.py`
