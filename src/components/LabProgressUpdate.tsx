@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('mar31');
+  const [activeTab, setActiveTab] = useState<'apr13' | 'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('apr13');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,24 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
+                onClick={() => setActiveTab('apr13')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'apr13' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'apr13' ? 'text-primary' : 'text-foreground/40'}`}>APR 13 2026</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('apr6')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'apr6' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'apr6' ? 'text-primary' : 'text-foreground/40'}`}>APR 6 2026</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('mar31')}
                 className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'mar31' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
-                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'mar31' ? 'text-primary' : 'text-foreground/40'}`}>MAR 31 2026</span>
               </button>
@@ -67,6 +81,332 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── April 13 2026 ── */}
+          {activeTab === 'apr13' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">13 April 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">February 2026 Neurotechnology Policy Brief reviewed and integrated — glial paradigm shifts, BCI commercialisation milestones, governance frameworks, and a new demo concept added to the engine roadmap.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Policy Brief Research Integrated */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📑</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">February 2026 Policy Brief — Key Sources Integrated</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Quanta Magazine (Jan 2026) — "Astrocytes Turn Out To Be in Charge": norepinephrine-driven Ca²⁺ waves release adenosine, actively modulating alertness and mood. Connectome models that ignore glia are structurally incomplete.' },
+                      { icon: '→', text: 'News-Medical (Feb 2026) — MPS Lattice as neurodegeneration gatekeeper: breakdown of the membrane-associated periodic skeleton accelerates APP/Aβ₄₂ uptake in Alzheimer\'s models. New reinforcement strategy proposed.' },
+                      { icon: '→', text: 'Molecular Metabolism (Jan 2026) — DLK/SARM1 metabolic survival switch: DLK is bivalent — protective short-term, degenerative long-term. Targeted for stroke/concussion neuroprotection.' },
+                      { icon: '→', text: 'UNESCO (2025) — First global neurotechnology ethics standard adopted: explicit consent, non-therapeutic child prohibition, affordability mandates. Directly expands NeuroAudit compliance matrix.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Governance Milestones */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚖️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Governance Milestones — Neurorights Hardening</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Chile Supreme Court (2023 → reported 2026): first neuroprivacy ruling against Emotiv — brain data cannot be sold or manipulated under Chile\'s constitutional neurorights amendment. NeuroAudit (Engine 09) Chile jurisdiction flag updated.' },
+                      { icon: '→', text: 'MIND Act (Schumer/Cantwell/Markey, 2025): FTC empowered to regulate neural data. Framing: neural data "reveals what people think and when they intend to act." Retention, consent, and anti-exploitation provisions align with our MIND Act compliance module.' },
+                      { icon: '→', text: 'Brazil Bill No. 2,338/2023: risk-tiered AI governance passed Senate 2025. "Excessive-risk" systems prohibited outright; medical AI = high-risk with mandatory human review. Stax Evaluator (Engine 11) governance taxonomy updated.' },
+                      { icon: '→', text: 'Spain ENDS (Jan 2026): National Health Data Space launched — secondary use of health data under strict ethical standards. Spain now hosts 3 EU cloud regions, positioning it as a European Health Data Area anchor.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Landscape — April 2026 Commercial Update */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧠</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">BCI Commercialisation — April 2026 Pulse</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Neuralink humans implanted (PRIME study)', value: '3', pct: 30 },
+                      { label: 'Synchron COMMAND study SAEs @ 12 mo', value: '0', pct: 5 },
+                      { label: 'Blackrock MoveAgain speech WPM record', value: '62', pct: 62 },
+                      { label: 'Non-invasive share of neurotech market', value: '76.5%', pct: 77 },
+                      { label: 'Market size 2025 → 2030 growth (USD B)', value: '$15.8→$30B', pct: 53 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] font-mono text-muted-foreground/50 mt-3">Sources: BioSpace (Synchron COMMAND); Blackrock Neurotech FDA Breakthrough; LEAP:IN Neurotech 2025 market report; Neuralink clinical trials</p>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Platform Cards */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 lg:col-span-2 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30 animate-fade-in-up stagger-5">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📡</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-4 font-black">Active BCI Platforms — February 2026 Snapshot</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                      { name: 'Neuralink N1', detail: '3 humans · PRIME study · 1,024 ch intracortical threads · R1 robot insertion · 20–30 implants targeted 2026', tag: 'PRIME Study' },
+                      { name: 'Synchron Stentrode', detail: 'COMMAND: 0 SAEs @ 12 mo · Native Apple BCI HID profile → iPhone/iPad/Vision Pro via Switch Control', tag: 'Apple Native' },
+                      { name: 'Blackrock MoveAgain', detail: '62 WPM ALS speech restoration · FDA Breakthrough Device · Utah Array multi-site · Tether-backed', tag: 'FDA Breakthrough' },
+                      { name: 'Cognixion Axon-R', detail: 'Non-invasive EEG headband · Apple Vision Pro clinical trial · Consumer pathway · WSJ 2026 prediction list', tag: 'Non-Invasive' },
+                    ].map(p => (
+                      <div key={p.name} className="bg-black/30 border border-primary/20 p-3 hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5 scan-card">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <p className="text-foreground font-mono text-xs font-semibold">{p.name}</p>
+                          <span className="text-[8px] font-mono text-primary bg-primary/10 border border-primary/20 px-1.5 py-0.5 uppercase tracking-wider whitespace-nowrap">{p.tag}</span>
+                        </div>
+                        <p className="text-muted-foreground text-[10px] leading-relaxed">{p.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Cellular Paradigm Shifts */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🔬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Cellular Paradigm Shifts — Q1 2026</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Astrocyte Ca²⁺ / adenosine axis: non-neuronal cells are primary regulators of brain state. Neurofeedback products operating on EEG proxies are intervening in a system far more complex than their models — zero regulatory framework for gliotransmitter manipulation.' },
+                      { icon: '→', text: 'MPS lattice breakdown → APP endocytosis → Aβ₄₂ toxicity: structural reinforcement of neuronal scaffolding is a viable Alzheimer\'s prevention target. Implication: scaffold-integrity markers may emerge as new biometric signal classes.' },
+                      { icon: '→', text: 'DLK bivalence (Michigan 2026): metabolic disruption → protective DLK activation; prolonged activation flips to degenerative. Dual-phase injury models now applicable to concussion and stroke recovery forensics.' },
+                      { icon: '→', text: 'Eif5a hypusination (VIB/KU Leuven 2026): axonal protein synthesis disruption in ALS. Spermidine restores hypusination — dietary/molecular intervention pathway with direct parallels to adaptive neural hardware resilience.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* New Demo Design: CognitiveSovereignty Mapper */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🗺️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">New Demo Design: Cognitive Sovereignty Mapper</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-3">
+                    Proposed new <span className="text-primary">governance</span>-category engine surfaced by policy brief review. Interactive jurisdiction-by-scenario matrix: given a BCI data processing operation (e.g. EEG re-identification, gliotransmitter-state inference, thought-to-text logging), the engine maps which neurorights frameworks apply, what consent tier is required, and what countermeasures are mandatory.
+                  </p>
+                  <div className="space-y-2 mb-3">
+                    {[
+                      { label: 'Jurisdictions', value: 'UNESCO · Chile · MIND Act · EU AI Act · Brazil 2338 · Spain ENDS · CCPA' },
+                      { label: 'Signal classes', value: 'EEG · Intracortical · Endovascular · Keystroke · Cursor · Gliotransmitter proxy' },
+                      { label: 'Output', value: 'Per-jurisdiction consent tier · mandatory countermeasure list · audit flag' },
+                    ].map(r => (
+                      <div key={r.label} className="flex gap-2 text-[10px] font-mono">
+                        <span className="text-primary/60 shrink-0 w-28">{r.label}:</span>
+                        <span className="text-muted-foreground">{r.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {['Engine 14 Candidate', 'Governance Category', 'v8.0 Roadmap', 'Multi-Jurisdiction'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Full-width: v7.1 → v8.0 Research Priorities */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🚀</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Research Priorities — Revised April 13 2026</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    February 2026 policy brief analysis drives three v7.1 / v8.0 tracks. <span className="text-primary">NeuroAudit (Engine 09)</span>: UNESCO global standard + Chile Emotiv ruling + MIND Act consent provisions added to jurisdiction matrix. <span className="text-primary">Stax Evaluator (Engine 11)</span>: Brazil Bill 2338 risk tiers and Spain ENDS secondary-use framework integrated into governance taxonomy. <span className="text-primary">Engine 14 (proposed)</span>: Cognitive Sovereignty Mapper scoped for v8.0 — interactive neurorights compliance explorer covering 7 jurisdictions and 6 BCI signal classes, with Synchron Apple BCI HID as the inaugural test scenario.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Feb 2026 Brief Reviewed', 'UNESCO Standard', 'Chile Emotiv Ruling', 'MIND Act Consent Tiers', 'Brazil AI Bill 2338', 'Spain ENDS', 'Engine 09 Updated', 'Engine 11 Updated', 'Engine 14 Proposed', 'Glial Blind Spot', 'Synchron Apple BCI HID'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
+
+          {/* ── April 6 2026 ── */}
+          {activeTab === 'apr6' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">6 April 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">2026 Research Integration Sprint — new peer-reviewed findings across BCI security, sycophancy causal analysis, and multi-agent collusion detection incorporated into forensic engine suite.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* New 2026 Papers */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📑</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">2026 Research Integrated</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'arXiv:2509.21305 — "Sycophancy Is Not One Thing" (ICLR 2026): sycophantic agreement, genuine agreement & sycophantic praise are independently steerable directions in LLM activation space. Directly informs Affective Firewall detection granularity.' },
+                      { icon: '→', text: 'arXiv:2604.01151 — "Detecting Multi-Agent Collusion Through Multi-Agent Interpretability" (Apr 2026, Oxford/NYU): NARCBench + 5 probing techniques aggregating per-agent activations. New forensic angle for Engine 10.' },
+                      { icon: '→', text: 'arXiv:2603.12296 — "Synthetic Data Generation for BCIs" (Mar 2026): benchmarks 4 paradigms of EEG generation (knowledge-/feature-/model-/translation-based). Informs EEG Shield v7.1 adversarial augmentation strategy.' },
+                      { icon: '→', text: 'arXiv:2601.16589 — "Emerging Threats in Neuromorphic Systems" (Jan 2026): asynchronous event-driven side-channels, PUF/TRNG vulnerabilities, synaptic weight tampering. Expands Gradient Auditor threat taxonomy.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Multi-Agent Collusion Forensics */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🕵</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Multi-Agent Collusion Detection — Engine 10 Extension</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Rose et al. (2026) introduce NARCBench: first benchmark for collusion detection under environment distribution shift.' },
+                      { icon: '→', text: 'White-box activation aggregation across interacting agents captures covert coordination that per-agent probes miss entirely.' },
+                      { icon: '→', text: 'Implication: TransformerLens Probe (Engine 10) scope expanded from single-model deception circuits to multi-agent coordination fingerprints.' },
+                      { icon: '→', text: 'Targeted for Engine 10 v7.1 patch: add NARCBench-style group-level classification alongside existing ablation pipeline.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Sycophancy Causal Analysis */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧲</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Sycophancy Causal Decomposition — Affective Firewall Update</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Vennemeyer et al. (ICLR 2026): three distinct linear directions encode (1) sycophantic agreement, (2) genuine agreement, (3) sycophantic praise — independently steerable without cross-interference.' },
+                      { icon: '→', text: 'Prior Affective Firewall treated sycophancy as a monolithic signal. Engine 01 (Affective Firewall) now distinguishes exploitation from genuine helpfulness.' },
+                      { icon: '→', text: 'Difference-in-means probing added as optional mode in Docent Auditor (Engine 12) — separates praise flattery from factual capitulation during transcript analysis.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Landscape — April 2026 */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-5 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧠</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">BCI Landscape — April 2026 Update</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Intracranial Language BCI WPM record', value: '62 WPM', pct: 62 },
+                      { label: 'Consumer EEG re-ID accuracy (30s)', value: '>93%', pct: 93 },
+                      { label: 'Neural data breach notification (industry)', value: '16.7%', pct: 17 },
+                      { label: 'Third-party transfer rights reserved', value: '96.7%', pct: 97 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] font-mono text-muted-foreground/50 mt-3">Sources: arXiv:2603.12279 (He et al. 2026); Neurorights Foundation Industry Audit 2024; FPF BCI Report 2021</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Full-width: v7.1 Research Priorities */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🔬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">v7.1 Research Priorities — Revised April 6 2026</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    New research accelerates two v7.1 tracks. <span className="text-primary">EEG Shield</span>: Wang et al. (2026) synthetic generation taxonomy provides evaluation scaffolding for PGD upgrade — knowledge-based & model-based generation cover the adversarial data augmentation gap. <span className="text-primary">Forensics</span>: Rose et al. (2026) NARCBench integration targeted for Engine 10; Vennemeyer causal decomposition targeted for Engine 12 transcript analysis. Neuromorphic threat surface (arXiv:2601.16589) added to Gradient Auditor threat taxonomy for v7.1 scope.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['2026 Papers Integrated', 'NARCBench Forensics', 'Sycophancy Causal Decomp', 'Synthetic EEG Augmentation', 'Neuromorphic Threat Taxonomy', 'Engine 10 Multi-Agent', 'Engine 12 Causal Probing'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── March 31 2026 ── */}
           {activeTab === 'mar31' && (

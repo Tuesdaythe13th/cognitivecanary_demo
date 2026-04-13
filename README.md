@@ -33,6 +33,24 @@
 
 ## Changelog
 
+### April 6, 2026 — 2026 Research Integration & Forensic Engine Expansion
+
+This update integrates four new 2026 peer-reviewed papers, expands the forensic engine scope, and sharpens the sycophancy detection model based on ICLR 2026 findings.
+
+**Sycophancy causal decomposition.** Vennemeyer et al. (ICLR 2026, arXiv:2509.21305) demonstrate that sycophantic agreement, genuine agreement, and sycophantic praise are encoded as *distinct, independently steerable linear directions* in LLM activation space. Prior Affective Firewall (Engine 01) and Docent Auditor (Engine 12) treated sycophancy as a monolithic signal. v7.1 target: difference-in-means probing to separate praise flattery from factual capitulation in transcript analysis.
+
+**Multi-agent collusion detection.** Rose, Cullen, Kaplowitz & de Witt (Oxford/NYU, April 2026, arXiv:2604.01151) introduce NARCBench and five group-level probing techniques that aggregate per-agent activations to detect covert coordination. Single-agent probes are systematically blind to multi-agent collusion. TransformerLens Probe (Engine 10) v7.1 patch: add NARCBench-style group classification alongside existing ablation pipeline.
+
+**Synthetic EEG generation benchmarks.** Wang et al. (March 2026, arXiv:2603.12296) provide the first systematic taxonomy and benchmark of brain signal generation for BCIs across four paradigms (knowledge-based, feature-based, model-based, translation-based). Model-based generation closes part of the adversarial augmentation gap for EEG Shield (Engine 06); composition bounds remain an open problem.
+
+**Neuromorphic threat surface.** arXiv:2601.16589 (January 2026) surveys asynchronous event-driven side-channels, PUF/TRNG vulnerabilities, and synaptic weight tampering in neuromorphic systems. These attack surfaces are not covered by the existing Gradient Auditor (Engine 05) taxonomy. Added to v7.1 scope.
+
+**Research Basis updated.** `ResearchBasis` component adds four new 2026 citations, expands Open Questions to 12 named problems (up from 8), and corrects the forensic limitation description to reflect the multi-agent and sycophancy decomposition gaps.
+
+**Date updated.** Project date advanced to April 6, 2026.
+
+---
+
 ### March 31, 2026 — Research Hardening & Product Narrative Update
 
 This update addresses critical gaps identified in external review across two dimensions: security rigor and product legibility.
@@ -68,7 +86,7 @@ This repo contains the **live demo site** (React), **fifteen Python defense and 
 ## Links
 
 - **Live demo**: https://cognitivecanary.lovable.app
-- **Colab notebook**: https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq — also at `CognitiveCanary_Demo.ipynb` in this repo
+- **Colab notebook**: https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq — also at `CognitiveCanary_Demo.ipynb` in this repo — features **3D matplotlib visualizations** of the Lissajous toroid (Engine 01), multi-channel EEG waterfall (Engine 06), and a 3D-enhanced full-pipeline dashboard
 - **Neurorights whitepaper** (HTML): `public/neurorights-2026.html`
 
 ---
@@ -87,7 +105,7 @@ I want to:
 - **Play with the live defenses/forensics in the browser** → see [Interactive Demo Sections](#interactive-demo-sections)
 - **Use EEG Shield in my own pipeline** → see [Engine 06 — `eeg_shield.py`](#06-eeg-shield--eeg_shieldpy)
 - **Run a neurorights audit on a product** → see [Engine 07 — `neuro_audit.py`](#07-neuro-audit--neuro_auditpy)
-- **Try everything interactively** → open the [Colab notebook](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq)
+- **Try everything interactively** → open the [Colab notebook](https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq) — includes **3D matplotlib visualizations** of the Lissajous toroid, EEG channel waterfall, and full-pipeline dashboard
 
 ---
 
@@ -113,7 +131,7 @@ For AI auditing, Canary utilizes **Sparse Autoencoders (SAEs)**, **Activation Pa
 
 ### `01` Lissajous 3D Harmonic Overlay
 **File:** `engines/lissajous_3d.py`
-Injects a small-amplitude Lissajous curve into cursor movement data using physiological tremor frequencies (4–12 Hz) with irrational frequency ratios (13:8:5) to mimic natural human tremor.
+Injects a small-amplitude Lissajous curve into cursor movement data using physiological tremor frequencies (4–12 Hz) with irrational frequency ratios (13:8:5) to mimic natural human tremor. The Colab notebook renders this as a **full 3D matplotlib visualization** with three panels: raw 2D cursor path, the parametric Lissajous toroid (ω=13:8:5, depth-coloured via `Line3DCollection`), and the obfuscated cursor scatter in (X, Y, Z=scroll-axis) space coloured by speed.
 
 ### `02` Adaptive Tremor Engine
 **File:** `engines/adaptive_tremor.py`
@@ -133,7 +151,7 @@ Detects real-time ML fingerprinting and poisoning attempts via dynamic temporal 
 
 ### `06` EEG Shield
 **File:** `engines/eeg_shield.py`
-Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data. *v7.1 target: upgrade adversarial layer from FGSM to PGD (Projected Gradient Descent) with random restarts — FGSM is a single-step attack and state-of-the-art classifiers are increasingly robust to it.*
+Three-layer neural privacy architecture: Adaptive Gaussian smoothing, Differential Privacy via per-band Laplace mechanism, and FGSM-style adversarial perturbations for consumer EEG data. The Colab notebook includes a **3D channel waterfall plot** comparing raw vs balanced-protected EEG across all four channels. *v7.1 target: upgrade adversarial layer from FGSM to PGD (Projected Gradient Descent) with random restarts — FGSM is a single-step attack and state-of-the-art classifiers are increasingly robust to it.*
 
 ### `07` Neuro Audit
 **File:** `engines/neuro_audit.py`
@@ -254,10 +272,14 @@ Use this as a reference implementation and starting point, not a guarantee of ab
 > Selected works grounding the theoretical and empirical claims in this project:
 
 1. **Pezeshki et al. (2021)** — [Gradient Starvation: A Learning Proclivity in Neural Networks](https://proceedings.neurips.cc/paper_files/paper/2021/file/0987b8b338d6c90bbedd8631bc499221-Paper.pdf) — NeurIPS
-2. **Lu et al. (2026)** — The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models — arXiv:2601.10387
+2. **Lu et al. (2026)** — The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models — [arXiv:2601.10387](https://arxiv.org/abs/2601.10387)
 3. **Huben et al. (2025)** — [Sparse Autoencoders Enable Deception Detection](https://arxiv.org/abs/2412.04092)
-4. **Garcia v. Character Technologies, Inc.** — [FIRE Case Reference](https://www.thefire.org/cases/garcia-v-character-technologies-inc)
-5. **Privacy-Protecting Techniques for Behavioral Biometric Data** — [arXiv:2109.04120](https://arxiv.org/pdf/2109.04120)
+4. **Vennemeyer et al. (2026)** — Sycophancy Is Not One Thing: Causal Separation of Sycophantic Behaviors in LLMs — [arXiv:2509.21305](https://arxiv.org/abs/2509.21305) — ICLR 2026
+5. **Rose, Cullen, Kaplowitz & de Witt (2026)** — Detecting Multi-Agent Collusion Through Multi-Agent Interpretability — [arXiv:2604.01151](https://arxiv.org/abs/2604.01151)
+6. **Wang et al. (2026)** — Synthetic Data Generation for Brain-Computer Interfaces: Overview, Benchmarking, and Future Directions — [arXiv:2603.12296](https://arxiv.org/abs/2603.12296)
+7. **arXiv:2601.16589 (2026)** — Emerging Threats and Countermeasures in Neuromorphic Systems: A Survey
+8. **Garcia v. Character Technologies, Inc.** — [FIRE Case Reference](https://www.thefire.org/cases/garcia-v-character-technologies-inc)
+9. **Privacy-Protecting Techniques for Behavioral Biometric Data** — [arXiv:2109.04120](https://arxiv.org/pdf/2109.04120)
 
 ---
 
@@ -276,7 +298,7 @@ If you use this project or the whitepaper in your work, please cite:
 <div align="center">
 
 ```
-[ARTIFEX LABS] // COGNITIVE CANARY v7.0 // d/acc // ACTIVE DEFENSE
+[ARTIFEX LABS] // COGNITIVE CANARY v7.0 // d/acc // ACTIVE DEFENSE // APR 6 2026
 The mental interior remains our own.
 ```
 
