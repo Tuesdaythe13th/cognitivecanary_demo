@@ -52,4 +52,15 @@ export interface EngineDefinition {
   supportsLiveMode: boolean;
   supportsMockMode: boolean;
   tags: string[];
+  researchNotes?: {
+    technicalDeepDive: string;
+    codeSnippet?: string;
+    theory?: string;
+  };
+  citations?: {
+    authors: string;
+    year: string;
+    title: string;
+    link?: string;
+  }[];
 }

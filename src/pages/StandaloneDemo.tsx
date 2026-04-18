@@ -22,8 +22,10 @@ import StaxEvaluator from '@/components/StaxEvaluator';
 import DocentAuditor from '@/components/DocentAuditor';
 import BloomElicitor from '@/components/BloomElicitor';
 import SparseCircuitMapper from '@/components/SparseCircuitMapper';
+import TripwireCanary from '@/components/TripwireCanary';
 import { ExternalLink } from 'lucide-react';
 import { engineRegistry } from '@/data/engineRegistry';
+import DemoNavigator from '@/components/shared/DemoNavigator';
 
 const DEMOS: Record<string, React.FC> = {
   'affective-firewall': AffectiveFirewall,
@@ -49,11 +51,12 @@ const DEMOS: Record<string, React.FC> = {
   'docent-auditor': DocentAuditor,
   'bloom-elicitor': BloomElicitor,
   'sparse-circuit-mapper': SparseCircuitMapper,
+  'tripwire-canary': TripwireCanary,
 };
 
 export default function StandaloneDemo() {
   const { id } = useParams<{ id: string }>();
-  
+
   const engineDef = engineRegistry.find(e => e.id === id);
 
   if (!id) return null;
@@ -62,14 +65,15 @@ export default function StandaloneDemo() {
 
   if (!DemoComponent) {
     if (engineDef) {
-       return (
-          <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center font-mono p-6">
-             <div className="text-display text-4xl mb-4 text-white/50">{engineDef.title}</div>
-             <div className="text-xs uppercase tracking-widest text-[#BFFF00] mb-8 px-3 py-1 bg-[#BFFF00]/10 border border-[#BFFF00]/30">System Under Construction</div>
-             <p className="max-w-md text-center text-white/40 leading-relaxed mb-8 text-sm">This engine is currently being refactored into the new ExhibitLayout unified grammar for v7.0.</p>
-             <Link to="/lab" className="text-[10px] text-white/50 hover:text-[#BFFF00] uppercase tracking-widest transition-colors border border-white/20 px-4 py-2 hover:bg-white/5">Return to Hub</Link>
-          </div>
-       );
+      return (
+        <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center font-mono p-6">
+          <div className="text-display text-4xl mb-4 text-white/50">{engineDef.title}</div>
+          <div className="text-xs uppercase tracking-widest text-[#BFFF00] mb-8 px-3 py-1 bg-[#BFFF00]/10 border border-[#BFFF00]/30">System Under Construction</div>
+          <p className="max-w-md text-center text-white/40 leading-relaxed mb-8 text-sm">This engine is currently being refactored into the new ExhibitLayout unified grammar for v7.0.</p>
+          <Link to="/lab" className="text-[10px] text-white/50 hover:text-[#BFFF00] uppercase tracking-widest transition-colors border border-white/20 px-4 py-2 hover:bg-white/5">Return to Hub</Link>
+          <DemoNavigator />
+        </div>
+      );
     }
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center font-mono text-sm">
@@ -83,14 +87,14 @@ export default function StandaloneDemo() {
       {/* Background textures */}
       <div className="fixed inset-0 grid-bg pointer-events-none opacity-40" />
       <div className="fixed inset-0 grain-overlay pointer-events-none opacity-50 mix-blend-overlay" />
-      
+
       {/* Header bar */}
       <div className="fixed top-0 left-0 w-full p-4 sm:p-6 z-[100] flex justify-between items-center pointer-events-none">
-        <Link 
-          to="/" 
+        <Link
+          to="/lab"
           className="pointer-events-auto flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50 hover:text-primary transition-colors bg-black/50 px-4 py-2 border border-white/10 rounded backdrop-blur-md"
         >
-          <span className="text-lg leading-none mb-[2px]">‹</span> Back to Hub
+          <span className="text-lg leading-none mb-[2px]">‹</span> Back to Lab
         </Link>
         <div className="text-[10px] font-mono text-primary uppercase tracking-[0.4em] px-4 py-2 border border-primary/30 bg-primary/5 backdrop-blur-md hidden sm:block">
           Standalone Exhibit Environment
@@ -103,6 +107,8 @@ export default function StandaloneDemo() {
           <DemoComponent />
         </div>
       </div>
+
+      <DemoNavigator />
     </div>
   );
 }

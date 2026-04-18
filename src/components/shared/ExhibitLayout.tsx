@@ -1,6 +1,6 @@
 import React from 'react';
 import { EngineDefinition, DataMode, EngineCategory } from '../../types/engine';
-import { Shield, BrainCircuit, Activity, FileText, FlaskConical, AlertTriangle } from 'lucide-react';
+import { Shield, BrainCircuit, Activity, FileText, FlaskConical, AlertTriangle, BookOpen, ChevronRight, Binary, Quote } from 'lucide-react';
 
 interface ExhibitLayoutProps {
   engine: EngineDefinition;
@@ -48,6 +48,7 @@ export default function ExhibitLayout({
   onPrimaryAction,
   isEngineActive
 }: ExhibitLayoutProps) {
+  const [showResearch, setShowResearch] = React.useState(false);
   const Icon = categoryIcons[engine.category];
   const colorClass = categoryColors[engine.category];
 
@@ -77,27 +78,116 @@ export default function ExhibitLayout({
              </p>
           </div>
 
-          <div className="flex bg-[#050505] border border-white/20 p-1">
+          <div className="flex flex-col sm:flex-row gap-4 items-end">
              <button
-               onClick={() => onDataModeChange('mock')}
-               className={`px-6 py-2 text-[10px] font-mono uppercase tracking-[0.2em] transition-all ${dataMode === 'mock' ? 'bg-white/10 text-white shadow-inner' : 'text-white/40 hover:text-white/80'}`}
+                onClick={() => setShowResearch(!showResearch)}
+                className={`flex items-center gap-2 px-4 py-2 border text-[10px] font-mono uppercase tracking-widest transition-all ${showResearch ? 'bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(191,255,0,0.2)]' : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'}`}
              >
-               Mock Data
+                <BookOpen size={14} />
+                Research Mode
              </button>
-             <button
-               disabled={!engine.supportsLiveMode}
-               onClick={() => engine.supportsLiveMode && onDataModeChange('live')}
-               className={`px-6 py-2 text-[10px] font-mono uppercase tracking-[0.2em] transition-all flex border-l border-white/10 items-center gap-2 ${!engine.supportsLiveMode ? 'opacity-30 cursor-not-allowed' : ''} ${dataMode === 'live' ? 'bg-white/10 text-white shadow-inner' : 'text-white/40 hover:text-white/80'}`}
-             >
-               {dataMode === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />}
-               Live Telemetry
-             </button>
+
+             <div className="flex bg-[#050505] border border-white/20 p-1">
+                <button
+                  onClick={() => onDataModeChange('mock')}
+                  className={`px-6 py-2 text-[10px] font-mono uppercase tracking-[0.2em] transition-all ${dataMode === 'mock' ? 'bg-white/10 text-white shadow-inner' : 'text-white/40 hover:text-white/80'}`}
+                >
+                  Mock Data
+                </button>
+                <button
+                  disabled={!engine.supportsLiveMode}
+                  onClick={() => engine.supportsLiveMode && onDataModeChange('live')}
+                  className={`px-6 py-2 text-[10px] font-mono uppercase tracking-[0.2em] transition-all flex border-l border-white/10 items-center gap-2 ${!engine.supportsLiveMode ? 'opacity-30 cursor-not-allowed' : ''} ${dataMode === 'live' ? 'bg-white/10 text-white shadow-inner' : 'text-white/40 hover:text-white/80'}`}
+                >
+                  {dataMode === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />}
+                  Live Telemetry
+                </button>
+             </div>
           </div>
         </header>
 
         {/* Middle Row: The Grammar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
           
+          {/* Research Overlay */}
+          <div className={`absolute inset-0 z-[50] bg-black/95 backdrop-blur-md border border-primary/20 p-8 transition-all duration-500 overflow-y-auto ${showResearch ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none translate-y-4'}`}>
+            <div className="max-w-4xl space-y-12">
+               <div className="flex justify-between items-start">
+                  <div className="space-y-2">
+                     <h2 className="text-display text-3xl text-primary leading-none">FORENSIC CASE NOTES</h2>
+                     <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.4em]">Engine {engine.index.toString().padStart(2, '0')} // Deep-Dive Analysis</p>
+                  </div>
+                  <button onClick={() => setShowResearch(false)} className="text-white/40 hover:text-white transition-colors">
+                     <Quote size={24} className="rotate-180" />
+                  </button>
+               </div>
+
+               {engine.researchNotes ? (
+                 <div className="grid md:grid-cols-2 gap-12">
+                   <div className="space-y-8">
+                     <section className="space-y-4">
+                       <h4 className="flex items-center gap-3 text-xs font-mono text-primary uppercase tracking-widest border-b border-primary/20 pb-2">
+                         <ChevronRight size={14} /> Technical Implementation
+                       </h4>
+                       <p className="text-sm text-white/70 leading-relaxed italic">
+                         "{engine.researchNotes.technicalDeepDive}"
+                       </p>
+                     </section>
+
+                     <section className="space-y-4">
+                       <h4 className="flex items-center gap-3 text-xs font-mono text-primary uppercase tracking-widest border-b border-primary/20 pb-2">
+                         <ChevronRight size={14} /> Theoretical Basis
+                       </h4>
+                       <p className="text-sm text-white/70 leading-relaxed">
+                         {engine.researchNotes.theory}
+                       </p>
+                     </section>
+                   </div>
+
+                   <div className="space-y-8">
+                     {engine.researchNotes.codeSnippet && (
+                       <section className="space-y-4">
+                         <h4 className="flex items-center gap-3 text-xs font-mono text-primary uppercase tracking-widest border-b border-primary/20 pb-2">
+                           <Binary size={14} /> Logic Prototype (Python)
+                         </h4>
+                         <div className="bg-black border border-white/10 p-4 rounded font-mono text-[11px] text-primary/80 leading-relaxed whitespace-pre overflow-x-auto">
+                           {engine.researchNotes.codeSnippet}
+                         </div>
+                       </section>
+                     )}
+
+                     {engine.citations && (
+                       <section className="space-y-4">
+                         <h4 className="flex items-center gap-3 text-xs font-mono text-primary uppercase tracking-widest border-b border-primary/20 pb-2">
+                           <BookOpen size={14} /> Peer-Reviewed Citations
+                         </h4>
+                         <div className="space-y-4">
+                           {engine.citations.map((c, i) => (
+                             <a 
+                               key={i} 
+                               href={c.link} 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               className="block group p-3 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all"
+                             >
+                               <div className="text-[10px] font-mono text-white/80 group-hover:text-primary transition-colors underline mb-1">{c.title}</div>
+                               <div className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{c.authors} ({c.year})</div>
+                             </a>
+                           ))}
+                         </div>
+                       </section>
+                     )}
+                   </div>
+                 </div>
+               ) : (
+                 <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 opacity-30">
+                   <FlaskConical size={48} />
+                   <div className="text-mono text-xs uppercase tracking-[0.3em]">Extended research data pending for this module.</div>
+                 </div>
+               )}
+            </div>
+          </div>
+
           {/* Input Panel */}
           <div className="col-span-1 lg:col-span-3 flex flex-col gap-2">
             <h3 className="text-mono text-[10px] text-white/40 border-b border-white/10 pb-2">01 / {engine.inputLabel}</h3>
