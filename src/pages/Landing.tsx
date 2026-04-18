@@ -1,304 +1,280 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Terminal, Shield, FileText, Activity, ArrowRight } from 'lucide-react';
+import { 
+  Shield, 
+  Cpu, 
+  Home, 
+  Lock, 
+  Zap, 
+  Database, 
+  EyeOff, 
+  ArrowRight,
+  Fingerprint,
+  Mic,
+  Smartphone,
+  Scale
+} from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import UseCases from '@/components/UseCases';
-import ThreatModels from '@/components/ThreatModels';
-import TripwireCanary from '@/components/TripwireCanary';
-import SafetyGovernance from '@/components/SafetyGovernance';
-import ResearchBasis from '@/components/ResearchBasis';
-import TrustCenter from '@/components/TrustCenter';
-import CaseStudies from '@/components/CaseStudies';
-export const landingCopy = {
-  hero: {
-    eyebrow: "ARTIFEX LABS // RESEARCH PROTOTYPE",
-    title: "COGNITIVE CANARY",
-    subtitle: "Privacy defenses for behavioral surveillance. Forensic tools for frontier model audits.",
-    whyNow: "A research prototype from ARTIFEX LABS exploring how to reduce human-side surveillance exposure while increasing model-side auditability.",
-    primaryCta: {
-      label: "Enter the Lab",
-      href: "/lab",
-    },
-    secondaryCtas: [
-      {
-        label: "View Notebook",
-        href: "https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq",
-        icon: Terminal
-      },
-      {
-        label: "Read Whitepaper",
-        href: "/neurorights-2026.html",
-        icon: FileText
-      },
-      {
-        label: "View Code",
-        href: "https://github.com/Tuesdaythe13th/cognitivecanary_demo",
-        icon: ExternalLink
-      },
-    ],
-  },
-};
-
-// Simple hook for scroll-based reveal on the Landing page
-function useReveal() {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.12 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return { ref, visible };
-}
+import './Landing.css';
 
 export default function Landing() {
-  const [mousePos, setMousePos] = useState({ x: -9999, y: -9999 });
   const [heroReady, setHeroReady] = useState(false);
-  const principlesReveal = useReveal();
-  const operationsReveal = useReveal();
+  const [lockdownActive, setLockdownActive] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!prefersReduced) setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    // Stagger hero entrance
-    const t = setTimeout(() => setHeroReady(true), 80);
-    return () => { window.removeEventListener('mousemove', handleMouseMove); clearTimeout(t); };
+    const t = setTimeout(() => setHeroReady(true), 100);
+    return () => clearTimeout(t);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#BFFF00] selection:text-black relative font-sans overflow-x-hidden grain-overlay">
-      {/* Cursor / Glow — only renders after first mouse move */}
-      {mousePos.x > 0 && (
-        <div
-          className="fixed w-[500px] h-[500px] bg-[#BFFF00] rounded-full blur-[140px] opacity-[0.04] pointer-events-none z-0"
-          style={{
-            left: mousePos.x,
-            top: mousePos.y,
-            transform: 'translate(-50%, -50%)',
-            transition: 'left 0.12s ease-out, top 0.12s ease-out',
-          }}
-        />
-      )}
-
-      {/* Brutalist Nav */}
-      <nav className="brutal-nav">
-        <div className="flex flex-col select-none">
-          <div className="text-xl font-brutal tracking-tighter text-[#BFFF00]">ARTIFEX LABS</div>
-          <div className="text-[8px] font-mono tracking-[0.4em] text-white/40 -mt-1 uppercase">Tuesday // Principal Investigator</div>
+    <div className="landing-container selection:bg-[#BFFF00] selection:text-black">
+      {/* ── Nav ──────────────────────────────────────────────────────────── */}
+      <nav className="fixed top-0 w-full z-[100] px-8 py-6 flex justify-between items-center mix-blend-difference">
+        <div className="flex flex-col">
+          <span className="text-xl font-bold tracking-tighter text-[#BFFF00]">ARTIFEX LABS</span>
+          <span className="text-[10px] uppercase tracking-[0.4em] opacity-40">Cognitive Canary // v7.2</span>
         </div>
-        <ul className="hidden md:flex gap-8 text-[11px] font-mono tracking-[0.3em] uppercase text-white/40">
-          <li><Link to="/lab#engines" className="hover:text-white transition-colors">Defenses</Link></li>
-          <li><Link to="/lab#forensics-pipeline" className="hover:text-white transition-colors">Forensics</Link></li>
-          <li><Link to="/lab#engines" className="hover:text-white transition-colors">Registry</Link></li>
-        </ul>
-        <Link
-          to="/lab"
-          className="px-6 py-2 border-2 border-[#BFFF00] text-[#BFFF00] font-mono text-[10px] tracking-[0.2em] hover:bg-[#BFFF00] hover:text-black transition-all duration-200 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFFF00]"
-        >
-          ENTER LAB
-        </Link>
+        <div className="flex gap-8 items-center">
+          <Link to="/lab" className="text-[11px] uppercase tracking-widest font-mono hover:text-[#BFFF00] transition-colors">Lab Access</Link>
+          <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" className="text-[11px] uppercase tracking-widest font-mono hover:text-[#BFFF00] transition-colors">Source</a>
+          <Link 
+            to="/lab" 
+            className="px-6 py-2 border border-[#BFFF00] text-[#BFFF00] text-[10px] font-mono tracking-widest hover:bg-[#BFFF00] hover:text-black transition-all"
+          >
+            INITIALIZE DEFENSE
+          </Link>
+        </div>
       </nav>
 
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20 relative z-10 overflow-hidden">
-        {/* Subtle grid */}
-        <div className="absolute inset-0 grid-bg pointer-events-none opacity-[0.03]" />
-
-        <div className="max-w-7xl w-full mx-auto">
-          <div
-            className="mb-8 text-[10px] font-mono tracking-[0.5em] uppercase"
-            style={{
-              opacity: heroReady ? 0.4 : 0,
-              transform: heroReady ? 'translateY(0)' : 'translateY(12px)',
-              transition: 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1)',
-            }}
-          >
-            {landingCopy.hero.eyebrow}
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section ref={heroRef} className="hero-section">
+        <div className="hero-background">
+          <div className="hero-image-wrapper">
+             <img src="/images/hero.png" alt="Cognitive Canary Core" className="w-full h-full object-contain opacity-50" />
           </div>
+          <div className="absolute inset-0 grid-bg opacity-[0.05]" />
+        </div>
 
-          <h1
-            className="hero-word text-[12vw] md:text-[8vw] leading-[0.8] tracking-tighter text-white mb-4"
-            style={{
-              opacity: heroReady ? 1 : 0,
-              transform: heroReady ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'opacity 0.9s ease 0.1s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s',
-            }}
-          >
-            COGNITIVE<br />
-            <span className="text-[#BFFF00]" style={{ textShadow: '0 0 60px rgba(191,255,0,0.2)' }}>CANARY</span>
-          </h1>
+        <img 
+          src="/images/hero.png" 
+          alt="Cognitive Canary Core" 
+          className={`hero-image-main ${heroReady ? 'opacity-100' : 'opacity-0'}`} 
+        />
 
-          {/* Version badge row */}
-          <div
-            className="flex gap-3 mb-8"
-            style={{
-              opacity: heroReady ? 1 : 0,
-              transform: heroReady ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.8s ease 0.2s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s',
-            }}
-          >
-            <span className="tag-badge">v7.0</span>
-            <span className="tag-badge" style={{ borderColor: 'hsl(175 60% 45% / 0.3)', color: 'hsl(175,60%,45%)', background: 'hsl(175 60% 45% / 0.08)' }}>d/acc</span>
-            <span className="tag-badge" style={{ borderColor: 'hsl(280 60% 60% / 0.3)', color: 'hsl(280,60%,60%)', background: 'hsl(280 60% 60% / 0.08)' }}>15 ENGINES</span>
-          </div>
+        <h1 className="hero-title">
+          COGNITIVE<br />
+          <span>CANARY</span>
+        </h1>
 
-          <div
-            className="grid md:grid-cols-2 gap-12 mt-6 items-end"
-            style={{
-              opacity: heroReady ? 1 : 0,
-              transform: heroReady ? 'translateY(0)' : 'translateY(24px)',
-              transition: 'opacity 0.9s ease 0.3s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s',
-            }}
-          >
-            <div className="space-y-6">
-              <p className="text-2xl md:text-3xl font-grotesque font-light leading-snug text-white/80">
-                Privacy defenses for <em className="not-italic text-white">behavioral surveillance</em>.<br />
-                Forensic tools for <em className="not-italic text-[#BFFF00]">frontier model audits</em>.
-              </p>
+        <p className="hero-subtitle">
+          From Reactive to Proactive. The 2026 Cyberstalking Defense Paradigm.<br />
+          Controlling the flow of personal data, polluting adversarial AI models, and leveraging continuous threat management.
+        </p>
 
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link
-                  to="/lab"
-                  className="group flex items-center gap-4 bg-[#BFFF00] text-black px-10 py-6 font-brutal text-lg transition-all duration-300 relative overflow-hidden hover:shadow-[0_0_40px_rgba(191,255,0,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFFF00]"
-                >
-                  <span className="relative z-10">THE LAB</span>
-                  <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-2 transition-transform duration-200" />
-                  <div className="absolute inset-0 bg-white translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 opacity-20" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="border-l border-[#BFFF00]/20 pl-8 space-y-6">
-              <p className="text-xs font-mono text-white/40 leading-relaxed max-w-sm tracking-wide">
-                {landingCopy.hero.whyNow}
-              </p>
-              <div className="flex items-center gap-6">
-                {landingCopy.hero.secondaryCtas.map((cta, i) => (
-                  <a
-                    key={i}
-                    href={cta.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={cta.label}
-                    className="text-white/40 hover:text-[#BFFF00] transition-colors duration-200 focus-visible:outline-none focus-visible:text-[#BFFF00]"
-                  >
-                    <cta.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="mt-12 flex gap-4">
+          <button className="cta-button" onClick={() => window.location.href='/lab'}>
+            Enter the Lab <ArrowRight />
+          </button>
         </div>
       </section>
-      
-      <TrustCenter />
 
-      {/* ── Marquee Tape ─────────────────────────────────────────────────── */}
-      <div className="tape-wrapper" aria-hidden="true">
-        <div className="tape-text">
-          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
-          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
+      {/* ── Marquee ──────────────────────────────────────────────────────── */}
+      <div className="marquee-wide">
+        <div className="marquee-content">
+          <span className="marquee-item">AGENTIC AI DEFENSE</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">DATA POISONING</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">DIGITAL DIVORCE</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">CTEM PROTOCOLS</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">BEHAVIORAL OBFUSCATION</span>
+          <span className="marquee-item">✦</span>
+          {/* Duplicate for seamless scroll */}
+          <span className="marquee-item">AGENTIC AI DEFENSE</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">DATA POISONING</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">DIGITAL DIVORCE</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">CTEM PROTOCOLS</span>
+          <span className="marquee-item">✦</span>
+          <span className="marquee-item">BEHAVIORAL OBFUSCATION</span>
+          <span className="marquee-item">✦</span>
         </div>
       </div>
 
-      {/* ── Principles ───────────────────────────────────────────────────── */}
-      <section
-        ref={principlesReveal.ref as React.RefObject<HTMLElement>}
-        className="py-40 px-6 md:px-20 bg-[#050505] relative z-10"
-        style={{
-          opacity: principlesReveal.visible ? 1 : 0,
-          transform: principlesReveal.visible ? 'translateY(0)' : 'translateY(32px)',
-          transition: 'opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1)',
-        }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <p className="text-[6vw] md:text-[4vw] font-grotesque font-bold leading-[1.1] tracking-tight text-white/20 uppercase">
-            WE BUILD <span className="text-white">DEFENSIVE KINEMATICS</span> THAT BREAK BIOMETRIC TRACKING.{' '}
-            NO REPRODUCIBILITY. NO FINGERPRINTS. JUST{' '}
-            <span className="text-[#BFFF00]" style={{ textShadow: '0 0 40px rgba(191,255,0,0.15)' }}>SIGNAL NOISE</span>{' '}
-            AND <span className="text-white">RADICAL PRIVACY</span>.
-          </p>
+      {/* ── AI-on-AI Defense ─────────────────────────────────────────────── */}
+      <section className="content-section">
+        <span className="section-label">Counter-Agent Intelligence</span>
+        <h2 className="section-title">Defending Against<br />Agentic AI</h2>
+        
+        <div className="feature-grid">
+          <div className="feature-card">
+            <Cpu className="feature-icon" />
+            <h3 className="feature-name">Personal Defensive AI</h3>
+            <p className="feature-desc">
+              Your digital bodyguard. Defensive agents filter incoming communications for micro-anomalies indicative of synthetic generation and autonomous stalking tactics.
+            </p>
+          </div>
+          <div className="feature-card">
+            <Fingerprint className="feature-icon" />
+            <h3 className="feature-name">Continuous Trust Verification</h3>
+            <p className="feature-desc">
+              Moving beyond static auth. IAM uses behavioral signals like typing cadences and touchscreen pressure to distinguish you from a scraping bot.
+            </p>
+          </div>
+          <div className="feature-card">
+            <Mic className="feature-icon" />
+            <h3 className="feature-name">Synthetic Voice Mitigation</h3>
+            <p className="feature-desc">
+              Secondary authentication protocols for sensitive calls combined with immersive simulated drills for voice-clone recognition.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── Operational Surfaces ─────────────────────────────────────────── */}
-      <section
-        ref={operationsReveal.ref as React.RefObject<HTMLElement>}
-        className="py-40 px-6 md:px-20 border-t border-white/5 bg-black relative z-10"
-      >
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20">
-          {[
-            {
-              num: '01', title: 'DEFENSE', icon: Shield,
-              desc: 'Protect against behavioral fingerprinting and biometric inference using kinematic noise, timing perturbation, and browser-side obfuscation.',
-              items: ['Cursor Obfuscation', 'Keystroke Jitter', 'EEG-Oriented Privacy', 'Spectral Defence'],
-              delay: 0,
-            },
-            {
-              num: '02', title: 'FORENSICS', icon: Activity,
-              desc: 'Probe frontier systems for evaluation-aware behavior, strategic inconsistency, and deceptive signals across 8 interpretability engines.',
-              items: ['Sandbagging Analysis', 'Inspect Harness', 'Strategic Fidelity', 'Circuit Mapping'],
-              delay: 120,
-              offset: 'md:pt-40',
-            },
-          ].map(({ num, title, icon: Icon, desc, items, delay, offset }) => (
-            <div
-              key={num}
-              className={`flex-1 space-y-8 ${offset ?? ''}`}
-              style={{
-                opacity: operationsReveal.visible ? 1 : 0,
-                transform: operationsReveal.visible ? 'translateY(0)' : 'translateY(32px)',
-                transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-              }}
-            >
-              <h2 className="text-4xl font-brutal tracking-tighter text-white">{num} / {title}</h2>
-              <div className="p-10 border border-white/10 bg-white/5 hover:border-[#BFFF00]/40 transition-all duration-300 engine-card">
-                <Icon className="w-12 h-12 text-[#BFFF00] mb-8" />
-                <p className="text-xl font-grotesque font-light text-white/70 leading-relaxed mb-6">{desc}</p>
-                <ul className="space-y-4 font-mono text-[10px] tracking-widest text-white/40 uppercase">
-                  {items.map(item => (
-                    <li key={item} className="flex items-center gap-3">
-                      <span className="text-[#BFFF00]">✦</span> {item}
-                    </li>
-                  ))}
-                </ul>
+      {/* ── CTEM Section ─────────────────────────────────────────────────── */}
+      <section className="content-section bg-[#0a0a0a]">
+        <div className="grid md:grid-cols-2 gap-20 items-center">
+          <div>
+            <span className="section-label">Continuous Threat Management</span>
+            <h2 className="section-title">Dismantle the Data Broker Grid</h2>
+            <p className="feature-desc text-xl mb-8">
+              Automated privacy suites dynamically issue legal takedown requests, monitor for data reappearance, and utilize data-pollution tactics to disrupt the network layer of cyberstalking architecture.
+            </p>
+            <ul className="space-y-4 font-mono text-sm">
+              <li className="flex gap-3 text-[#BFFF00]"><Shield size={18} /> Real-time Visibility into Footprint</li>
+              <li className="flex gap-3 text-[#BFFF00]"><Shield size={18} /> Automated Takedowns (TAKE IT DOWN Act)</li>
+              <li className="flex gap-3 text-[#BFFF00]"><Shield size={18} /> Conflictual Data Pollution</li>
+            </ul>
+          </div>
+          
+          <div className="ctem-visualization">
+            <div className="ctem-grid">
+              {Array.from({ length: 64 }).map((_, i) => (
+                <div key={i} className={`ctem-cell ${Math.random() > 0.8 ? 'active' : ''}`}>
+                  {Math.random().toString(16).substring(2, 4)}
+                </div>
+              ))}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent pointer-events-none" />
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[10px] text-[#BFFF00]">
+              SCANNING DATA BROKER ECOSYSTEM :: 78% DEPLOYED
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── IoT Lockdown ─────────────────────────────────────────────────── */}
+      <section className="content-section">
+        <span className="section-label">Smart Home Resilience</span>
+        <h2 className="section-title">Digital Divorce &<br />Emergency Egress</h2>
+        
+        <div className="iot-lockdown">
+          <div className="flex-1">
+            <p className="feature-desc text-xl mb-8">
+              Instantly sever administrative privileges of secondary accounts. Modern IoT devices flag anomalous access patterns, alerting you if an estranged partner is monitoring your space.
+            </p>
+            <div className="flex items-center gap-6">
+              <div 
+                className={`lockdown-switch ${lockdownActive ? 'active' : ''}`}
+                onClick={() => setLockdownActive(!lockdownActive)}
+              >
+                <div className="switch-knob" />
+              </div>
+              <span className="font-mono text-sm tracking-widest text-[#BFFF00]">
+                {lockdownActive ? 'EGRESS PROTOCOL ACTIVE' : 'SYSTEM IDLE'}
+              </span>
+            </div>
+          </div>
+          <div className="hidden md:block flex-1 border border-white/10 p-12 bg-white/5 relative">
+            <Home className={`w-24 h-24 mb-6 transition-all duration-500 ${lockdownActive ? 'text-[#BFFF00]' : 'text-white/20'}`} />
+            <div className="space-y-4">
+              <div className="h-2 bg-white/10 overflow-hidden">
+                <div className={`h-full bg-[#BFFF00] transition-all duration-1000 ${lockdownActive ? 'w-full' : 'w-0'}`} />
+              </div>
+              <div className="flex justify-between font-mono text-[10px] opacity-40">
+                <span>LOCAL ARCHITECTURE ISOLATED</span>
+                <span>SECURE</span>
               </div>
             </div>
-          ))}
+            {lockdownActive && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#BFFF00]/10 backdrop-blur-sm animate-in fade-in duration-500">
+                <Lock className="text-[#BFFF00] w-12 h-12 animate-pulse" />
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
-      <UseCases />
-      <ThreatModels />
-      <TripwireCanary />
-      <CaseStudies />
-      <SafetyGovernance />
-      <ResearchBasis />
+      {/* ── Data Poisoning ────────────────────────────────────────────────── */}
+      <section className="content-section bg-[#0a0a0a]">
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="md:col-span-2">
+            <span className="section-label">Active Defense</span>
+            <h2 className="section-title">Behavioral Obfuscation &<br />Data Poisoning</h2>
+            <p className="feature-desc text-lg">
+              Drawing on frontier AI safety, we use digital camouflage to protect you. Deploy tools like Cognitive Canary to poison mouse movement tracking or pass photos through "poisoning" filters (Nightshade/Glaze evolutions) that break adversarial AI likeness training.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="p-6 border border-[#BFFF00]/20 bg-[#BFFF00]/5 flex items-center gap-4">
+              <EyeOff className="text-[#BFFF00]" />
+              <span className="font-mono text-xs">COGNITIVE CAMOUFLAGE ENABLED</span>
+            </div>
+            <div className="p-6 border border-white/10 bg-white/5 flex items-center gap-4">
+              <Zap className="text-white/40" />
+              <span className="font-mono text-xs opacity-40">KINEMATIC NOISE: 450ms JITTER</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Legal / Policy ────────────────────────────────────────────────── */}
+      <section className="content-section">
+        <span className="section-label">Governance & Liability</span>
+        <h2 className="section-title">Secure by Design.<br />Liable by Default.</h2>
+        
+        <div className="grid md:grid-cols-2 gap-12 mt-12">
+          <div className="p-10 border border-white/10 hover:border-[#BFFF00]/40 transition-all">
+            <Scale className="text-[#BFFF00] mb-6" size={32} />
+            <h3 className="text-2xl font-bold mb-4">Civil Remedies First</h3>
+            <p className="opacity-60 leading-relaxed">
+              Empowering survivors to pursue aggressive civil remedies when law enforcement forensic resources fall short. Shifting the burden to platforms that facilitate synthetic harassment.
+            </p>
+          </div>
+          <div className="p-10 border border-white/10 hover:border-[#BFFF00]/40 transition-all">
+            <Database className="text-[#BFFF00] mb-6" size={32} />
+            <h3 className="text-2xl font-bold mb-4">Legislative Frameworks</h3>
+            <p className="opacity-60 leading-relaxed">
+              Enforcement of the TAKE IT DOWN Act and NO FAKES Act, criminalizing unauthorized AI generation of voice or likeness for harassment. Platform liability for failing to implement safety guardrails.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="py-20 px-6 md:px-20 bg-black border-t-4 border-[#BFFF00] relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center space-y-8">
-          <div className="space-y-2">
-            <h2 className="text-[8vw] md:text-[4vw] font-brutal tracking-tighter text-[#BFFF00]">ARTIFEX LABS</h2>
-            <p className="text-[10px] font-mono tracking-[0.8em] text-white/40 uppercase">Tuesday // Principal Investigator</p>
+      <footer className="landing-footer">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-6xl font-black mb-8">READY TO DEPLOY?</h2>
+          <div className="flex flex-col md:flex-row gap-6 justify-center">
+            <button className="cta-button" onClick={() => window.location.href='/lab'}>
+              Initialize System <Smartphone />
+            </button>
+            <button className="cta-button cta-secondary">
+              Read the Whitepaper
+            </button>
           </div>
-
-          <div className="flex gap-12 text-[11px] font-mono tracking-[0.4em] uppercase text-white/60">
-            <Link to="/lab" className="hover:text-white transition-all">Enter Lab</Link>
-            <a href="https://github.com/Tuesdaythe13th/cognitivecanary_demo" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">GitHub</a>
-            <a href="/neurorights-2026.html" className="hover:text-white transition-all">Whitepaper</a>
-            <a href="https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all">Notebook</a>
-          </div>
-
-          <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">
-            © 2026 COGNITIVE CANARY // RESEARCH SPEC // VERSION 7.0
+          
+          <div className="mt-20 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-mono tracking-[0.4em] opacity-40">
+            <span>© 2026 ARTIFEX LABS</span>
+            <div className="flex gap-8">
+              <a href="#">PRIVACY</a>
+              <a href="#">ETHICS</a>
+              <a href="#">SECURITY</a>
+            </div>
           </div>
         </div>
       </footer>
