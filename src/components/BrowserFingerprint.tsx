@@ -200,7 +200,3 @@ export default function BrowserFingerprint() {
     />
   );
 }
-  );
-};
-
-export default BrowserFingerprint;

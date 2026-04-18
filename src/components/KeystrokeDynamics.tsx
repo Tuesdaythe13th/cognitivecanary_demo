@@ -169,7 +169,3 @@ export default function KeystrokeDynamics() {
     />
   );
 }
-  );
-};
-
-export default KeystrokeDynamics;

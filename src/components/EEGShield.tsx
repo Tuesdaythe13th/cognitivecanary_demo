@@ -122,7 +122,7 @@ const WaveformCanvas = ({
       // Waveform
       ctx.beginPath();
       samples.forEach((v, i) => {
-        const x = (i / (samples - 1)) * W;
+        const x = (i / (samples.length - 1)) * W;
         const y = mid - v * scale;
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
@@ -140,7 +140,7 @@ const WaveformCanvas = ({
       if (!filtered) {
         const cfg = WAVEFORM_CONFIGS[mode];
         const peakIdx = mode === 'P300' ? 57 : mode === 'ERN' ? 17 : 28;
-        const px = (peakIdx / (samples - 1)) * W;
+        const px = (peakIdx / (samples.length - 1)) * W;
         const py = mid - samples[peakIdx] * scale;
         ctx.strokeStyle = '#ff4466aa';
         ctx.lineWidth = 0.5;
