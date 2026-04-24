@@ -1,54 +1,11 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Terminal, Shield, FileText, Activity, ArrowRight } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import UseCases from '@/components/UseCases';
-import ThreatModels from '@/components/ThreatModels';
-import TripwireCanary from '@/components/TripwireCanary';
-import SafetyGovernance from '@/components/SafetyGovernance';
-import ResearchBasis from '@/components/ResearchBasis';
-import TrustCenter from '@/components/TrustCenter';
-import CaseStudies from '@/components/CaseStudies';
-import CognitiveSecurityCarousel from '@/components/CognitiveSecurityCarousel';
-export const landingCopy = {
-  hero: {
-    eyebrow: "ARTIFEX LABS // RESEARCH PROTOTYPE",
-    title: "COGNITIVE CANARY",
-    subtitle: "Privacy defenses for behavioral surveillance. Forensic tools for frontier model audits.",
-    whyNow: "A research prototype from ARTIFEX LABS exploring how to reduce human-side surveillance exposure while increasing model-side auditability.",
-    primaryCta: {
-      label: "Enter the Lab",
-      href: "/lab",
-    },
-    secondaryCtas: [
-      {
-        label: "View Notebook",
-        href: "https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq",
-        icon: Terminal
-      },
-      {
-        label: "Read Whitepaper",
-        href: "/neurorights-2026.html",
-        icon: FileText
-      },
-      {
-        label: "View Code",
-        href: "https://github.com/Tuesdaythe13th/cognitivecanary_demo",
-        icon: ExternalLink
-      },
-    ],
-  },
-};
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { 
-  Shield, 
-  Cpu, 
-  ArrowRight,
-  Fingerprint,
-  Mic,
+import {
+  Shield,
+  Cpu,
   Smartphone,
   EyeOff,
-  Zap,
   Lock,
   ChevronRight
 } from 'lucide-react';
@@ -58,10 +15,11 @@ import ThreeVisual from '@/components/SOTA/ThreeVisual';
 import SerratedDivider from '@/components/SOTA/SerratedDivider';
 import StickyNote from '@/components/SOTA/StickyNote';
 import CatalogLabel from '@/components/SOTA/CatalogLabel';
+import CognitiveSecurityCarousel from '@/components/CognitiveSecurityCarousel';
 
 export default function Landing() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
+  useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
@@ -69,20 +27,20 @@ export default function Landing() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { 
-      title: "Agentic Defense", 
+    {
+      title: "Agentic Defense",
       content: "Proactive agents that filter synthetic anomalies in real-time. Your digital bodyguard for the autonomous era.",
       fig: "01A",
       icon: <Cpu className="w-6 h-6" />
     },
-    { 
-      title: "Data Poisoning", 
+    {
+      title: "Data Poisoning",
       content: "Leveraging Nightshade protocols to pollute adversarial AI models and break unauthorized likeness training.",
       fig: "02B",
       icon: <EyeOff className="w-6 h-6" />
     },
-    { 
-      title: "Digital Divorce", 
+    {
+      title: "Digital Divorce",
       content: "Instant administrative isolation. Sever privileges and monitor for anomalous domestic surveillance.",
       fig: "03C",
       icon: <Lock className="w-6 h-6" />
@@ -107,9 +65,9 @@ export default function Landing() {
 
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 glass-nav p-1 rounded-full">
           {['Research', 'Security', 'About'].map((link) => (
-            <Link 
+            <Link
               key={link}
-              to="#" 
+              to="#"
               className="px-6 py-2 rounded-full text-sm font-sans tracking-wide hover:bg-stone-white hover:text-stone-black transition-all duration-300"
             >
               {link}
@@ -117,8 +75,8 @@ export default function Landing() {
           ))}
         </div>
 
-        <Link 
-          to="/lab" 
+        <Link
+          to="/lab"
           className="bg-acid-lime text-stone-black px-8 py-3 rounded-full text-xs font-mono uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300 shadow-[0_0_20px_rgba(212,242,104,0.3)]"
         >
           Initialize Defense
@@ -128,10 +86,10 @@ export default function Landing() {
       {/* ── Hero Section ──────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center pt-20 px-10">
         <ThreeVisual />
-        
+
         <div className="grid grid-cols-12 gap-10 w-full max-w-7xl mx-auto relative z-10">
           <div className="col-span-12 lg:col-span-5 flex flex-col justify-center">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -140,8 +98,8 @@ export default function Landing() {
               Asymmetric <br />
               <i className="text-acid-lime">Defense</i>
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -150,7 +108,7 @@ export default function Landing() {
               The 2026 Cyberstalking Defense Paradigm. Controlling the flow of personal data through data-poisoning and proactive agents.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
@@ -168,23 +126,23 @@ export default function Landing() {
           </div>
 
           <div className="col-span-12 lg:col-span-7 relative flex items-center justify-center">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9, rotateY: 20 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-full aspect-[4/5] max-w-lg"
             >
               <div className="absolute inset-0 rounded-t-[10rem] overflow-hidden border border-stone-white/10 shadow-2xl">
-                <img 
-                  src="/images/sota/hero.png" 
-                  alt="Defense Core" 
+                <img
+                  src="/images/sota/hero.png"
+                  alt="Defense Core"
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-black via-transparent to-transparent opacity-60" />
                 <CatalogLabel fig="1A" status="Standby" />
               </div>
-              
-              <StickyNote 
+
+              <StickyNote
                 title="The Shift"
                 content="From reactive monitoring to proactive model pollution. We break the adversarial training loop."
                 footer="Ref: CANARY-8"
@@ -201,7 +159,7 @@ export default function Landing() {
       {/* ── Bento Tabbed Content ────────────────────────────────────────── */}
       <section className="bg-warm-charcoal py-32 px-10 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #D4F268 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        
+
         <div className="max-w-7xl mx-auto grid grid-cols-12 gap-10">
           <div className="col-span-12 lg:col-span-4 flex flex-col justify-center">
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-acid-lime mb-6">Capabilities Suite</span>
@@ -233,8 +191,8 @@ export default function Landing() {
 
           <div className="col-span-12 lg:col-span-8 relative min-h-[600px] bg-stone-black rounded-[24px] border border-stone-white/5 overflow-hidden flex items-center justify-center group">
              <div className="absolute inset-0 bg-gradient-to-br from-acid-lime/5 to-transparent pointer-events-none" />
-             
-             <motion.div 
+
+             <motion.div
                key={activeTab}
                initial={{ opacity: 0, scale: 1.1 }}
                animate={{ opacity: 1, scale: 1 }}
@@ -242,8 +200,8 @@ export default function Landing() {
                transition={{ duration: 0.8 }}
                className="w-full h-full"
              >
-                <img 
-                  src={activeTab === 0 ? "/images/sota/showcase-1.png" : activeTab === 1 ? "/images/sota/showcase-2.png" : "/images/sota/hero.png"} 
+                <img
+                  src={activeTab === 0 ? "/images/sota/showcase-1.png" : activeTab === 1 ? "/images/sota/showcase-2.png" : "/images/sota/hero.png"}
                   alt="Feature Visual"
                   className="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-1000"
                 />
@@ -292,14 +250,14 @@ export default function Landing() {
             { img: "/images/sota/showcase-2.png", title: "Camouflage Matrix", fig: "5B", offset: true },
             { img: "/images/sota/hero.png", title: "Model Pollution", fig: "6C" }
           ].map((item, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               whileHover={{ y: -10 }}
               className={`relative aspect-[3/4] rounded-[24px] overflow-hidden group border border-stone-white/5 ${item.offset ? 'md:translate-y-20' : ''}`}
             >
-              <img 
-                src={item.img} 
-                alt={item.title} 
+              <img
+                src={item.img}
+                alt={item.title}
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
               />
               <div className="absolute inset-0 bg-stone-black/40 group-hover:bg-stone-black/0 transition-colors duration-500" />
@@ -323,7 +281,7 @@ export default function Landing() {
            <div className="absolute w-[600px] h-[600px] border border-acid-lime/10 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -333,10 +291,10 @@ export default function Landing() {
             Secure the <br />
             <i className="text-acid-lime">Future.</i>
           </h2>
-          
+
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <Link 
-              to="/lab" 
+            <Link
+              to="/lab"
               className="bg-acid-lime text-stone-black px-12 py-5 rounded-full text-lg font-sans font-medium hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-3 shadow-[0_0_30px_rgba(212,242,104,0.4)]"
             >
               Deploy Canary <Smartphone size={20} />
@@ -382,7 +340,7 @@ export default function Landing() {
             </div>
           </div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto mt-20 pt-10 border-t border-stone-white/5 flex justify-between items-center text-[10px] font-mono uppercase tracking-[0.3em] opacity-20">
           <span>© 2026 ARTIFEX LABS. ALL RIGHTS RESERVED.</span>
           <span>LATENCY: 14MS // ENCRYPTION: AES-GCM</span>
