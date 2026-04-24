@@ -414,4 +414,12 @@ export const THREAT_TYPE_TO_CAT: Record<string, string[]> = {
   FONT_PROBE: ['CAT-2022-144', 'CAT-2022-143'],
   // CSS feature enumeration for environment fingerprinting
   CSS_ENUM: ['CAT-2022-144', 'CAT-2022-143'],
+  // AI-orchestrated psychological extortion via agentic systems
+  VIBE_EXTORTION: ['CAT-2022-301', 'CAT-2024-003'],
+  // LLM-generated influence operations and coordinated persuasion
+  LLM_INFLUENCE: ['CAT-2022-314', 'CAT-2022-311'],
+  // Neuro-phishing using behavioral neural signatures
+  NEURAL_PHISH: ['CAT-2022-288', 'CAT-2023-012'],
+  // Deepfake voice synthesis for identity impersonation
+  DEEPFAKE_VOICE: ['CAT-2022-282', 'CAT-2025-001'],
 };
