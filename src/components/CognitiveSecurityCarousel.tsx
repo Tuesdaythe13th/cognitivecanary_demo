@@ -156,6 +156,7 @@ const SlideCanvas = ({ accentColor, active }: { accentColor: string; active: boo
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     };
+    window.addEventListener('resize', resize);
     resize();
 
     let offset = 0;
@@ -191,7 +192,10 @@ const SlideCanvas = ({ accentColor, active }: { accentColor: string; active: boo
     };
 
     draw();
-    return () => cancelAnimationFrame(animRef.current);
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, [active, accentColor]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />;
@@ -376,6 +380,7 @@ export default function CognitiveSecurityCarousel() {
                 {autoplay && (
                   <div className="w-full h-[2px] bg-white/5 overflow-hidden mb-6">
                     <div
+                      key={current}
                       className="h-full"
                       style={{
                         background: slide.accentColor,
