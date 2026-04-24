@@ -66,6 +66,9 @@ export default {
         sm: "8px",
         full: "9999px",
       },
+      transitionTimingFunction: {
+        "editorial": "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

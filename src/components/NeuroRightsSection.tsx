@@ -138,7 +138,7 @@ const CollapsiblePanel = ({ title, badge, children, defaultOpen = false }: { tit
         </div>
         <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
       </button>
-      <div className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${open ? 'max-h-[6000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div className={`transition-all duration-500 ease-editorial overflow-hidden ${open ? 'max-h-[6000px] opacity-100' : 'max-h-0 opacity-0'}`}>
         {children}
       </div>
     </div>

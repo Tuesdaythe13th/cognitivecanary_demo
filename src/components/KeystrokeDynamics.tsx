@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import ExhibitLayout from './shared/ExhibitLayout';
 import { engineRegistry } from '@/data/engineRegistry';
 import { DataMode } from '@/types/engine';
@@ -110,7 +110,7 @@ export default function KeystrokeDynamics() {
         placeholder="TYPE HERE..."
         className="flex-1 bg-black/40 border border-white/10 p-4 font-mono text-sm uppercase text-primary outline-none focus:border-primary/40 transition-all resize-none"
       />
-      <button 
+      <button
         onClick={() => { setEvents([]); setInputValue(''); }}
         className="py-2 border border-white/5 text-[9px] font-mono uppercase tracking-widest hover:bg-white/5 transition-colors"
       >
@@ -124,11 +124,11 @@ export default function KeystrokeDynamics() {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1">
           <div className="text-[8px] font-mono text-white/30 uppercase">Hold (μ)</div>
-          <div className="text-xl font-mono text-white">{events.length ? (events.reduce((a,b)=>a+b.dwellMs,0)/events.length).toFixed(0) : '--'}ms</div>
+          <div className="text-xl font-mono text-white">{events.length ? (events.reduce((a, b) => a + b.dwellMs, 0) / events.length).toFixed(0) : '--'}ms</div>
         </div>
         <div className="space-y-1">
           <div className="text-[8px] font-mono text-white/30 uppercase">Flight (μ)</div>
-          <div className="text-xl font-mono text-white">{events.length ? (events.reduce((a,b)=>a+b.flightMs,0)/events.length).toFixed(0) : '--'}ms</div>
+          <div className="text-xl font-mono text-white">{events.length ? (events.reduce((a, b) => a + b.flightMs, 0) / events.length).toFixed(0) : '--'}ms</div>
         </div>
       </div>
       <div className="space-y-2">
@@ -147,12 +147,15 @@ export default function KeystrokeDynamics() {
     <div className="space-y-2">
       <h4 className="text-xs font-mono uppercase tracking-widest text-white/80">{isJitterActive ? 'Biometric Noise Injection Active' : 'Rhythm Signature Exposed'}</h4>
       <p className="text-[9px] font-mono text-white/40 leading-relaxed uppercase">
-        {isJitterActive 
-          ? 'Synthetic jitter is masking dwell/flight ratios. Identity entropy reduced by 94%.' 
+        {isJitterActive
+          ? 'Synthetic jitter is masking dwell/flight ratios. Identity entropy reduced by 94%.'
           : 'Predictable cadence detected. Signature matches known user profile with 99.2% confidence.'}
       </p>
     </div>
   );
+
+  const obfuscatedEvents = useMemo(() => obfuscate(events), [events]);
+  const activePanelEvents = isJitterActive ? obfuscatedEvents : events;
 
   return (
     <ExhibitLayout
@@ -161,7 +164,7 @@ export default function KeystrokeDynamics() {
       onDataModeChange={setDataMode}
       inputPanel={inputPanel}
       baselinePanel={<BarChart events={events} obfuscated={false} />}
-      activePanel={<BarChart events={isJitterActive ? obfuscate(events) : events} obfuscated={isJitterActive} />}
+      activePanel={<BarChart events={activePanelEvents} obfuscated={isJitterActive} />}
       metricPanel={metricPanel}
       verdictPanel={verdictPanel}
       onPrimaryAction={() => setIsJitterActive(!isJitterActive)}

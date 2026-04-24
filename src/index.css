@@ -25,7 +25,8 @@
   }
 
   i, .italic {
-    @apply font-serif italic;
+    @apply font-serif;
+    font-style: italic;
   }
 }
 
@@ -70,10 +71,8 @@
 }
 
   .text-mono {
-    font-family: 'Geist Mono', monospace;
+    @apply font-mono text-[10px] uppercase tracking-widest;
     font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
   }
 
   .text-body {
@@ -398,14 +397,192 @@
   }
 
   .engine-card:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 8px 32px hsl(142 71% 45% / 0.06),
-      0 2px 8px  hsl(0 0% 0% / 0.4);
-  }
-}
+  @layer components {
+    .scan-card {
+      @apply relative overflow-hidden;
+    }
+    
+    .scan-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        transparent,
+        rgba(212, 242, 104, 0.05),
+        transparent
+      );
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+    
+    .scan-card:hover::after {
+      animation: scan-vertical 2s linear infinite;
+    }
 
-@keyframes tape-scroll {
+    /* Animated stat bar */
+    .stat-bar {
+      height: 2px;
+      background: hsl(142 71% 45% / 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, hsl(142 71% 45%), hsl(175 60% 45%));
+      animation: bar-grow 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      box-shadow: 0 0 6px hsl(142 71% 45% / 0.5);
+    }
+
+    /* Terminal cursor blink */
+    .cursor-blink::after {
+      content: '█';
+      animation: typewriter-cursor 1s step-end infinite;
+      color: hsl(142 71% 45%);
+      font-size: 0.7em;
+      margin-left: 2px;
+    }
+
+    /* Brutalist utilities */
+    .brutal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 3rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      mix-blend-mode: difference;
+    }
+    
+    .tape-wrapper {
+      background: #BFFF00;
+      color: #050505;
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      border-top: 2px solid #050505;
+      border-bottom: 2px solid #050505;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      transform: rotate(-2deg) scale(1.1);
+      margin: 4rem 0;
+      box-shadow: 0 10px 30px rgba(191, 255, 0, 0.1);
+    }
+    
+    .tape-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: tape-scroll 20s linear infinite;
+    }
+    
+    .hero-word {
+      font-family: 'Syncopate', sans-serif;
+      font-weight: 700;
+      line-height: 0.85;
+    }
+
+    /* Shimmer highlight for loading states / badges */
+    .shimmer {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        hsl(142 71% 45% / 0.15) 40%,
+        hsl(142 71% 45% / 0.25) 50%,
+        hsl(142 71% 45% / 0.15) 60%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+
+    /* Focus-visible ring — keyboard navigation */
+    :focus-visible {
+      outline: 2px solid hsl(142 71% 45% / 0.7);
+      outline-offset: 3px;
+    }
+
+    /* Reduced-motion overrides */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float,
+      .animate-pulse-glow,
+      .animate-flicker,
+      .animate-scan-line,
+      .animate-grid-drift,
+      .animate-tape-scroll,
+      .animate-data-flow,
+      .animate-shimmer {
+        animation: none !important;
+      }
+
+      .reveal-hidden,
+      .reveal-left-hidden {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .grain-overlay::before {
+        display: none;
+      }
+    }
+
+    /* Neon text variants */
+    .neon-glow-cyan {
+      text-shadow:
+        0 0 7px  hsl(175 60% 45% / 0.6),
+        0 0 20px hsl(175 60% 45% / 0.3),
+        0 0 42px hsl(175 60% 45% / 0.15);
+    }
+
+    .neon-glow-purple {
+      text-shadow:
+        0 0 7px  hsl(280 60% 60% / 0.6),
+        0 0 20px hsl(280 60% 60% / 0.3),
+        0 0 42px hsl(280 60% 60% / 0.15);
+    }
+
+    /* Glowing border variants */
+    .neon-border-cyan {
+      box-shadow:
+        0 0 5px  hsl(175 60% 45% / 0.2),
+        0 0 20px hsl(175 60% 45% / 0.08),
+        inset 0 0 5px hsl(175 60% 45% / 0.05);
+      border-color: hsl(175 60% 45% / 0.35) !important;
+    }
+
+    .neon-border-amber {
+      box-shadow:
+        0 0 5px  hsl(38 90% 55% / 0.2),
+        0 0 20px hsl(38 90% 55% / 0.08),
+        inset 0 0 5px hsl(38 90% 55% / 0.05);
+      border-color: hsl(38 90% 55% / 0.35) !important;
+    }
+
+    /* Engine card hover glow */
+    .engine-card {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.25s ease,
+                  border-color 0.25s ease;
+    }
+
+    .engine-card:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 32px hsl(142 71% 45% / 0.06),
+        0 2px 8px  hsl(0 0% 0% / 0.4);
+    }
+  }
+
+  @keyframes tape-scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
