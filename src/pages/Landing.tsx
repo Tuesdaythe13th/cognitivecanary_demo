@@ -1,4 +1,43 @@
 import { Link } from 'react-router-dom';
+import { ExternalLink, Terminal, Shield, FileText, Activity, ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import UseCases from '@/components/UseCases';
+import ThreatModels from '@/components/ThreatModels';
+import TripwireCanary from '@/components/TripwireCanary';
+import SafetyGovernance from '@/components/SafetyGovernance';
+import ResearchBasis from '@/components/ResearchBasis';
+import TrustCenter from '@/components/TrustCenter';
+import CaseStudies from '@/components/CaseStudies';
+import CognitiveSecurityCarousel from '@/components/CognitiveSecurityCarousel';
+export const landingCopy = {
+  hero: {
+    eyebrow: "ARTIFEX LABS // RESEARCH PROTOTYPE",
+    title: "COGNITIVE CANARY",
+    subtitle: "Privacy defenses for behavioral surveillance. Forensic tools for frontier model audits.",
+    whyNow: "A research prototype from ARTIFEX LABS exploring how to reduce human-side surveillance exposure while increasing model-side auditability.",
+    primaryCta: {
+      label: "Enter the Lab",
+      href: "/lab",
+    },
+    secondaryCtas: [
+      {
+        label: "View Notebook",
+        href: "https://colab.research.google.com/drive/1Fm4-aQkAzqazirgdhQ6OVCtR8HQXwTyq",
+        icon: Terminal
+      },
+      {
+        label: "Read Whitepaper",
+        href: "/neurorights-2026.html",
+        icon: FileText
+      },
+      {
+        label: "View Code",
+        href: "https://github.com/Tuesdaythe13th/cognitivecanary_demo",
+        icon: ExternalLink
+      },
+    ],
+  },
+};
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { 
@@ -220,6 +259,16 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Cognitive Security Carousel ───────────────────────────────────── */}
+      <CognitiveSecurityCarousel />
+
+      {/* ── Marquee Tape ─────────────────────────────────────────────────── */}
+      <div className="tape-wrapper" aria-hidden="true">
+        <div className="tape-text">
+          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
+          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
+        </div>
+      </div>
       <SerratedDivider className="mb-20 rotate-180" />
 
       {/* ── Showcase Grid ─────────────────────────────────────────────── */}
