@@ -57,9 +57,12 @@
   .text-display {
     @apply font-serif font-light tracking-[-0.02em];
   }
+}
 
+@layer components {
   .text-mono {
     @apply font-mono text-[10px] uppercase tracking-widest;
+    font-weight: 500;
   }
 
   .glass-nav {
