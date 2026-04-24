@@ -100,7 +100,7 @@ const WaveformCanvas = ({
       ctx.clearRect(0, 0, W, H);
 
       timeRef.current += 1;
-      const samples = generateERP(mode, timeRef.current, filtered ? 0.04 : 0.02, filtered);
+      const waveformSamples = generateERP(mode, timeRef.current, filtered ? 0.04 : 0.02, filtered);
       const mid = H / 2;
       const scale = (H / 2) * 0.85;
 
@@ -121,8 +121,8 @@ const WaveformCanvas = ({
 
       // Waveform
       ctx.beginPath();
-      samples.forEach((v, i) => {
-        const x = (i / (samples.length - 1)) * W;
+      waveformSamples.forEach((v, i) => {
+        const x = (i / (waveformSamples.length - 1)) * W;
         const y = mid - v * scale;
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
@@ -140,8 +140,8 @@ const WaveformCanvas = ({
       if (!filtered) {
         const cfg = WAVEFORM_CONFIGS[mode];
         const peakIdx = mode === 'P300' ? 57 : mode === 'ERN' ? 17 : 28;
-        const px = (peakIdx / (samples.length - 1)) * W;
-        const py = mid - samples[peakIdx] * scale;
+        const px = (peakIdx / (waveformSamples.length - 1)) * W;
+        const py = mid - waveformSamples[peakIdx] * scale;
         ctx.strokeStyle = '#ff4466aa';
         ctx.lineWidth = 0.5;
         ctx.setLineDash([2, 2]);
