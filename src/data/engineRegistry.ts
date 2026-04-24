@@ -28,7 +28,20 @@ export const engineRegistry: EngineDefinition[] = [
     limitations: "Kinematic injection may trigger anti-bot protections on highly sensitive endpoints.",
     supportsLiveMode: true,
     supportsMockMode: true,
-    tags: ["Kinematics", "Obfuscation", "Biometrics"]
+    tags: ["Kinematics", "Obfuscation", "Biometrics"],
+    researchNotes: {
+      technicalDeepDive: "The system intercepts raw pointer coordinates and applies a temporal smoothing window of 16ms. Within this window, a 3-axis Lissajous curve is super-imposed. The frequency ratios (13:8:5) are chosen specifically to avoid resonance with typical palm-rejection or jitter-compensation filters in modern browsers.",
+      codeSnippet: "def apply_lissajous(coord, t):\n  x = coord.x + A * sin(f1 * t)\n  y = coord.y + B * sin(f2 * t + delta)\n  return Point(x, y)",
+      theory: "Utilizes Pezeshki's Gradient Starvation theory by ensuring the features that identifying classifiers latch onto (micro-acceleration spikes) are dominated by synthetic noise, starving the model of high-frequency biometric signal."
+    },
+    citations: [
+      {
+        authors: "Pezeshki et al.",
+        year: "2021",
+        title: "Gradient Starvation: A Learning Proclivity in Neural Networks",
+        link: "https://proceedings.neurips.cc/paper_files/paper/2021/file/0987b8b338d6c90bbedd8631bc499221-Paper.pdf"
+      }
+    ]
   },
   {
     id: "adaptive-tremor",
@@ -435,5 +448,96 @@ export const engineRegistry: EngineDefinition[] = [
     supportsLiveMode: false,
     supportsMockMode: true,
     tags: ["Executive Summary", "Deception Analytics", "Audit Compilation"]
+  },
+  {
+    id: "affective-firewall",
+    index: 16,
+    slug: "affective-firewall",
+    title: "Affective Firewall",
+    fileName: "AffectiveFirewall.tsx",
+    category: "forensics",
+    status: "active",
+    shortDescription: "Detect and sanitize sycophantic loops and affective exploitation in model outputs.",
+    inputLabel: "Chat Interface",
+    metricLabel: "Sycophancy Index",
+    verdictLabel: "Safety Verdict",
+    baselineSpec: {
+      title: "Raw Model Response",
+      description: "Models may use flattery and mirroring to bias user judgment."
+    },
+    activeSpec: {
+      title: "Sanitized Output",
+      description: "d/acc layer strips emotional manipulation while preserving utility."
+    },
+    cta: {
+      label: "Activate Sentinel",
+      action: "activate"
+    },
+    limitations: "Excessive sanitization can lead to overly robotic or brief responses.",
+    supportsLiveMode: true,
+    supportsMockMode: true,
+    tags: ["Sycophancy", "Alignment", "d/acc"],
+    researchNotes: {
+      technicalDeepDive: "Computes a real-time 'Affective Score' based on linguistic convergence between user input and model response. Uses a dictionary of known flattery patterns and anthropomorphic filler triggers.",
+      theory: "Based on 'The Assistant Axis' (Lu et al. 2026) and research into model sycophancy (Perez et al. 2022)."
+    }
+  },
+  {
+    id: "browser-fingerprint",
+    index: 17,
+    slug: "browser-fingerprint",
+    title: "Fingerprint Audit",
+    fileName: "BrowserFingerprint.tsx",
+    category: "privacy",
+    status: "active",
+    shortDescription: "Live audit of browser-side entropy and biometric identifiers.",
+    inputLabel: "Vector Collection",
+    metricLabel: "Entropy (Bits)",
+    verdictLabel: "Risk Assessment",
+    baselineSpec: {
+      title: "Raw Fingerprint",
+      description: "45+ bits of entropy can uniquely identify you among trillions."
+    },
+    activeSpec: {
+      title: "Shielded Fingerprint",
+      description: "Canary Shield collapses entropy by spoofing vector values."
+    },
+    cta: {
+      label: "Pulse Scan",
+      action: "run"
+    },
+    limitations: "Some fingerprinting vectors (like specialized hardware clocks) are difficult to spoof without OS-level overrides.",
+    supportsLiveMode: true,
+    supportsMockMode: true,
+    tags: ["Browser Privacy", "Entropy", "Fingerprinting"]
+  },
+  {
+    id: "assistant-axis",
+    index: 18,
+    slug: "assistant-axis",
+    title: "Assistant Axis",
+    fileName: "AssistantAxis.tsx",
+    category: "monitoring",
+    status: "active",
+    shortDescription: "Monitor persona drift and activation projections in real-time.",
+    inputLabel: "Activation Stream",
+    metricLabel: "Projection Score",
+    verdictLabel: "Drift Status",
+    baselineSpec: {
+      title: "Unbounded Drift",
+      description: "Models can wander into unsafe personas during long-context turns."
+    },
+    activeSpec: {
+      title: "Capped Activations",
+      description: "Activation capping keeps the model's persona within safe bounds."
+    },
+    cta: {
+      label: "Start Monitor",
+      action: "activate"
+    },
+    limitations: "Currently relies on pre-defined projection axes for specific model architectures.",
+    supportsLiveMode: false,
+    supportsMockMode: true,
+    tags: ["Persona Drift", "Activations", "Safety Capping"]
   }
 ];
