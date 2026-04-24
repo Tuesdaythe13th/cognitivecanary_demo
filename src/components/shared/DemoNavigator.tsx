@@ -27,6 +27,12 @@ export default function DemoNavigator() {
         if (e.key === 'Escape') setIsOpen(false);
         return;
       }
+      const isInput = e.target instanceof HTMLInputElement ||
+                      e.target instanceof HTMLTextAreaElement ||
+                      e.target instanceof HTMLSelectElement ||
+                      (e.target as HTMLElement).isContentEditable;
+      if (isInput) return;
+
       if (e.key === 'ArrowLeft' && prevEngine) navigate(`/demo/${prevEngine.id}`);
       if (e.key === 'ArrowRight' && nextEngine) navigate(`/demo/${nextEngine.id}`);
     };

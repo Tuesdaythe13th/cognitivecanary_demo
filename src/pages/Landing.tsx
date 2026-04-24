@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion, useScroll } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 import {
   Shield,
   Cpu,
@@ -18,12 +18,6 @@ import CatalogLabel from '@/components/SOTA/CatalogLabel';
 import CognitiveSecurityCarousel from '@/components/CognitiveSecurityCarousel';
 
 export default function Landing() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
@@ -48,7 +42,7 @@ export default function Landing() {
   ];
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-stone-black text-stone-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden">
+    <div className="relative min-h-screen bg-stone-black text-stone-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden">
       <NoiseOverlay />
 
       {/* ── Navigation ────────────────────────────────────────────────── */}
