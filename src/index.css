@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syncopate:wght@700&display=swap');
-@import './demo-styles.css';
-@import './axis-monitor.css';
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..600;1,400..600&family=Newsreader:ital,opsz,wght@0,6..72,200..400;1,6..72,200..400&family=Geist+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,100 +6,68 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%; /* #050505 approx */
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 2%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 74 100% 50%; /* #BFFF00 */
-    --primary-foreground: 0 0% 2%;
-
-    --secondary: 0 0% 100%;
-    --secondary-foreground: 0 0% 2%;
-
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 60%;
-
-    --accent: 74 100% 50%;
-    --accent-foreground: 0 0% 2%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 100%; /* controlled by opacity usually, or set to 100% with alpha in components */
-    --input: 0 0% 100%;
-    --ring: 74 100% 50%;
-
-    --radius: 2px;
-
-    /* ─── Design tokens ─── */
-    --grid-color: hsl(142 71% 45% / 0.06);
-    --neon-green: hsl(142, 71%, 45%);
-    --neon-cyan: hsl(175, 60%, 45%);
-    --neon-purple: hsl(280, 60%, 60%);
-    --neon-amber: hsl(38, 90%, 55%);
-
-    /* SVG ring animation helper — override per element */
-    --circumference: 283;
-    --target-offset: 0;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-white/10;
+    --background: #0C0A09;
+    --foreground: #E7E5E4;
+    --primary: #D4F268;
+    --secondary: #1C1917;
+    --border: rgba(255, 255, 255, 0.1);
   }
 
   body {
-    @apply bg-[#050505] text-white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
+    @apply bg-stone-black text-stone-white;
+    font-family: 'Instrument Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
-    cursor: default;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
+  h1, h2, h3 {
+    @apply font-serif font-light tracking-[-0.02em];
   }
 
-  ::selection {
-    background-color: hsl(74, 100%, 50%, 0.3);
-    color: hsl(74, 100%, 50%);
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #050505;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #BFFF00;
-    border-radius: 0;
+  i, .italic {
+    @apply font-serif italic;
   }
 }
 
 @layer utilities {
-  .text-display {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
+
+  .serrated-edge {
+    --mask: radial-gradient(circle at 10px 0, transparent 0, transparent 5px, black 5px);
+    mask-image: var(--mask);
+    mask-size: 20px 10px;
+    mask-repeat: repeat-x;
+    -webkit-mask-image: var(--mask);
+    -webkit-mask-size: 20px 10px;
+    -webkit-mask-repeat: repeat-x;
+  }
+
+  .text-display {
+    @apply font-serif font-light tracking-[-0.02em];
+  }
+
+  .text-mono {
+    @apply font-mono text-[10px] uppercase tracking-widest;
+  }
+
+  .glass-nav {
+    background: rgba(231, 229, 228, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
 
   .text-mono {
     font-family: 'Geist Mono', monospace;
@@ -121,13 +86,9 @@
     font-weight: 400;
   }
 
-  /* Animated grid background */
   .grid-bg {
-    background-image:
-      linear-gradient(var(--grid-color) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: grid-drift 20s linear infinite;
+    background-image: radial-gradient(circle, rgba(212, 242, 104, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
   /* gradient blobs - now darker/subtler */
@@ -260,31 +221,28 @@
   .stagger-11 { animation-delay: 800ms; }
   .stagger-12 { animation-delay: 880ms; }
 
-  /* Scan card — horizontal scan line on hover */
   .scan-card {
-    position: relative;
-    overflow: hidden;
+    @apply relative overflow-hidden;
   }
+  
   .scan-card::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 40%;
+    width: 100%;
     height: 100%;
     background: linear-gradient(
-      90deg,
       transparent,
-      hsl(142 71% 45% / 0.06),
-      hsl(142 71% 45% / 0.12),
-      hsl(142 71% 45% / 0.06),
+      rgba(212, 242, 104, 0.05),
       transparent
     );
-    transform: translateX(-100%);
-    transition: none;
+    transform: translateY(-100%);
+    pointer-events: none;
   }
+  
   .scan-card:hover::after {
-    animation: scan-line 1.2s ease-in-out forwards;
+    animation: scan-vertical 2s linear infinite;
   }
 
   /* Animated stat bar */
@@ -580,4 +538,14 @@
 @keyframes reveal-left {
   from { opacity: 0; transform: translateX(-24px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scan-vertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
