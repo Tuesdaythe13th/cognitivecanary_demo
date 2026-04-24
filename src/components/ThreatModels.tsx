@@ -1,4 +1,4 @@
-import { AlertTriangle, Fingerprint, Eye, Brain, DatabaseZap, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, Fingerprint, Eye, Brain, DatabaseZap, ShieldAlert, Zap, Bot } from 'lucide-react';
 
 // Dolev-Yao-style adversary model
 const ADVERSARY = {
@@ -8,11 +8,14 @@ const ADVERSARY = {
     { id: 'A3', label: 'Cross-session correlation', desc: 'Ability to link behavioral profiles across multiple browsing sessions and sites.' },
     { id: 'A4', label: 'Multi-modal fusion', desc: 'Simultaneous analysis of cursor trajectory, keystroke timing, scroll dynamics, and touch data.' },
     { id: 'A5', label: 'Adaptive retraining', desc: 'Ability to retrain classifiers on Canary-obfuscated output — the primary open research problem.' },
+    { id: 'A6', label: 'Agentic task delegation', desc: 'Delegates intrusion, reconnaissance, and psychological targeting to autonomous AI agents operating continuously at machine speed — weeks of work in hours.' },
+    { id: 'A7', label: 'LLM-optimized persuasion', desc: 'Generates influence content statistically proven to outperform human-written messaging on attitude change (Nature Comms 2025, n=4,829).' },
   ],
   limitations: [
     'Cannot modify client-side JavaScript at runtime without full browser compromise',
     'Cannot access secure enclave contents or in-memory obfuscation state',
     'Cannot break cryptographic primitives (session keys, audit log signatures)',
+    'Cannot yet autonomously adapt persuasion vectors post-deployment without human-in-the-loop retraining',
   ],
   claims: [
     { adv: 'A1–A4 (static)', claim: 'Classifier confidence reduced to ≤ random chance (p > 0.05) on behavioral ID tasks' },
@@ -60,6 +63,22 @@ const THREATS = [
     inference: "True identity bridging across anonymous accounts",
     countermeasure: "Strategic Fidelity, Profile Selection",
     icon: AlertTriangle
+  },
+  {
+    name: "LLM Influence Operators",
+    goal: "Synthetic persuasion at scale via AI-optimized content",
+    inputs: "Engagement patterns, dwell time, emotional reaction signals, scroll hesitation",
+    inference: "Belief susceptibility score, micro-compliance trigger window, optimal persuasion vector",
+    countermeasure: "Preference Obfuscation, False Engagement Signals, Affective Firewall",
+    icon: Zap
+  },
+  {
+    name: "Vibe Hacking Systems",
+    goal: "AI-orchestrated psychological extortion (Anthropic ATI Aug 2025)",
+    inputs: "Organizational graph, personal behavioral data, inferred emotional vulnerabilities",
+    inference: "Maximum psychological pressure point, victim compliance likelihood, optimal threat timing",
+    countermeasure: "Cognitive Decoy Profiles, Strategic Fidelity Audit, Persona Partitioning",
+    icon: Bot
   }
 ];
 
@@ -126,14 +145,14 @@ export default function ThreatModels() {
               </div>
               <div className="pt-2 border-t border-white/10">
                 <p className="text-[9px] text-white/25 font-mono leading-relaxed">
-                  Note: A5 (adaptive retraining) is the primary open problem — the "Tor problem" of obfuscation. Canary's presence could itself become a detectable signal. See v7.1 roadmap.
+                  Note: A5 (adaptive retraining) is the primary open problem — the "Tor problem" of obfuscation. Canary's presence could itself become a detectable signal. See v7.1 roadmap. A6 (agentic) changes the attack surface fundamentally: automated reconnaissance, social engineering, and exfiltration now operate at machine speed with no human bottleneck.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {THREATS.map((threat, i) => (
             <div key={i} className="flex flex-col p-6 bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] transition-colors relative group">
               <threat.icon className="w-8 h-8 text-[#BFFF00] mb-6 opacity-80" />

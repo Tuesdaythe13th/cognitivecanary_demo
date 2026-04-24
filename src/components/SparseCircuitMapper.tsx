@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import ExhibitLayout from './shared/ExhibitLayout';
 import { engineRegistry } from '../data/engineRegistry';
 import { DataMode } from '../types/engine';
 import { FlaskConical, AlertTriangle, ShieldCheck, Network, Zap } from 'lucide-react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Float, Text, Line } from '@react-three/drei';
+import * as THREE from 'three';
 
 interface CircuitNode {
   id: string;
@@ -122,6 +125,186 @@ const threatColors = {
   benign: '#BFFF00',
 };
 
+// Deterministic pseudo-random based on index
+const pseudoRandom = (seed: number) => {
+  const x = Math.sin(seed + 1) * 10000;
+  return x - Math.floor(x);
+};
+
+interface NodeMeshProps {
+  node: CircuitNode;
+  position: [number, number, number];
+  active: boolean;
+}
+
+const NodeMesh = ({ node, position, active }: NodeMeshProps) => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const color = categoryColors[node.category];
+
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    if (active) {
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 2 + node.activation * 10) * 0.12;
+      meshRef.current.scale.setScalar(pulse);
+    } else {
+      meshRef.current.scale.setScalar(1);
+    }
+  });
+
+  const sphere = (
+    <mesh ref={meshRef} position={position}>
+      <sphereGeometry args={[0.25, 16, 16]} />
+      <meshStandardMaterial
+        color={color}
+        emissive={color}
+        emissiveIntensity={active ? 0.8 : 0.1}
+        roughness={0.3}
+        metalness={0.2}
+      />
+    </mesh>
+  );
+
+  const label = (
+    <Text
+      position={[position[0], position[1] + 0.45, position[2]]}
+      fontSize={0.14}
+      color="white"
+      anchorX="center"
+      anchorY="bottom"
+      font={undefined}
+    >
+      {node.featureId}
+    </Text>
+  );
+
+  return (
+    <>
+      {active ? (
+        <Float speed={2} rotationIntensity={0} floatIntensity={0.3}>
+          {sphere}
+        </Float>
+      ) : sphere}
+      {label}
+    </>
+  );
+};
+
+interface EdgeLineProps {
+  from: [number, number, number];
+  to: [number, number, number];
+  inhibitory: boolean;
+}
+
+const EdgeLine = ({ from, to, inhibitory }: EdgeLineProps) => {
+  const color = inhibitory ? '#ff4466' : '#BFFF00';
+
+  // Bezier midpoint offset for curve
+  const mid: [number, number, number] = [
+    (from[0] + to[0]) / 2,
+    (from[1] + to[1]) / 2 + 0.4,
+    (from[2] + to[2]) / 2 + 0.3,
+  ];
+
+  const points = useMemo(() => {
+    const curve = new THREE.QuadraticBezierCurve3(
+      new THREE.Vector3(...from),
+      new THREE.Vector3(...mid),
+      new THREE.Vector3(...to),
+    );
+    return curve.getPoints(20);
+  }, [from[0], from[1], from[2], to[0], to[1], to[2]]);
+
+  return (
+    <Line
+      points={points}
+      color={color}
+      lineWidth={2}
+      transparent
+      opacity={0.75}
+    />
+  );
+};
+
+interface ScatteredNodesProps {
+  count?: number;
+}
+
+const ScatteredNodes = ({ count = 30 }: ScatteredNodesProps) => {
+  const positions = useMemo<[number, number, number][]>(
+    () =>
+      Array.from({ length: count }, (_, i) => [
+        (pseudoRandom(i * 3) - 0.5) * 10,
+        (pseudoRandom(i * 3 + 1) - 0.5) * 6,
+        (pseudoRandom(i * 3 + 2) - 0.5) * 4,
+      ]),
+    [count],
+  );
+
+  return (
+    <>
+      {positions.map((pos, i) => (
+        <mesh key={i} position={pos}>
+          <sphereGeometry args={[0.12, 8, 8]} />
+          <meshStandardMaterial color="#ffffff" transparent opacity={0.15} />
+        </mesh>
+      ))}
+    </>
+  );
+};
+
+interface CircuitSceneProps {
+  cluster: CircuitCluster | null;
+  active: boolean;
+}
+
+const CircuitScene = ({ cluster, active }: CircuitSceneProps) => {
+  // Compute 3D positions for each node
+  const nodePositions = useMemo<Record<string, [number, number, number]>>(() => {
+    if (!cluster) return {};
+    const nodes = cluster.nodes;
+    const layers = [...new Set(nodes.map(n => n.layer))].sort((a, b) => a - b);
+    const positions: Record<string, [number, number, number]> = {};
+
+    layers.forEach((layer, li) => {
+      const layerNodes = nodes.filter(n => n.layer === layer);
+      const xFrac = layers.length > 1 ? li / (layers.length - 1) : 0.5;
+      const x = -3 + xFrac * 6;
+      layerNodes.forEach((n, ni) => {
+        const yFrac = layerNodes.length > 1 ? ni / (layerNodes.length - 1) : 0.5;
+        const y = -1.5 + yFrac * 3;
+        const z = (pseudoRandom(li * 7 + ni * 3) - 0.5) * 1.0;
+        positions[n.id] = [x, y, z];
+      });
+    });
+
+    return positions;
+  }, [cluster]);
+
+  if (!cluster || !active) {
+    return <ScatteredNodes />;
+  }
+
+  return (
+    <>
+      {cluster.edges.map((edge, i) => {
+        const from = nodePositions[edge.from];
+        const to = nodePositions[edge.to];
+        if (!from || !to) return null;
+        return (
+          <EdgeLine key={i} from={from} to={to} inhibitory={edge.inhibitory} />
+        );
+      })}
+      {cluster.nodes.map(node => {
+        const pos = nodePositions[node.id];
+        if (!pos) return null;
+        return (
+          <NodeMesh key={node.id} node={node} position={pos} active={active} />
+        );
+      })}
+    </>
+  );
+};
+
 const CircuitGraph = ({
   cluster,
   active,
@@ -129,132 +312,22 @@ const CircuitGraph = ({
   cluster: CircuitCluster | null;
   active: boolean;
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animRef = useRef<number>(0);
-  const timeRef = useRef(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const draw = () => {
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx.scale(dpr, dpr);
-      const W = canvas.offsetWidth;
-      const H = canvas.offsetHeight;
-      ctx.clearRect(0, 0, W, H);
-      timeRef.current += 0.05;
-
-      if (!cluster || !active) {
-        // Scattered isolated nodes
-        ctx.fillStyle = 'rgba(255,255,255,0.15)';
-        ctx.font = '9px "Geist Mono", monospace';
-        ctx.textAlign = 'center';
-        if (!active) {
-          ctx.fillText('ISOLATED FEATURES — NO CIRCUIT DETECTED', W / 2, H / 2);
-          // Scattered dots
-          const rand = Array.from({ length: 30 }, (_, i) => ({
-            x: 30 + ((i * 97 + 43) % (W - 60)),
-            y: 30 + ((i * 73 + 19) % (H - 60)),
-          }));
-          rand.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.2)';
-            ctx.fill();
-          });
-        }
-        return;
-      }
-
-      // Layout nodes in a flowing graph
-      const nodes = cluster.nodes;
-      const layers = [...new Set(nodes.map(n => n.layer))].sort((a, b) => a - b);
-      const xStep = (W - 60) / Math.max(1, layers.length - 1);
-      const positions: Record<string, { x: number; y: number }> = {};
-
-      layers.forEach((layer, li) => {
-        const layerNodes = nodes.filter(n => n.layer === layer);
-        const x = 30 + li * xStep;
-        layerNodes.forEach((n, ni) => {
-          const y = H / (layerNodes.length + 1) * (ni + 1);
-          positions[n.id] = { x, y };
-        });
-      });
-
-      // Draw edges
-      cluster.edges.forEach(edge => {
-        const from = positions[edge.from];
-        const to = positions[edge.to];
-        if (!from || !to) return;
-
-        const pulse = Math.sin(timeRef.current * 3 + edge.weight * 5) * 0.3 + 0.7;
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.bezierCurveTo(
-          from.x + (to.x - from.x) * 0.4, from.y,
-          from.x + (to.x - from.x) * 0.6, to.y,
-          to.x, to.y
-        );
-        const edgeColor = edge.inhibitory ? `rgba(255,68,102,${edge.weight * pulse * 0.8})` : `rgba(191,255,0,${edge.weight * pulse * 0.6})`;
-        ctx.strokeStyle = edgeColor;
-        ctx.lineWidth = edge.weight * 2.5;
-        ctx.stroke();
-
-        // Arrow head
-        const angle = Math.atan2(to.y - from.y, to.x - from.x);
-        const headLen = 8;
-        ctx.beginPath();
-        ctx.moveTo(to.x, to.y);
-        ctx.lineTo(to.x - headLen * Math.cos(angle - 0.4), to.y - headLen * Math.sin(angle - 0.4));
-        ctx.lineTo(to.x - headLen * Math.cos(angle + 0.4), to.y - headLen * Math.sin(angle + 0.4));
-        ctx.closePath();
-        ctx.fillStyle = edge.inhibitory ? '#ff4466aa' : '#BFFF00aa';
-        ctx.fill();
-      });
-
-      // Draw nodes
-      nodes.forEach(n => {
-        const pos = positions[n.id];
-        if (!pos) return;
-
-        const pulse = active ? (1 + Math.sin(timeRef.current * 2 + n.activation * 10) * 0.15) : 1;
-        const r = 10 * pulse;
-        const color = categoryColors[n.category];
-
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = active ? 12 : 0;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Feature ID
-        ctx.fillStyle = 'rgba(255,255,255,0.8)';
-        ctx.font = '7px "Geist Mono", monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText(n.featureId, pos.x, pos.y - r - 4);
-
-        // Label
-        n.label.split('\n').forEach((line, li) => {
-          ctx.fillStyle = color;
-          ctx.fillText(line, pos.x, pos.y + r + 10 + li * 9);
-        });
-      });
-
-      animRef.current = requestAnimationFrame(draw);
-    };
-
-    animRef.current = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(animRef.current);
-  }, [cluster, active]);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+  return (
+    <div className="absolute inset-0">
+      <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+        <color attach="background" args={['#050505']} />
+        <ambientLight intensity={0.3} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} />
+        <CircuitScene cluster={cluster} active={active} />
+        <OrbitControls
+          autoRotate
+          autoRotateSpeed={0.8}
+          enableZoom={false}
+          enablePan={false}
+        />
+      </Canvas>
+    </div>
+  );
 };
 
 export default function SparseCircuitMapper() {

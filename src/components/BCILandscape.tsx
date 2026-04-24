@@ -45,6 +45,13 @@ const coreCapabilities = [
     highlights: ['64-channel @ 500Hz', '~94% binary intent classification', 'Hands-free UI control'],
     limitations: ['Limited bandwidth', 'Not yet suitable for language decoding'],
   },
+  {
+    project: 'NeuroGPT (2026)',
+    org: 'Commercial BCI Aggregators, 2026',
+    capability: 'Cross-session neural profile construction and sale',
+    highlights: ['$17.1B neurotechnology market (2026)', 'Speech decoding at 92–100% accuracy in research', 'Mental image reconstruction at 90% accuracy'],
+    limitations: ['Raises fundamental cognitive liberty questions', 'Minnesota / Colorado legislation actively restricting'],
+  },
 ];
 
 const securityThreats = [
@@ -90,6 +97,27 @@ const securityThreats = [
     example: 'Neuro-Audit flags jurisdiction-specific violations in real time',
     countermeasures: ['Integrated compliance engine', 'Automated policy-checking', 'Transparent audit logging'],
   },
+  {
+    vector: 'Neuro-Phishing & Brainjacking',
+    desc: 'Decoded neural data is weaponized to craft hyper-personalized phishing lures. Brainjacking — unauthorized control of neural implants — enables modification of motor function, emotional states, and cognition.',
+    example: '"Neuro-phishing" emerged 2025: P300 ERP inference via CSS animation timing extracts cognitive state without consent',
+    countermeasures: ['EEG Shield feature removal', 'Spectral Defender band attenuation', 'Hardware-level signal isolation (DARPA Neuro-AI)'],
+  },
+  {
+    vector: 'Neural Data Sovereignty Violations',
+    desc: 'Neurorights Foundation audit (2024): 96.7% of 30 consumer neurotech companies reserve the right to transfer brain data to third parties. Under 20% mention encryption. Only 16.7% commit to breach notification.',
+    example: 'Chile (2021) secured landmark ruling ordering deletion of a senator\'s brain data. Minnesota (2025) grants right to "cognitive liberty".',
+    countermeasures: ['Neural data minimization', 'On-device inference (no cloud upload)', 'Neuro Audit compliance engine'],
+  },
+];
+
+const neuroRightsLegislation = [
+  { jurisdiction: 'Chile', year: '2021', law: 'Constitutional Amendment', key: 'First country with constitutional neural rights. "Mental integrity" protected. Landmark ruling: brain data of former senator ordered deleted.' },
+  { jurisdiction: 'Colorado', year: '2024', law: 'Colorado Privacy Act (Neural Amendment)', key: 'First US state neural data law. Classifies neural data as "sensitive personal information."' },
+  { jurisdiction: 'California / Montana', year: '2024', law: 'Neural Data Privacy', key: 'California and Montana added neural data to existing privacy laws. Montana SB 163 effective Oct 1, 2025.' },
+  { jurisdiction: 'Minnesota', year: '2025 (Bill)', law: 'Standalone Neural Privacy Act', key: 'Grants right to "cognitive liberty." Prohibits bypassing conscious decision-making via BCI. Covers both private and government entities.' },
+  { jurisdiction: 'EU', year: '2026 (August)', law: 'AI Act — Full Enforcement', key: 'Bans emotion detection at work/school, real-time biometric surveillance in public, Clearview-style face scraping. Does NOT ban behavioral biometrics for fraud prevention.' },
+  { jurisdiction: 'US Senate', year: '2025', law: 'FTC Neural Data Request', key: 'Senators urged FTC to protect Americans\' neural data from "exploitation or sale." 15+ state bills pending as of April 2026.' },
 ];
 
 const mitigationTools = [
@@ -267,8 +295,34 @@ const BCILandscape = () => {
             </div>
           </CollapsibleSection>
 
-          {/* 4. Mitigation Tools */}
-          <CollapsibleSection title="Threat-Mitigation Landscape" badge="04">
+          {/* 4. Neuro-Rights Legislation */}
+          <CollapsibleSection title="Neuro-Rights Legislation (2026)" badge="04">
+            <div className="overflow-x-auto">
+              <table className="w-full text-[10px] font-mono border-collapse">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/[0.02]">
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Jurisdiction</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Year</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest">Law / Framework</th>
+                    <th className="text-left p-3 text-primary uppercase tracking-widest hidden sm:table-cell">Key Provisions</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/50">
+                  {neuroRightsLegislation.map((n, i) => (
+                    <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                      <td className="p-3 text-foreground font-bold">{n.jurisdiction}</td>
+                      <td className="p-3 text-primary/70">{n.year}</td>
+                      <td className="p-3">{n.law}</td>
+                      <td className="p-3 hidden sm:table-cell text-white/40">{n.key}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CollapsibleSection>
+
+          {/* 5. Mitigation Tools */}
+          <CollapsibleSection title="Threat-Mitigation Landscape" badge="05">
             <div className="overflow-x-auto">
               <table className="w-full text-[10px] font-mono border-collapse">
                 <thead>
@@ -291,8 +345,8 @@ const BCILandscape = () => {
             </div>
           </CollapsibleSection>
 
-          {/* 5. Outlook */}
-          <CollapsibleSection title="Outlook 2027–2030" badge="05">
+          {/* 6. Outlook */}
+          <CollapsibleSection title="Outlook 2027–2030" badge="06">
             <div className="p-4 space-y-0">
               {outlook.map((o, i) => (
                 <div key={i} className="flex gap-4 p-3 border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">

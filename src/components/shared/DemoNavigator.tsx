@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { engineRegistry } from '../../data/engineRegistry';
 import { ChevronRight, ChevronLeft, Menu, X, Shield, BrainCircuit, Activity, FileText, FlaskConical } from 'lucide-react';
 
@@ -13,39 +13,90 @@ const categoryIcons = {
 
 export default function DemoNavigator() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentIndex = engineRegistry.findIndex(e => e.id === id);
+  const currentEngine = currentIndex >= 0 ? engineRegistry[currentIndex] : null;
   const prevEngine = currentIndex > 0 ? engineRegistry[currentIndex - 1] : null;
   const nextEngine = currentIndex < engineRegistry.length - 1 ? engineRegistry[currentIndex + 1] : null;
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (isOpen) {
+        if (e.key === 'Escape') setIsOpen(false);
+        return;
+      }
+      const isInput = e.target instanceof HTMLInputElement ||
+                      e.target instanceof HTMLTextAreaElement ||
+                      e.target instanceof HTMLSelectElement ||
+                      (e.target as HTMLElement).isContentEditable;
+      if (isInput) return;
+
+      if (e.key === 'ArrowLeft' && prevEngine) navigate(`/demo/${prevEngine.id}`);
+      if (e.key === 'ArrowRight' && nextEngine) navigate(`/demo/${nextEngine.id}`);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen, prevEngine, nextEngine, navigate]);
 
   return (
     <>
       {/* Bottom Floating Nav Bar */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-2 px-4 py-2 bg-black/80 border border-white/10 rounded-full backdrop-blur-xl shadow-2xl pointer-events-auto">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-stretch gap-0 bg-black/90 border border-white/10 rounded-full backdrop-blur-xl shadow-2xl pointer-events-auto overflow-hidden">
+
+        {/* Prev */}
         <Link
           to={prevEngine ? `/demo/${prevEngine.id}` : '#'}
-          className={`p-2 rounded-full transition-colors ${prevEngine ? 'text-white/60 hover:text-primary hover:bg-white/5' : 'text-white/10 cursor-not-allowed'}`}
+          className={`group flex items-center gap-2 px-5 py-3 transition-all duration-200 ${prevEngine ? 'text-white/50 hover:text-primary hover:bg-white/5' : 'text-white/10 cursor-not-allowed pointer-events-none'}`}
           title={prevEngine?.title}
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={16} className="shrink-0" />
+          <span className="text-[9px] font-mono uppercase tracking-widest hidden sm:block max-w-[100px] truncate">
+            {prevEngine?.title ?? ''}
+          </span>
         </Link>
 
+        <div className="w-px bg-white/10 self-stretch" />
+
+        {/* Center: current exhibit */}
         <button
           onClick={() => setIsOpen(true)}
-          className="px-6 py-1.5 flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.3em] text-white/80 hover:text-primary transition-colors border-x border-white/10 hover:bg-white/5"
+          className="flex items-center gap-3 px-6 py-3 text-white/80 hover:text-primary hover:bg-white/5 transition-all duration-200"
         >
-          <Menu size={14} className="text-primary" />
-          <span>Exhibit {currentIndex >= 0 ? (currentIndex + 1).toString().padStart(2, '0') : '--'} / {engineRegistry.length}</span>
+          <Menu size={13} className="text-primary shrink-0" />
+          <div className="flex flex-col items-start leading-tight">
+            <span className="text-[8px] font-mono uppercase tracking-[0.4em] text-white/30">
+              {currentIndex >= 0 ? `${(currentIndex + 1).toString().padStart(2, '0')} / ${engineRegistry.length}` : '-- / --'}
+            </span>
+            <span className="text-[11px] font-mono uppercase tracking-wider text-white/80 max-w-[160px] truncate">
+              {currentEngine?.title ?? 'Select Exhibit'}
+            </span>
+          </div>
         </button>
 
+        <div className="w-px bg-white/10 self-stretch" />
+
+        {/* Next */}
         <Link
           to={nextEngine ? `/demo/${nextEngine.id}` : '#'}
-          className={`p-2 rounded-full transition-colors ${nextEngine ? 'text-white/60 hover:text-primary hover:bg-white/5' : 'text-white/10 cursor-not-allowed'}`}
+          className={`group flex items-center gap-2 px-5 py-3 transition-all duration-200 ${nextEngine ? 'text-white/50 hover:text-primary hover:bg-white/5' : 'text-white/10 cursor-not-allowed pointer-events-none'}`}
           title={nextEngine?.title}
         >
-          <ChevronRight size={20} />
+          <span className="text-[9px] font-mono uppercase tracking-widest hidden sm:block max-w-[100px] truncate">
+            {nextEngine?.title ?? ''}
+          </span>
+          <ChevronRight size={16} className="shrink-0" />
         </Link>
+      </div>
+
+      {/* Keyboard hint */}
+      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[99] pointer-events-none">
+        <span className="text-[8px] font-mono uppercase tracking-widest text-white/15 flex items-center gap-2">
+          <kbd className="px-1.5 py-0.5 border border-white/10 rounded text-white/20">←</kbd>
+          <kbd className="px-1.5 py-0.5 border border-white/10 rounded text-white/20">→</kbd>
+          navigate
+        </span>
       </div>
 
       {/* Full Screen Overlay Menu */}
@@ -54,7 +105,7 @@ export default function DemoNavigator() {
           <div className="flex justify-between items-center mb-16 border-b border-white/10 pb-8">
             <div className="space-y-1">
               <h2 className="text-display text-4xl text-primary leading-none tracking-tighter italic">LAB INDEX</h2>
-              <p className="text-mono text-[10px] uppercase tracking-[0.4em] text-white/40">Select Exhibit for Deep-Dive Analysis</p>
+              <p className="text-mono text-[10px] uppercase tracking-[0.4em] text-white/40">Select Exhibit — or use ← → arrow keys</p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -68,7 +119,7 @@ export default function DemoNavigator() {
             {engineRegistry.map((engine, idx) => {
               const Icon = categoryIcons[engine.category as keyof typeof categoryIcons];
               const isActive = engine.id === id;
-              
+
               return (
                 <Link
                   key={engine.id}
@@ -84,11 +135,11 @@ export default function DemoNavigator() {
                       <Icon size={16} />
                     </div>
                   </div>
-                  
+
                   <h3 className={`text-display text-xl leading-none mb-3 transition-colors ${isActive ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>
                     {engine.title}
                   </h3>
-                  
+
                   <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 leading-relaxed group-hover:text-white/50 transition-colors">
                     {engine.shortDescription}
                   </p>
@@ -105,8 +156,8 @@ export default function DemoNavigator() {
           </div>
 
           <div className="mt-20 pt-8 border-t border-white/5 flex justify-center">
-            <Link 
-              to="/lab" 
+            <Link
+              to="/lab"
               className="text-[10px] font-mono uppercase tracking-[0.5em] text-white/20 hover:text-primary transition-colors"
             >
               Return to Control Hub

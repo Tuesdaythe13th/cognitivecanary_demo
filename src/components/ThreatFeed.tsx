@@ -18,7 +18,11 @@ type ThreatType =
   | 'GAZE_VECTOR'
   | 'LATENCY_CLOCK'
   | 'FONT_PROBE'
-  | 'CSS_ENUM';
+  | 'CSS_ENUM'
+  | 'VIBE_EXTORTION'
+  | 'LLM_INFLUENCE'
+  | 'NEURAL_PHISH'
+  | 'DEEPFAKE_VOICE';
 
 interface ThreatEvent {
   id: string;
@@ -186,6 +190,50 @@ const THREAT_TEMPLATES: {
     ],
     sources: ['Nudata Security', 'ThreatMetrix v5', 'Visa Decision Manager'],
   },
+  {
+    type: 'VIBE_EXTORTION',
+    severity: 'CRITICAL',
+    engine: 'Affective Firewall',
+    descriptions: [
+      'Agentic extortion script generated — targeting 3 organizational vulnerabilities (Anthropic ATI 2025)',
+      'AI-authored ransom demand tailored to victim org graph — psychological pressure point identified',
+      'PROMPTFLUX malware family: LLM-generated code executing data exfiltration across 17 orgs',
+    ],
+    sources: ['Anthropic Threat Intelligence', 'HiddenLayer 2026', 'SC World Threat Intel'],
+  },
+  {
+    type: 'LLM_INFLUENCE',
+    severity: 'HIGH',
+    engine: 'Affective Firewall',
+    descriptions: [
+      'AI-generated persuasion content — outperforms human writing on attitude change (Nature Comms 2025)',
+      'Coordinated AI agent swarm: 50 synthetic accounts autonomously amplifying shared narrative',
+      'Micro-compliance trigger sequence detected — Chase Hughes PCP model deployed via LLM',
+    ],
+    sources: ['USC Viterbi ISI 2026', 'WEF Disinformation Monitor', 'Blackbird.AI RAV3N 2026'],
+  },
+  {
+    type: 'NEURAL_PHISH',
+    severity: 'CRITICAL',
+    engine: 'EEG Shield',
+    descriptions: [
+      'Neuro-phishing probe: decoded behavioral signature used to craft hyper-personalized lure',
+      'Neural data from 96.7% of neurotech vendors exposed to 3rd parties — active targeting detected',
+      'P300 ERP inference via CSS animation timing — cognitive state extracted without consent',
+    ],
+    sources: ['Neurorights Foundation 2024', 'BYU Neurosecurity Lab', 'NeuroMark v1.2'],
+  },
+  {
+    type: 'DEEPFAKE_VOICE',
+    severity: 'HIGH',
+    engine: 'Spectral Defender',
+    descriptions: [
+      'Voice clone synthesized from 3.2s audio sample — 87% accuracy (FBI May 2025 IOC)',
+      'Deepfake-as-a-Service: senior official voice impersonation targeting government contact network',
+      'AI voice memo impersonation: TAKE IT DOWN Act conviction precedent (Ohio, April 2026)',
+    ],
+    sources: ['FBI Cyber Division', 'Cyble ETIS', 'Keepnet Deepfake Monitor 2026'],
+  },
 ];
 
 function resolveCat(type: ThreatType): CATEntry | null {
@@ -296,7 +344,7 @@ const ThreatFeed = () => {
               THREAT <span className="text-primary not-italic block mt-2">INTERCEPT<span className="text-white opacity-20"> STREAM</span></span>
             </h2>
             <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em] max-w-md leading-relaxed">
-              Real-time behavioral surveillance attempts intercepted by Canary v6.0 defense engines.
+              Real-time behavioral surveillance attempts intercepted by Canary v8.4 defense engines.
             </p>
           </div>
 
@@ -389,7 +437,7 @@ const ThreatFeed = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[8px] font-mono text-white/20 uppercase">
-                {shieldActive ? 'Canary v6.0 Active' : 'Unprotected Mode'}
+                {shieldActive ? 'Canary v8.4 Active' : 'Unprotected Mode'}
               </span>
               <div className={`w-1.5 h-1.5 rounded-full ${shieldActive ? 'bg-primary' : 'bg-destructive'}`} />
             </div>
@@ -513,7 +561,7 @@ const ThreatFeed = () => {
 
         <div className="mt-6 text-[8px] font-mono text-white/15 uppercase tracking-[0.2em] leading-loose">
           [LIVE SIMULATION — Data reflects real attack vectors in production deployments] <br />
-          [VECTORS: Mouse // Keystroke // Canvas // WebGL // Audio // EEG // CSS // Font // Clock] <br />
+          [VECTORS: Mouse // Keystroke // Canvas // WebGL // Audio // EEG // CSS // Font // Clock // Vibe Hacking // LLM Influence // Neural Phish // Deepfake Voice] <br />
           Status: <span className="text-primary/40">{shieldActive ? 'All 5 engines online' : 'Unprotected — vulnerability window open'}</span>
         </div>
       </div>
