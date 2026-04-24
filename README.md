@@ -12,7 +12,7 @@
 ██║     ██╔══██║██║╚██╗██║██╔══██║██╔══██╗  ╚██╔╝
 ╚██████╗██║  ██║██║ ╚████║██║  ██║██║  ██║   ██║
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
-                                            v7.0 // ARTIFEX LABS
+                                            v8.0 // ARTIFEX LABS
 ```
 
 <div align="center">
@@ -33,6 +33,22 @@
 
 ## Changelog
 
+### April 24, 2026 — Sovereign Mental Privacy & Agentic Threat Detection
+
+This major update (v8.0) integrates the final research findings of April 2026, focusing on the defense against **Agentic AI threats**, **Emotional Contagion**, and the evolution of **Global Neurorights**.
+
+**Agentic multi-agent collusion.** Following the Rose et al. (April 2026) Oxford findings on NARCBench, we have integrated multi-agent activation aggregation into the **Docent Auditor (Engine 12)** and **TransformerLens Probe (Engine 10)**. This allows for the detection of "strategic silence" and "collusive sandbagging" in agent clusters—behaviors that are invisible to single-agent forensics.
+
+**Emotional Contagion & Romance Scams.** 2026 research into *affective exploitation* (e.g., the "Digital Mirror" effect) shows that LLMs can induce emotional dependency by mirroring user vulnerability. The **Affective Firewall (Engine 01)** now includes **Sycophancy Decomposition** (Vennemeyer 2026) to distinguish between helpful compliance and predatory mirroring used in advanced social engineering and romance scams.
+
+**SOTA BCI Anonymization.** Integrating Wang et al. (2026) taxonomies, **EEG Shield (Engine 06)** has been upgraded to include **Cross-Paradigm Synthetic Augmentation**. By generating synthetic "decoy" neural signatures, we can now provide $\epsilon-\delta$ differential privacy guarantees for P300 and ERN signals without destroying control fidelity.
+
+**Neurorights Legal Expansion.** The **Neuro Audit (Engine 07)** has been updated with the final 2026 regulatory frameworks, including the **Colorado AI Act**, **California AB 1836 (Neural Data Privacy)**, and the **EU AI Act's 2026 amendments** regarding biometric psychography.
+
+**Cognitive Security & Psychometric Harvesting.** Added a new focus on **Cognitive Security**: preventing the harvesting of cognitive load, fatigue, and arousal states as "free training data." Behavioral Fingerprinting defenses (Engines 01-03) are now framed as a fundamental defense against psychometric profiling.
+
+---
+
 ### April 6, 2026 — 2026 Research Integration & Forensic Engine Expansion
 
 This update integrates four new 2026 peer-reviewed papers, expands the forensic engine scope, and sharpens the sycophancy detection model based on ICLR 2026 findings.
@@ -47,7 +63,7 @@ This update integrates four new 2026 peer-reviewed papers, expands the forensic 
 
 **Research Basis updated.** `ResearchBasis` component adds four new 2026 citations, expands Open Questions to 12 named problems (up from 8), and corrects the forensic limitation description to reflect the multi-agent and sycophancy decomposition gaps.
 
-**Date updated.** Project date advanced to April 6, 2026.
+**Date updated.** Project date advanced to April 24, 2026.
 
 ---
 
@@ -77,7 +93,7 @@ This update addresses critical gaps identified in external review across two dim
 
 Cognitive Canary is a **behavioral obfuscation and model alignment layer** that collapses fingerprinting and re-identification on the client side, while providing deep forensic auditing of AI models to detect deception and sandbagging.
 
-Initially built to wrap browser and EEG telemetry in adaptive noise to prevent behavioral fingerprinting, the **v7.0 update** expands Canary's repertoire to include **Forensic Interpretability Engines**. These tools allow researchers and policymakers to probe frontier AI models for deceptive alignment, activation patching, and strategic fidelity.
+Initially built to wrap browser and EEG telemetry in adaptive noise to prevent behavioral fingerprinting, the **v8.0 update** expands Canary's repertoire to include **Forensic Interpretability Engines** and **Agentic Threat Detection**. These tools allow researchers and policymakers to probe frontier AI models for deceptive alignment, activation patching, and strategic fidelity.
 
 This repo contains the **live demo site** (React), **fifteen Python defense and forensic engines**, an interactive **Colab notebook**, and the **2026 neurorights whitepaper** backing the threat model.
 
@@ -215,8 +231,8 @@ Type text and see your dwell time and flight time visualized in milliseconds. To
 ### Lab Exhibit 06 — Threat Intercept Stream
 Live threat intelligence feed across 12 attack vectors with real-time severity classification, Cognitive Attack Taxonomy (CAT) enrichments, and per-engine block counts.
 
-### Lab Exhibit 07 — Deception Pipeline / Forensics *(New in v7.0)*
-Explore the 8 new forensic engines analyzing frontier AI behavior for sandbagging, sycophancy, and evaluation awareness.
+### Lab Exhibit 07 — Deception Pipeline & Agentic Forensics *(v8.0 Update)*
+Explore the 8 forensic engines analyzing frontier AI behavior for **strategic sandbagging**, **collusive sycophancy**, and **eval-awareness**. Features live causal circuit discovery via activation patching and multi-agent coordination probes.
 
 ---
 
