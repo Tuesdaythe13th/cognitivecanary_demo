@@ -389,16 +389,9 @@
     border-color: hsl(38 90% 55% / 0.35) !important;
   }
 
-  /* Engine card hover glow */
-  .engine-card {
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.25s ease,
-                border-color 0.25s ease;
-  }
 
-  .engine-card:hover {
-  @layer components {
-    .scan-card {
+@layer components {
+  .scan-card {
       @apply relative overflow-hidden;
     }
     
