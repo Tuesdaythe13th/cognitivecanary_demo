@@ -8,6 +8,7 @@ import SafetyGovernance from '@/components/SafetyGovernance';
 import ResearchBasis from '@/components/ResearchBasis';
 import TrustCenter from '@/components/TrustCenter';
 import CaseStudies from '@/components/CaseStudies';
+import CognitiveSecurityCarousel from '@/components/CognitiveSecurityCarousel';
 export const landingCopy = {
   hero: {
     eyebrow: "ARTIFEX LABS // RESEARCH PROTOTYPE",
@@ -199,6 +200,9 @@ export default function Landing() {
       </section>
       
       <TrustCenter />
+
+      {/* ── Cognitive Security Carousel ───────────────────────────────────── */}
+      <CognitiveSecurityCarousel />
 
       {/* ── Marquee Tape ─────────────────────────────────────────────────── */}
       <div className="tape-wrapper" aria-hidden="true">
