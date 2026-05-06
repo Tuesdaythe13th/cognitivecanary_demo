@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+
+const MAX_PTS = 200;
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -22,11 +24,8 @@ interface CursorPath3DProps {
 }
 
 function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
-  const lineRef = useRef<THREE.Line>(null);
   const dotRef = useRef<THREE.Mesh>(null);
   const tAnimRef = useRef(0);
-
-  const MAX_PTS = 200;
 
   // Preallocate typed array so geometry buffer never reallocates
   const posArray = useMemo(() => new Float32Array(MAX_PTS * 3), []);
@@ -46,8 +45,21 @@ function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
     });
   }, [mode]);
 
-  // Compose the THREE.Line object once
-  const lineObject = useMemo(() => new THREE.Line(geometry, material), [geometry, material]);
+  // Compose the THREE.Line object once; disable frustum culling so Three.js
+  // skips the per-frame bounding-sphere check on a geometry we update manually.
+  const lineObject = useMemo(() => {
+    const line = new THREE.Line(geometry, material);
+    line.frustumCulled = false;
+    return line;
+  }, [geometry, material]);
+
+  // Dispose GPU resources on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+      material.dispose();
+    };
+  }, [geometry, material]);
 
   useFrame((_, delta) => {
     tAnimRef.current += delta;
@@ -79,7 +91,8 @@ function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
 
     (geometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
     geometry.setDrawRange(0, count);
-    geometry.computeBoundingSphere();
+    // computeBoundingSphere() omitted — frustumCulled=false means Three.js
+    // never reads it, so computing it every frame would be wasted work.
 
     // Move glowing dot to last point
     if (dotRef.current && count > 0) {
@@ -97,7 +110,7 @@ function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
 
   return (
     <group>
-      <primitive object={lineObject} ref={lineRef} />
+      <primitive object={lineObject} />
       <Sphere ref={dotRef} args={[0.06, 16, 16]} visible={false}>
         <MeshDistortMaterial
           color={dotColor}
@@ -116,16 +129,12 @@ function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
 // ─── DangerZoneGrid ──────────────────────────────────────────────────────────
 
 function DangerZoneGrid() {
-  const grid = useMemo(() => {
-    const helper = new THREE.GridHelper(6, 12, 0xffffff, 0xffffff);
-    helper.rotation.x = Math.PI / 2; // rotate to XY plane
-    const mat = helper.material as THREE.Material;
-    mat.opacity = 0.04;
-    mat.transparent = true;
-    return helper;
-  }, []);
-
-  return <primitive object={grid} />;
+  // Declarative form: R3F owns the lifecycle and disposes geometry+material automatically.
+  return (
+    <gridHelper args={[6, 12, 0xffffff, 0xffffff]} rotation={[Math.PI / 2, 0, 0]}>
+      <lineBasicMaterial color={0xffffff} opacity={0.04} transparent />
+    </gridHelper>
+  );
 }
 
 // ─── Scene (baseline – raw path) ─────────────────────────────────────────────
@@ -209,7 +218,7 @@ export default function Lissajous3D() {
         const x = 150 + Math.cos(angle * 2) * 100 + Math.sin(angle * 3) * 30;
         const y = 80 + Math.sin(angle * 1.5) * 50 + Math.cos(angle * 4) * 20;
         const now = Date.now();
-        setRealPoints(prev => [...prev.slice(-200), { x, y, t: now }]);
+        setRealPoints(prev => [...prev.slice(-MAX_PTS), { x, y, t: now }]);
       }, 30);
     } else {
       if (mockIntervalRef.current) clearInterval(mockIntervalRef.current);
