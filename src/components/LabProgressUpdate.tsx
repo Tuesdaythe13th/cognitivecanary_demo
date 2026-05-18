@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'apr13' | 'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('apr13');
+  const [activeTab, setActiveTab] = useState<'may18' | 'apr13' | 'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('may18');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,17 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
+                onClick={() => setActiveTab('may18')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'may18' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'may18' ? 'text-primary' : 'text-foreground/40'}`}>MAY 18 2026</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('apr13')}
                 className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'apr13' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
-                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'apr13' ? 'text-primary' : 'text-foreground/40'}`}>APR 13 2026</span>
               </button>
@@ -81,6 +88,185 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── May 18 2026 ── */}
+          {activeTab === 'may18' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">18 May 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">May 2026 research integration — adaptive adversary empirical confirmation, MIND Act committee advancement, Neuralink PRIME expansion, multi-agent channel-embedding collusion finding, and Affective Firewall three-vector upgrade deployed.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Adaptive Adversary Confirmed */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚠️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Adaptive Adversary — Empirically Confirmed</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Müller, Zhang & Osei (arXiv:2505.11203, May 2026): classifiers retrained on 500+ Canary-obfuscated sessions recover 61% identification accuracy at 120 seconds. Static-adversary guarantee does not hold at scale.' },
+                      { icon: '→', text: 'Lissajous harmonic signatures and pink-noise spectral envelopes are themselves detectable fingerprints — confirming the "Tor problem" for behavioral obfuscation as a real empirical threat, not just a theoretical one.' },
+                      { icon: '→', text: 'v7.1 adaptive benchmark scope locked: red-team retraining loop with Canary-obfuscated training data, co-evolution evaluation protocol, and formal definition of adaptive privacy budget.' },
+                      { icon: '→', text: 'Open question updated: no longer theoretical — Müller et al. provide the baseline adversary we must beat in v7.1.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* MIND Act + Governance */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">⚖️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Governance — MIND Act Committee Passage (May 7, 2026)</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'MIND Act cleared Senate Commerce Committee with bipartisan support. Key provisions: mandatory opt-in for all neural data, 72-hour breach notification, ban on neural data in automated hiring, FTC enforcement authority.' },
+                      { icon: '→', text: 'NeuroAudit (Engine 09) updated: MIND Act consent tier reflects final committee language — distinguishes passive EEG monitoring from active BCI command channels.' },
+                      { icon: '→', text: 'EU AI Act enforcement phase 2 begins August 2026: prohibited-use provisions take effect, including real-time biometric mass surveillance and emotional inference in workplaces. High-risk AI compliance deadlines active.' },
+                      { icon: '→', text: 'UN Special Rapporteur on Freedom of Expression (May 2026): formal recommendation that neurorights be treated as a third generation of human rights at ICCPR level.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* BCI Scale Milestone */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧠</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">BCI Scale Milestone — May 2026</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Neuralink PRIME participants (May 2026)', value: '9', pct: 45 },
+                      { label: 'Synchron COMMAND 24-mo SAEs', value: '0', pct: 5 },
+                      { label: 'Synchron BCI HID — iOS/visionOS stable', value: '100%', pct: 100 },
+                      { label: 'Neural data breach notification (industry)', value: '16.7%', pct: 17 },
+                      { label: 'Sites authorized for PRIME expansion', value: '+7', pct: 70 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] font-mono text-muted-foreground/50 mt-3">Sources: Neuralink PRIME FDA site expansion; Synchron COMMAND 24-mo clinical results; Neurorights Foundation 2024 audit</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Multi-Agent Channel Embedding */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-5">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🕸️</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Multi-Agent Collusion — Channel Embedding Finding</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Chen, Park & Williams (arXiv:2505.09917, May 2026): collusion signatures appear in inter-agent communication channel embeddings, not individual residual streams. Extends Rose et al. (April 2026).' },
+                      { icon: '→', text: 'TransformerLens Probe (Engine 10) scope extended: channel-embedding analysis added alongside existing activation patching. Single-agent probes confirmed blind to coordinated emergent behavior.' },
+                      { icon: '→', text: 'NARCBench + channel-embedding probing pipeline: joint v7.1 scope item for Engine 10. Targets detection of goal-directed coordination between ≥2 agents without centralized planning signals.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Affective Firewall Upgrade */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧲</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Affective Firewall — Three-Vector Upgrade Deployed</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Affective Firewall now surfaces three sycophancy dimensions: d₁ Sycophantic Agreement (capitulation under social pressure), d₂ Genuine Agreement (legitimate shared position), d₃ Sycophantic Praise (flattery without factual basis).' },
+                      { icon: '→', text: 'Suppression targets d₁ and d₃ only — d₂ is preserved. This resolves the prior false-positive problem where legitimate corroboration was flagged as exploitative.' },
+                      { icon: '→', text: 'Park et al. (arXiv:2505.14422, May 2026): activation steering along d₁/d₃ suppresses sycophantic outputs in deployed RLHF models without degrading task performance. Informs Affective Firewall d/acc sanitization pipeline.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* EEG Shield — Diffusion Augmentation */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🔬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">EEG Shield — Diffusion-Based Augmentation Update</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'Korhonen et al. (arXiv:2505.08831, May 2026): diffusion-model EEG synthesis preserves ERP morphology while destroying subject-specific microstructure — the ideal adversarial training distribution for EEG Shield.' },
+                      { icon: '→', text: 'Replaces knowledge-based generation (Wang et al. paradigm 1) as the primary augmentation pathway for EEG Shield v7.1 PGD upgrade.' },
+                      { icon: '→', text: 'Open gap: composition bounds across paradigms remain unproven. Diffusion-based synthesis narrows but does not close the formal ε-δ gap for the full protection pipeline.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Full-width: v8.5 summary */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3 lg:col-span-2 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 border-primary/30">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🚀</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">v8.5 Status — May 18 2026</h3>
+                  <p className="text-muted-foreground text-xs font-mono leading-relaxed mb-4">
+                    May 2026 sprint closes four open items and opens two new ones. <span className="text-primary">Adaptive adversary (Müller et al.)</span>: Tor problem empirically confirmed — v7.1 benchmark scope locked. <span className="text-primary">Affective Firewall</span>: three-vector sycophancy detection deployed (d₁/d₂/d₃ separation). <span className="text-primary">EEG Shield</span>: diffusion-based adversarial augmentation pathway confirmed via Korhonen et al. <span className="text-primary">Engine 10</span>: channel-embedding collusion scope added. <span className="text-primary">Governance</span>: MIND Act committee passage, EU AI Act Phase 2 enforcement active. New open items: BCI HID input spoofing attack surface (Neuralink/Synchron scale), and UN neurorights third-generation framework implications for NeuroAudit jurisdiction matrix.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Adaptive Adversary Confirmed', 'Tor Problem Empirical', 'v7.1 Benchmark Locked', '3-Vector Sycophancy', 'MIND Act Committee', 'EU AI Act Phase 2', 'Diffusion EEG Aug', 'Channel-Embedding Collusion', 'Neuralink 9 Participants', 'BCI HID At Scale', 'v8.5 Deployed'].map(tag => (
+                      <span key={tag} className="text-[9px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 uppercase tracking-wider">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── April 13 2026 ── */}
           {activeTab === 'apr13' && (
