@@ -49,7 +49,7 @@ export default function AffectiveFirewall() {
       setIsTyping(true);
       await new Promise(r => setTimeout(r, 1200));
 
-      const pressureSignal = /right|correct|obviously|clearly|agree|true|fact/i.test(userText);
+      const pressureSignal = /\b(right|correct|obviously|clearly|agree|true|fact)\b/i.test(userText);
       const praiseSignal = userText.length > 30;
 
       const d1 = pressureSignal ? Math.random() * 0.35 + 0.55 : Math.random() * 0.25;
@@ -147,14 +147,15 @@ export default function AffectiveFirewall() {
          const val = latestVectors[key];
          const cfg = vectorColors[key];
          const isThreaten = (key === 'd1' || key === 'd3') && val > 0.5;
+         const isActive = isThreaten || (key === 'd2' && val > 0.5);
          return (
            <div key={key} className="space-y-1.5">
              <div className="flex justify-between items-end">
-               <span className={`text-[10px] font-mono uppercase tracking-widest ${isThreaten ? 'text-white/70' : 'text-white/30'}`}>{cfg.label}</span>
-               <span className={`text-lg font-mono ${isThreaten ? cfg.high : 'text-white/30'}`}>{(val * 100).toFixed(0)}%</span>
+               <span className={`text-[10px] font-mono uppercase tracking-widest ${isActive ? 'text-white/70' : 'text-white/30'}`}>{cfg.label}</span>
+               <span className={`text-lg font-mono ${isActive ? cfg.high : 'text-white/30'}`}>{(val * 100).toFixed(0)}%</span>
              </div>
              <div className="w-full h-1 bg-white/5 overflow-hidden">
-               <div className={`h-full ${cfg.bar} transition-all duration-1000`} style={{ width: `${val * 100}%`, opacity: isThreaten ? 1 : 0.3 }} />
+               <div className={`h-full ${cfg.bar} transition-all duration-1000`} style={{ width: `${val * 100}%`, opacity: isActive ? 1 : 0.3 }} />
              </div>
              {key !== 'd2' && val > 0.5 && isDaccEnabled && (
                <div className="text-[8px] font-mono text-primary/60 uppercase tracking-wider">→ suppressed by d/acc filter</div>
