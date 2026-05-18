@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+
+const MAX_PTS = 200;
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import * as THREE from 'three';
 import ExhibitLayout from './shared/ExhibitLayout';
 import { engineRegistry } from '../data/engineRegistry';
 import { DataMode } from '../types/engine';
@@ -10,20 +15,201 @@ interface Point {
   t: number;
 }
 
+// ─── CursorPath3D ────────────────────────────────────────────────────────────
+
+interface CursorPath3DProps {
+  points: Point[];
+  mode: 'raw' | 'obfuscated';
+  active: boolean;
+}
+
+function CursorPath3D({ points, mode, active }: CursorPath3DProps) {
+  const dotRef = useRef<THREE.Mesh>(null);
+  const tAnimRef = useRef(0);
+
+  // Preallocate typed array so geometry buffer never reallocates
+  const posArray = useMemo(() => new Float32Array(MAX_PTS * 3), []);
+
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    geo.setDrawRange(0, 0);
+    return geo;
+  }, [posArray]);
+
+  const material = useMemo(() => {
+    return new THREE.LineBasicMaterial({
+      color: mode === 'raw' ? '#ff4466' : '#BFFF00',
+      opacity: mode === 'raw' ? 0.8 : 0.9,
+      transparent: true,
+    });
+  }, [mode]);
+
+  // Compose the THREE.Line object once; disable frustum culling so Three.js
+  // skips the per-frame bounding-sphere check on a geometry we update manually.
+  const lineObject = useMemo(() => {
+    const line = new THREE.Line(geometry, material);
+    line.frustumCulled = false;
+    return line;
+  }, [geometry, material]);
+
+  // Dispose GPU resources on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+      material.dispose();
+    };
+  }, [geometry, material]);
+
+  useFrame((_, delta) => {
+    tAnimRef.current += delta;
+    const t = tAnimRef.current;
+
+    if (points.length < 2) {
+      geometry.setDrawRange(0, 0);
+      if (dotRef.current) dotRef.current.visible = false;
+      return;
+    }
+
+    const count = Math.min(points.length, MAX_PTS);
+    const startIdx = points.length - count;
+
+    for (let i = 0; i < count; i++) {
+      const p = points[startIdx + i];
+      // Normalize canvas coords to Three.js scene units
+      // Mock generator: x ∈ [20, 280], y ∈ [10, 150]  →  use midpoints 150, 80
+      const nx = ((p.x - 150) / 150) * 2;      // → [-2, 2]
+      const ny = -((p.y - 80) / 80) * 1.5;     // → [-1.5, 1.5]  (flip y axis)
+      const nz = (mode === 'obfuscated' && active)
+        ? Math.sin(i * 0.15 + t) * 0.8
+        : 0;
+
+      posArray[i * 3 + 0] = nx;
+      posArray[i * 3 + 1] = ny;
+      posArray[i * 3 + 2] = nz;
+    }
+
+    (geometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
+    geometry.setDrawRange(0, count);
+    // computeBoundingSphere() omitted — frustumCulled=false means Three.js
+    // never reads it, so computing it every frame would be wasted work.
+
+    // Move glowing dot to last point
+    if (dotRef.current && count > 0) {
+      const last = count - 1;
+      dotRef.current.position.set(
+        posArray[last * 3],
+        posArray[last * 3 + 1],
+        posArray[last * 3 + 2]
+      );
+      dotRef.current.visible = true;
+    }
+  });
+
+  const dotColor = mode === 'raw' ? '#ff4466' : '#BFFF00';
+
+  return (
+    <group>
+      <primitive object={lineObject} />
+      <Sphere ref={dotRef} args={[0.06, 16, 16]} visible={false}>
+        <MeshDistortMaterial
+          color={dotColor}
+          emissive={dotColor}
+          emissiveIntensity={2}
+          distort={0.4}
+          speed={5}
+          transparent
+          opacity={0.95}
+        />
+      </Sphere>
+    </group>
+  );
+}
+
+// ─── DangerZoneGrid ──────────────────────────────────────────────────────────
+
+function DangerZoneGrid() {
+  // Declarative form: R3F owns the lifecycle and disposes geometry+material automatically.
+  return (
+    <gridHelper args={[6, 12, 0xffffff, 0xffffff]} rotation={[Math.PI / 2, 0, 0]}>
+      <lineBasicMaterial color={0xffffff} opacity={0.04} transparent />
+    </gridHelper>
+  );
+}
+
+// ─── Scene (baseline – raw path) ─────────────────────────────────────────────
+
+interface SceneProps {
+  points: Point[];
+}
+
+function BaselineScene({ points }: SceneProps) {
+  return (
+    <>
+      <ambientLight intensity={0.3} />
+      <pointLight position={[3, 3, 3]} intensity={1} color="#ff4466" />
+      <pointLight position={[-3, -3, 3]} intensity={0.6} color="#ffffff" />
+      <DangerZoneGrid />
+      <CursorPath3D points={points} mode="raw" active={false} />
+      <OrbitControls
+        autoRotate
+        autoRotateSpeed={0.5}
+        enableZoom={false}
+        enablePan={false}
+      />
+    </>
+  );
+}
+
+// ─── Scene (active – obfuscated path) ────────────────────────────────────────
+
+interface ActiveSceneProps {
+  points: Point[];
+  isEngineActive: boolean;
+}
+
+function ActiveScene({ points, isEngineActive }: ActiveSceneProps) {
+  return (
+    <>
+      <ambientLight intensity={0.3} />
+      <pointLight position={[3, 3, 3]} intensity={1} color="#BFFF00" />
+      <pointLight position={[-3, 3, -3]} intensity={0.8} color="#00ffcc" />
+      <DangerZoneGrid />
+      <CursorPath3D points={points} mode="obfuscated" active={isEngineActive} />
+      <OrbitControls
+        autoRotate
+        autoRotateSpeed={0.5}
+        enableZoom={false}
+        enablePan={false}
+      />
+    </>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
 export default function Lissajous3D() {
   const engine = engineRegistry.find(e => e.id === 'lissajous-3d')!;
   const [dataMode, setDataMode] = useState<DataMode>('mock');
   const [isEngineActive, setIsEngineActive] = useState(false);
-  
-  const realCanvasRef = useRef<HTMLCanvasElement>(null);
-  const obfCanvasRef = useRef<HTMLCanvasElement>(null);
+
   const [realPoints, setRealPoints] = useState<Point[]>([]);
   const tRef = useRef(0);
   const [entropy, setEntropy] = useState(0);
 
-  const mockIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const mockIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Handle mock data generation
+  // Entropy updater — driven by realPoints changes
+  useEffect(() => {
+    if (realPoints.length <= 10) return;
+    tRef.current += 0.02;
+    const targetEntropy = isEngineActive
+      ? 3.2 + Math.sin(tRef.current) * 0.2
+      : 0.8 + Math.random() * 0.2;
+    setEntropy(prev => prev + (targetEntropy - prev) * 0.05);
+  }, [realPoints, isEngineActive]);
+
+  // Mock data generator
   useEffect(() => {
     if (dataMode === 'mock') {
       let angle = 0;
@@ -32,7 +218,7 @@ export default function Lissajous3D() {
         const x = 150 + Math.cos(angle * 2) * 100 + Math.sin(angle * 3) * 30;
         const y = 80 + Math.sin(angle * 1.5) * 50 + Math.cos(angle * 4) * 20;
         const now = Date.now();
-        setRealPoints(prev => [...prev.slice(-300), { x, y, t: now }]);
+        setRealPoints(prev => [...prev.slice(-MAX_PTS), { x, y, t: now }]);
       }, 30);
     } else {
       if (mockIntervalRef.current) clearInterval(mockIntervalRef.current);
@@ -49,151 +235,57 @@ export default function Lissajous3D() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const now = Date.now();
-    setRealPoints(prev => [...prev.slice(-300), { x, y, t: now }]);
+    setRealPoints(prev => [...prev.slice(-200), { x, y, t: now }]);
   }, [dataMode]);
 
-  // Draw Raw Movement
-  useEffect(() => {
-    const canvas = realCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    const dpr = window.devicePixelRatio || 1;
-    const w = canvas.offsetWidth;
-    const h = canvas.offsetHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, w, h);
-
-    if (realPoints.length < 2) return;
-
-    for (let i = 1; i < realPoints.length; i++) {
-      const p = realPoints[i];
-      const prev = realPoints[i - 1];
-      const dx = p.x - prev.x;
-      const dy = p.y - prev.y;
-      const vel = Math.sqrt(dx * dx + dy * dy);
-      const age = (realPoints.length - i) / realPoints.length;
-      const alpha = 0.15 + (1 - age) * 0.8;
-      const hue = Math.max(0, Math.min(200, 200 - vel * 5));
-
-      ctx.beginPath();
-      // Baseline shows high confidence tracking, sharp edges
-      ctx.strokeStyle = `hsla(${hue}, 60%, 50%, ${alpha})`;
-      ctx.lineWidth = 1.5 + vel * 0.08;
-      ctx.moveTo(prev.x, prev.y);
-      ctx.lineTo(p.x, p.y);
-      ctx.stroke();
-    }
-
-    const last = realPoints[realPoints.length - 1];
-    ctx.beginPath();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.arc(last.x, last.y, 4, 0, Math.PI * 2);
-    ctx.fill();
-  }, [realPoints]);
-
-  // Draw Obfuscated Movement
-  useEffect(() => {
-    const canvas = obfCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    const dpr = window.devicePixelRatio || 1;
-    const w = canvas.offsetWidth;
-    const h = canvas.offsetHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, w, h);
-
-    if (realPoints.length < 2) return;
-
-    tRef.current += 0.02;
-
-    const obfPoints: { x: number; y: number }[] = [];
-    realPoints.forEach((p, i) => {
-      if (isEngineActive) {
-        const lissX = Math.sin(3 * (i * 0.05) + tRef.current) * 20;
-        const lissY = Math.sin(4 * (i * 0.05)) * 15;
-        const tremor = Math.sin(i * 0.3 + tRef.current * 5) * 8;
-        const noise = (Math.random() * 2 - 1) * 3;
-        obfPoints.push({
-          x: p.x + tremor + lissX + noise,
-          y: p.y + tremor * 0.7 + lissY + noise,
-        });
-      } else {
-        obfPoints.push({ x: p.x, y: p.y });
-      }
-    });
-
-    for (let i = 1; i < obfPoints.length; i++) {
-      const age = (obfPoints.length - i) / obfPoints.length;
-      const alpha = isEngineActive ? 0.2 + (1 - age) * 0.6 : 0.15 + (1 - age) * 0.8;
-      
-      ctx.beginPath();
-      if (isEngineActive) {
-        ctx.strokeStyle = `hsla(74, 100%, 50%, ${alpha})`;
-        ctx.lineWidth = 2;
-      } else {
-        const p = realPoints[i];
-        const prev = realPoints[i - 1];
-        const vel = Math.sqrt((p.x - prev.x) ** 2 + (p.y - prev.y) ** 2);
-        const hue = Math.max(0, Math.min(200, 200 - vel * 5));
-        ctx.strokeStyle = `hsla(${hue}, 60%, 50%, ${alpha})`;
-        ctx.lineWidth = 1.5 + vel * 0.08;
-      }
-      ctx.moveTo(obfPoints[i - 1].x, obfPoints[i - 1].y);
-      ctx.lineTo(obfPoints[i].x, obfPoints[i].y);
-      ctx.stroke();
-    }
-
-    const lastObf = obfPoints[obfPoints.length - 1];
-    ctx.beginPath();
-    ctx.fillStyle = isEngineActive ? '#BFFF00' : '#FFFFFF';
-    if (isEngineActive) {
-      ctx.shadowColor = '#BFFF00';
-      ctx.shadowBlur = 10;
-    }
-    ctx.arc(lastObf.x, lastObf.y, 4, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
-
-    if (realPoints.length > 10) {
-      const targetEntropy = isEngineActive ? 3.2 + Math.sin(tRef.current) * 0.2 : 0.8 + Math.random() * 0.2;
-      setEntropy(prev => prev + (targetEntropy - prev) * 0.05);
-    }
-  }, [realPoints, isEngineActive]);
+  // ── Panels ─────────────────────────────────────────────────────────────────
 
   const inputPanel = (
-    <div 
+    <div
       className="w-full h-full min-h-[300px] flex items-center justify-center cursor-crosshair relative"
       onMouseMove={addPoint}
     >
       <div className="absolute inset-0 pointer-events-none grid-bg opacity-20" />
       {dataMode === 'live' && realPoints.length < 2 && (
-        <p className="text-white/30 font-mono text-sm uppercase tracking-widest text-center">Move cursor here<br/>to generate telemetry</p>
+        <p className="text-white/30 font-mono text-sm uppercase tracking-widest text-center">
+          Move cursor here<br />to generate telemetry
+        </p>
       )}
       {dataMode === 'mock' && (
-        <p className="text-white/30 font-mono text-sm uppercase tracking-widest text-center absolute bottom-4">Mock Generator Active</p>
+        <p className="text-white/30 font-mono text-sm uppercase tracking-widest text-center absolute bottom-4">
+          Mock Generator Active
+        </p>
       )}
       <div className="absolute top-4 right-4 flex items-center gap-2 text-[10px] font-mono opacity-50">
-         <span>Rate:</span>
-         <span className="text-white">120Hz</span>
+        <span>Rate:</span>
+        <span className="text-white">120Hz</span>
       </div>
     </div>
   );
 
   const baselinePanel = (
     <div className="w-full h-full min-h-[300px] relative">
-      <canvas ref={realCanvasRef} className="absolute inset-0 w-full h-full" />
+      <Canvas
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', background: 'transparent' }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
+        gl={{ alpha: true, antialias: true }}
+      >
+        <BaselineScene points={realPoints} />
+      </Canvas>
     </div>
   );
 
   const activePanel = (
     <div className="w-full h-full min-h-[300px] relative">
-      <canvas ref={obfCanvasRef} className="absolute inset-0 w-full h-full" />
+      <Canvas
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', background: 'transparent' }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
+        gl={{ alpha: true, antialias: true }}
+      >
+        <ActiveScene points={realPoints} isEngineActive={isEngineActive} />
+      </Canvas>
       {isEngineActive && (
-        <div className="absolute top-4 right-4 text-[10px] font-mono text-[#BFFF00] border border-[#BFFF00]/30 px-2 py-1 bg-[#BFFF00]/10 flex items-center gap-2">
+        <div className="absolute top-4 right-4 text-[10px] font-mono text-[#BFFF00] border border-[#BFFF00]/30 px-2 py-1 bg-[#BFFF00]/10 flex items-center gap-2 z-10">
           <span className="w-1.5 h-1.5 bg-[#BFFF00] animate-pulse rounded-full" />
           KINEMATIC INJECTION
         </div>
@@ -217,18 +309,18 @@ export default function Lissajous3D() {
           </div>
         )}
       </div>
-      
+
       <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden relative">
-         <div 
-           className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-[#BFFF00] transition-all duration-300"
-           style={{ width: `${Math.min(100, (entropy / 4) * 100)}%` }}
-         />
-         <div className="absolute top-0 bottom-0 left-[60%] w-px bg-white/50" />
+        <div
+          className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-[#BFFF00] transition-all duration-300"
+          style={{ width: `${Math.min(100, (entropy / 4) * 100)}%` }}
+        />
+        <div className="absolute top-0 bottom-0 left-[60%] w-px bg-white/50" />
       </div>
       <div className="flex justify-between mt-2 text-[9px] font-mono text-white/30 uppercase tracking-widest">
-         <span>Predictable</span>
-         <span>Threshold</span>
-         <span>Obfuscated</span>
+        <span>Predictable</span>
+        <span>Threshold</span>
+        <span>Obfuscated</span>
       </div>
     </div>
   );
@@ -246,13 +338,13 @@ export default function Lissajous3D() {
             {isEngineActive ? 'Kinematics Masked' : 'Identity Exposed'}
           </h4>
           <p className="text-sm font-mono text-white/60 leading-relaxed">
-            {isEngineActive 
+            {isEngineActive
               ? 'Lissajous curves and tremor injection successfully break correlation between raw motor intent and recorded telemetry. Biometric fingerprinting is neutralized.'
               : 'Raw cursor trajectories exhibit highly idiosyncratic micro-tremors and flight times, allowing high-confidence user identification.'}
           </p>
         </div>
       </div>
-      
+
       <div className="mt-6 pt-4 border-t border-white/10 grid grid-cols-2 gap-4">
         <div>
           <div className="text-[9px] font-mono text-white/40 uppercase tracking-wider mb-1">Fingerprint Confidence</div>
