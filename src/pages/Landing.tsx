@@ -53,7 +53,7 @@ export default function Landing() {
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-xl font-serif font-light tracking-tighter">Cognitive Canary</span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-40">Artifex Labs // v8.4</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-40">Artifex Labs // v8.5</span>
           </div>
         </div>
 
