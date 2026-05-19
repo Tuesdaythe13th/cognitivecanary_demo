@@ -217,8 +217,8 @@ export default function Landing() {
       {/* ── Marquee Tape ─────────────────────────────────────────────────── */}
       <div className="tape-wrapper" aria-hidden="true">
         <div className="tape-text">
-          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
-          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦&nbsp;
+          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦ DEEPERBRAIN THREAT ✦ ALLJOINED-1.6M ✦ MIND ACT 2026 ✦ EEG FOUNDATION MODELS ✦ NEURORIGHTS NOW ✦&nbsp;
+          BEHAVIORAL OBFUSCATION ✦ KINEMATIC NOISE ✦ NEURO AUDIT ✦ STRATEGIC FIDELITY ✦ 15 ENGINES ✦ PRIVACY DEFENCE ✦ FORENSIC AUDITS ✦ d/acc ✦ DEEPERBRAIN THREAT ✦ ALLJOINED-1.6M ✦ MIND ACT 2026 ✦ EEG FOUNDATION MODELS ✦ NEURORIGHTS NOW ✦&nbsp;
         </div>
       </div>
       <SerratedDivider className="mb-20 rotate-180" />
@@ -265,6 +265,96 @@ export default function Landing() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Research Pulse ─────────────────────────────────────────────── */}
+      <section className="py-24 px-10 bg-warm-charcoal border-t border-stone-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #D4F268 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-[0.4em] text-acid-lime mb-4 block">Research Pulse // May 2026</span>
+              <h2 className="text-5xl md:text-6xl font-serif font-light leading-none">
+                Latest <br /><i>Breakthroughs</i>
+              </h2>
+            </div>
+            <p className="text-sm font-mono text-stone-white/40 max-w-sm">
+              The frontier is accelerating. New EEG foundation models, million-trial datasets, and MIND Act legislation redefine the threat surface in real time.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                badge: 'Jan 2026',
+                title: 'DeeperBrain',
+                sub: 'Zhejiang University',
+                body: 'Neuro-grounded EEG foundation model. Volume conduction-aware encoding + neurodynamics-aware temporal encoding. SOTA on fine-tuning AND frozen-probing — one backbone replaces hundreds of task-specific classifiers.',
+                tag: 'EEG Foundation Model',
+                color: 'border-acid-lime/30 bg-acid-lime/5'
+              },
+              {
+                badge: 'Dec 2025',
+                title: 'NeuroSketch',
+                sub: 'Multi-Institutional',
+                body: 'Systematic CNN-2D architecture optimization achieves state-of-the-art neural decoding across EEG, SEEG, ECoG — visual, auditory, and speech tasks simultaneously. First unified multi-modal decoder framework.',
+                tag: 'Architecture SOTA',
+                color: 'border-stone-white/10 bg-stone-white/5'
+              },
+              {
+                badge: 'Aug 2025',
+                title: 'Alljoined-1.6M',
+                sub: 'Open Consortium',
+                body: '1.6 million EEG-Image paired trials on consumer hardware. Log-linear decoding scaling confirmed. Democratizes neural decoding research — and offensive capability — to anyone with a cheap headset.',
+                tag: 'Dataset at Scale',
+                color: 'border-red-500/20 bg-red-500/5'
+              },
+              {
+                badge: 'Nov 2025',
+                title: 'RBTransformer',
+                sub: 'Multi-Institutional',
+                body: 'Inter-cortical multi-head attention models long-range brain connectivity for emotion recognition. SOTA on SEED, DEAP, DREAMER. Passive emotion inference from consumer EEG now viable in real time.',
+                tag: 'Emotion Decoding',
+                color: 'border-stone-white/10 bg-stone-white/5'
+              },
+              {
+                badge: 'May 2026',
+                title: 'MIND Act',
+                sub: 'US Senate Commerce Committee',
+                body: 'Mental Interface & Neural Data Protection Act passes committee with bipartisan support. Mandatory opt-in consent, 72-hour breach notification, ban on neural data in automated hiring. FTC enforcement.',
+                tag: 'Legislation',
+                color: 'border-acid-lime/20 bg-acid-lime/5'
+              },
+              {
+                badge: 'Dec 2024',
+                title: 'Brain-to-Text \'24',
+                sub: 'Stanford / Multi-Institutional',
+                body: 'Standardized public benchmark for intracortical neural-to-text decoding. Ensemble RNN + fine-tuned LLM achieves best CER. Establishes reproducible attacker baseline the field must now defend against.',
+                tag: 'Benchmark',
+                color: 'border-stone-white/10 bg-stone-white/5'
+              }
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.08 }}
+                className={`p-6 rounded-2xl border ${item.color} flex flex-col gap-4 group hover:scale-[1.02] transition-transform duration-300`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-acid-lime opacity-70">{item.badge}</span>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-stone-white/30 border border-stone-white/10 px-2 py-0.5">{item.tag}</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-serif italic mb-1">{item.title}</h3>
+                  <p className="font-mono text-[10px] text-stone-white/40 uppercase tracking-wider">{item.sub}</p>
+                </div>
+                <p className="text-sm font-sans text-stone-white/60 leading-relaxed flex-1">{item.body}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
