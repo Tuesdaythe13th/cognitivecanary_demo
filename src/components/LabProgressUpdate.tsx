@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView';
 
 const LabProgressUpdate = () => {
   const { ref, isInView } = useInView();
-  const [activeTab, setActiveTab] = useState<'may18' | 'apr13' | 'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('may18');
+  const [activeTab, setActiveTab] = useState<'may19' | 'may18' | 'apr13' | 'apr6' | 'mar31' | 'mar15' | 'mar10' | 'mar9' | 'mar1' | 'feb14'>('may19');
 
   return (
     <section id="lab-update" className="relative py-20 px-6 border-b border-primary/20 bg-gradient-to-b from-black via-black/95 to-black" ref={ref}>
@@ -23,10 +23,17 @@ const LabProgressUpdate = () => {
             {/* Date tab switcher */}
             <div className="flex gap-2 flex-wrap">
               <button
+                onClick={() => setActiveTab('may19')}
+                className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'may19' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
+              >
+                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
+                <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
+                <span className={`text-mono text-2xl font-black ${activeTab === 'may19' ? 'text-primary' : 'text-foreground/40'}`}>MAY 19 2026</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('may18')}
                 className={`px-5 py-3 border transition-all duration-200 text-left relative ${activeTab === 'may18' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-border hover:border-primary/40'}`}
               >
-                <span className="absolute -top-2 -right-2 text-[9px] font-mono font-black text-black bg-primary px-1.5 py-0.5 uppercase tracking-wider animate-pulse">NEW</span>
                 <span className="text-mono text-xs text-primary/60 uppercase tracking-widest block">Reporting Date</span>
                 <span className={`text-mono text-2xl font-black ${activeTab === 'may18' ? 'text-primary' : 'text-foreground/40'}`}>MAY 18 2026</span>
               </button>
@@ -88,6 +95,125 @@ const LabProgressUpdate = () => {
               </button>
             </div>
           </div>
+
+          {/* ── May 19 2026 ── */}
+          {activeTab === 'may19' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* Submission */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-1">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl animate-flicker">✓</span>
+                <div>
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-2 font-black">Weekly Progress Form</h3>
+                  <p className="text-body text-foreground text-lg">Submitted: <span className="text-primary font-semibold cursor-blink">19 May 2026</span></p>
+                  <p className="text-muted-foreground text-xs font-mono mt-2">EEG foundation model threat escalation — DeeperBrain, NeuroSketch, and Alljoined-1.6M dataset integrated. BCILandscape expanded with 5 new entries. RBTransformer emotion-decoding implications assessed. Research basis updated.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* EEG Foundation Models */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🧬</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">EEG Foundation Models — New Threat Class</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'DeeperBrain (arXiv:2601.06134, Jan 2026): neuro-grounded EEG foundation model with volume conduction-aware channel encoding + neurodynamics-aware temporal encoding. SOTA on fine-tuning AND frozen-probing — replaces dozens of task-specific classifiers with one pre-trained backbone.' },
+                      { icon: '→', text: 'NeuroSketch (arXiv:2512.09524, Dec 2025): systematic architecture optimization framework achieving SOTA across EEG, SEEG, ECoG on visual/auditory/speech modalities simultaneously. First unified multi-modal neural decoder.' },
+                      { icon: '→', text: 'Threat assessment: a DeeperBrain encoder pre-trained on attacker-controlled corpus enables zero-shot cross-session identity linking without per-user enrollment. Eliminates the 30-minute calibration hurdle that previously protected users.' },
+                      { icon: '⚠', text: 'v7.1 priority: EEG Shield adversarial training must target foundation model embedding space, not task-specific classifiers. Static-adversary EEG Shield guarantee does not hold against DeeperBrain-class encoders.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Alljoined Dataset */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-3 scan-card">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📊</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Alljoined-1.6M — Consumer BCI Dataset at Scale</h3>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'EEG-Image paired trials', value: '1.6M', pct: 100 },
+                      { label: 'Hardware tier', value: 'Consumer', pct: 30 },
+                      { label: 'Decoding scaling', value: 'Log-linear', pct: 80 },
+                      { label: 'Open access', value: '✓ Public', pct: 100 },
+                      { label: 'EEG Shield adversarial samples added', value: 'v7.1', pct: 45 },
+                    ].map((b, i) => (
+                      <div key={b.label} style={{ animationDelay: `${i * 100}ms` }}>
+                        <div className="flex justify-between items-center text-xs mb-1">
+                          <span className="text-muted-foreground font-mono">{b.label}</span>
+                          <span className="text-primary font-mono font-black">{b.value}</span>
+                        </div>
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill" style={{ '--bar-width': `${b.pct}%`, animationDelay: `${i * 120 + 200}ms` } as React.CSSProperties} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] font-mono text-muted-foreground/50 mt-3">Source: Xu et al. arXiv:2508.18571 — log-linear scaling confirmed: performance improves monotonically with data volume even on cheap headsets.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Emotion Decoding */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-4">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">🎭</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Emotion Decoding — RBTransformer (Nov 2025)</h3>
+                  <ul className="space-y-2">
+                    {[
+                      { icon: '→', text: 'RBTransformer (arXiv:2511.13954): inter-cortical multi-head attention on Band Differential Entropy tokens + Electrode Identity embeddings. SOTA on SEED, DEAP, DREAMER across Valence, Arousal, Dominance dimensions.' },
+                      { icon: '→', text: 'First model to explicitly model inter-cortical neural dynamics in latent space — captures long-range connectivity patterns that single-electrode classifiers miss entirely.' },
+                      { icon: '→', text: 'Threat vector: passive emotion inference from unmodified EEG. A neuro-phishing attacker with consumer headset + RBTransformer can infer emotional valence in real time during a browsing session.' },
+                      { icon: '⚠', text: 'EEG Shield v7.1 target: band-power perturbation must now cover inter-cortical coherence features, not just per-electrode spectral power. Affective Firewall emotion suppression scope expanded.' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-primary mt-0.5 font-mono shrink-0">{item.icon}</span>
+                        <span className="text-muted-foreground leading-relaxed">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Brain-to-Text Benchmark */}
+            <div className="glass-panel p-6 hover:neon-border-glow transition-all duration-300 animate-fade-in-up stagger-5 lg:col-span-2">
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">📝</span>
+                <div className="flex-1">
+                  <h3 className="text-mono text-sm text-primary uppercase tracking-wider mb-3 font-black">Brain-to-Text Benchmark '24 — Lessons for BCI Security</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-2">Architecture Finding</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Ensemble RNN decoders + fine-tuned LLM outperforms deep state-space models and transformers on intracortical neural-to-text decoding. RNN training with diphone objective achieves best CER.</p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-2">Security Implication</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Establishes a reproducible public benchmark — attackers can now measure progress against a standard. Canary must target the benchmark ensemble, not just individual decoders.</p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-2">v7.1 Action</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Gradient Auditor updated to flag loss-landscape signatures consistent with RNN diphone objectives. EEG Shield adversarial evaluation uses Benchmark '24 ensemble as the canonical attacker model.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          )}
 
           {/* ── May 18 2026 ── */}
           {activeTab === 'may18' && (

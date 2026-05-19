@@ -52,6 +52,41 @@ const coreCapabilities = [
     highlights: ['$17.1B neurotechnology market (2026)', 'Speech decoding at 92–100% accuracy in research', 'Mental image reconstruction at 90% accuracy'],
     limitations: ['Raises fundamental cognitive liberty questions', 'Minnesota / Colorado legislation actively restricting'],
   },
+  {
+    project: 'Brain-to-Text Benchmark \'24',
+    org: 'Stanford / Multi-Institutional, Dec 2024',
+    capability: 'Standardized evaluation for neural-to-text decoding from intracortical arrays',
+    highlights: ['Ensemble of RNN decoders + fine-tuned LLM achieves state-of-the-art CER', 'RNN training with diphone objective outperforms deep state-space models', 'Defines reproducible benchmark for the field'],
+    limitations: ['Subject-specific models only — no cross-subject generalization', 'Invasive intracortical setup limits consumer applicability'],
+  },
+  {
+    project: 'DeeperBrain',
+    org: 'Zhejiang University, Jan 2026',
+    capability: 'Neuro-grounded EEG foundation model for universal BCI',
+    highlights: ['Volume conduction-aware channel encoding + neurodynamics-aware temporal encoding', 'Masked EEG Reconstruction + Neurodynamics Statistics Prediction pre-training', 'State-of-the-art on both fine-tuning and frozen-probing protocols'],
+    limitations: ['Requires large EEG pre-training corpus', 'Neuromorphic side-channels remain unaddressed in model design'],
+  },
+  {
+    project: 'NeuroSketch',
+    org: 'Multi-Institutional, Dec 2025',
+    capability: 'Systematic architecture optimization for neural decoding across modalities',
+    highlights: ['State-of-the-art on EEG, SEEG, ECoG across visual/auditory/speech modalities', 'CNN-2D backbone with macro + micro-level optimizations', 'Unified framework covering 5+ brain signal types'],
+    limitations: ['Optimization is architecture-specific — not a general neural decoder', 'No privacy or adversarial robustness guarantees'],
+  },
+  {
+    project: 'Alljoined-1.6M',
+    org: 'Open Consortium, Aug 2025',
+    capability: 'Million-trial EEG-Image dataset for affordable consumer-grade BCI research',
+    highlights: ['1.6M EEG trials paired with images — largest open dataset of its kind', 'Enables EEG-to-Image reconstruction with deep neural networks', 'Log-linear decoding scaling confirmed — performance scales with data volume'],
+    limitations: ['Consumer-grade hardware — lower signal fidelity than clinical EEG', 'EEG-Image pairing does not capture imagined (unviewed) imagery'],
+  },
+  {
+    project: 'RBTransformer',
+    org: 'Multi-Institutional, Nov 2025',
+    capability: 'Inter-cortical neural dynamics for EEG emotion recognition',
+    highlights: ['Band Differential Entropy tokens + Electrode Identity embeddings', 'Inter-cortical multi-head attention captures long-range brain connectivity', 'SOTA on SEED, DEAP, and DREAMER datasets across Valence/Arousal/Dominance'],
+    limitations: ['Requires clean multi-channel EEG — degrades with motion artifacts', 'Emotion labels are self-reported; ground truth ambiguity persists'],
+  },
 ];
 
 const securityThreats = [
@@ -118,6 +153,8 @@ const neuroRightsLegislation = [
   { jurisdiction: 'Minnesota', year: '2025 (Bill)', law: 'Standalone Neural Privacy Act', key: 'Grants right to "cognitive liberty." Prohibits bypassing conscious decision-making via BCI. Covers both private and government entities.' },
   { jurisdiction: 'EU', year: '2026 (August)', law: 'AI Act — Full Enforcement', key: 'Bans emotion detection at work/school, real-time biometric surveillance in public, Clearview-style face scraping. Does NOT ban behavioral biometrics for fraud prevention.' },
   { jurisdiction: 'US Senate', year: '2025', law: 'FTC Neural Data Request', key: 'Senators urged FTC to protect Americans\' neural data from "exploitation or sale." 15+ state bills pending as of April 2026.' },
+  { jurisdiction: 'US Senate', year: '2026 (May)', law: 'MIND Act — Committee Passage', key: 'Mental Interface & Neural Data Protection Act cleared Senate Commerce Committee with bipartisan support. Mandatory opt-in consent, 72-hour breach notification, ban on neural data in automated hiring, FTC enforcement authority.' },
+  { jurisdiction: 'UN', year: '2026 (May)', law: 'Special Rapporteur Recommendation', key: 'UN Special Rapporteur on Freedom of Expression formally recommended neurorights be treated as a third generation of human rights at ICCPR level.' },
 ];
 
 const mitigationTools = [
@@ -131,11 +168,13 @@ const mitigationTools = [
 ];
 
 const outlook = [
-  { trend: 'Increasing Bandwidth of Invasive BCIs', implication: 'Full-sentence, low-latency decoding becomes feasible; security stakes rise dramatically.' },
-  { trend: 'Standardization of Neuro-Privacy Laws', implication: 'Global frameworks will mandate privacy-by-design for any BCI-LLM system.' },
-  { trend: 'Adversarial-Resistant Architectures', implication: 'New training regimes required to survive active gradient-obfuscation attacks.' },
-  { trend: 'Open-Source Neuro-Canary Toolkits', implication: 'Community-driven libraries for privacy-preserving BCI pipelines will emerge.' },
-  { trend: 'Human-Centric Evaluation Metrics', implication: 'Cognitive load, user-perceived privacy, and trust will dominate benchmarks.' },
+  { trend: 'EEG Foundation Models (2026+)', implication: 'DeeperBrain-class models trained on 1M+ trials enable universal cross-task decoders; one pre-trained model replaces hundreds of task-specific classifiers.' },
+  { trend: 'Increasing Bandwidth of Invasive BCIs', implication: 'Full-sentence, low-latency decoding becomes feasible as Neuralink PRIME expands to 9+ sites; security stakes rise dramatically.' },
+  { trend: 'Standardization of Neuro-Privacy Laws', implication: 'MIND Act (US), EU AI Act full enforcement (Aug 2026), and 15+ state bills mandate privacy-by-design for any BCI-LLM system.' },
+  { trend: 'Adversarial-Resistant Architectures', implication: 'Müller et al. (2026) confirm adaptive adversaries recover 61% accuracy — new co-evolution training regimes required to survive retraining attacks.' },
+  { trend: 'Consumer BCI Datasets at Scale', implication: 'Alljoined-1.6M demonstrates log-linear scaling: more data = better decoding even on cheap hardware. Democratizes offensive capability.' },
+  { trend: 'Open-Source Neuro-Canary Toolkits', implication: 'Community-driven libraries for privacy-preserving BCI pipelines will emerge — privacy-by-default for the 2027 developer ecosystem.' },
+  { trend: 'Human-Centric Evaluation Metrics', implication: 'Cognitive load, user-perceived privacy, and trust will dominate benchmarks as BCI systems move from research to consumer deployment.' },
 ];
 
 const pipelineSteps = [
@@ -191,7 +230,7 @@ const BCILandscape = () => {
         </span>
         <h2 className="text-4xl sm:text-5xl md:text-6xl text-foreground mt-4 mb-4">
           BCI Mind-Reading<br />
-          <span className="text-destructive">Landscape 2023–2026.</span>
+          <span className="text-destructive">Landscape 2023–2026 · Updated May 2026</span>
         </h2>
         <p className="text-body text-muted-foreground text-lg max-w-3xl mb-16 leading-relaxed">
           A primer on demonstrated "mind-reading" capabilities, their common architecture, and the security threats they introduce — the landscape Cognitive Canary was built to defend against.
@@ -346,7 +385,7 @@ const BCILandscape = () => {
           </CollapsibleSection>
 
           {/* 6. Outlook */}
-          <CollapsibleSection title="Outlook 2027–2030" badge="06">
+          <CollapsibleSection title="Outlook 2026–2030" badge="06">
             <div className="p-4 space-y-0">
               {outlook.map((o, i) => (
                 <div key={i} className="flex gap-4 p-3 border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">
